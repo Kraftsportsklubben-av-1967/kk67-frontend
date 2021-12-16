@@ -5,3 +5,29 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 ## Recommended IDE Setup
 
 - [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
+
+## Contribute
+
+This website is maintained by [**Marius Arhaug**](https://www.github.com/MariusArhaug).
+
+To contribute to this project, follow the guidelines described in the [CONTRIBUTING.md](./CONTRIBUTING.md)
+
+## Available Scripts
+
+In the project directory, you can run:
+
+### `yarn install`
+
+Installs the nessesary dependencies defined in [package.json](package.json)
+
+### `yarn dev`
+
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
+
+### `yarn build`
+
+Transpile `TypeScript` into `JavaScript` and check for build errors.
