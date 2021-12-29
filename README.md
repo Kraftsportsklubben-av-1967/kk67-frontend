@@ -12,6 +12,13 @@ This website is maintained by [**Marius Arhaug**](https://www.github.com/MariusA
 
 To contribute to this project, follow the guidelines described in the [CONTRIBUTING.md](./CONTRIBUTING.md)
 
+## Website Concept: 
+
+A concept draft has been created and approved (thus far) by KK67 leader, **Jostein Fiveltun**.  
+
+Our aim is to develop a website that matches the concept draft provided [**here**](./assets/)
+
+
 ## Available Scripts
 
 In the project directory, you can run:
