@@ -1,6 +1,6 @@
 <template>
   <div class="text-sm font-bold p-4">
-    <button
+    <router-link
       v-if="focus"
       class="
         bg-white
@@ -10,10 +10,11 @@
         text-black
         hover:bg-red-600 hover:text-slate-50
       "
+      :to="path"
     >
       <strong>{{ title }}</strong>
-    </button>
-    <button
+    </router-link>
+    <router-link
       v-else
       class="
         border-8
@@ -23,9 +24,10 @@
         text-white
         hover:bg-white hover:text-black
       "
+      :to="path"
     >
       <strong>{{ title }}</strong>
-    </button>
+    </router-link>
   </div>
 </template>
 
@@ -34,7 +36,7 @@ import { defineComponent } from 'vue'
 
 export interface INavbarButton {
   title: string
-  url: string
+  path: string
   focus?: boolean
 }
 
@@ -46,6 +48,10 @@ export default defineComponent({
     },
     focus: {
       type: Boolean,
+    },
+    path: {
+      type: String,
+      required: true,
     },
   },
 })

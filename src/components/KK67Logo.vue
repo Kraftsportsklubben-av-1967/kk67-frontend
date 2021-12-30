@@ -1,6 +1,7 @@
 <template>
   <div>
     <img
+      @click="goToHomepage()"
       :src="selectLogo()"
       alt="kk67-logo"
       :style="`width: ${imgWidth}%; margin-top: 2px; image-rendering: crisp-edges;`"
@@ -9,21 +10,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
+
+export enum LOGO_TYPES {
+  BLACK_LOGO = 'kk-logo-black.png',
+  WHITE_LGOO = 'kk-logo-white.png',
+  DEFAULT_LOGO = 'kk-logo.png',
+}
 
 const ASSETS_URL = '../../assets/'
-const BLACK_LOGO = 'kk-logo-black.png'
-const WHITE_LGOO = 'kk-logo-white.png'
-const DEFAULT_LOGO = 'kk-logo.png'
 export default defineComponent({
   name: 'KK67Logo',
   props: {
-    blackLogo: {
-      type: Boolean,
-      required: true,
-    },
-    whiteLogo: {
-      type: Boolean,
+    logoColor: {
+      type: String as PropType<LOGO_TYPES>,
       required: true,
     },
     imgWidth: {
@@ -34,19 +34,25 @@ export default defineComponent({
 
   methods: {
     selectLogo(): string {
-      if (this.blackLogo) {
-        return this.updatePath(BLACK_LOGO)
-      }
-      if (this.whiteLogo) {
-        return this.updatePath(WHITE_LGOO)
-      }
-      return this.updatePath(DEFAULT_LOGO)
+      return this.updatePath(this.logoColor)
     },
     updatePath(logo: string) {
       return ASSETS_URL + logo
+    },
+    goToHomepage() {
+      this.$router.push('/')
     },
   },
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+img {
+  transition-duration: 0.4s;
+}
+
+img:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+</style>

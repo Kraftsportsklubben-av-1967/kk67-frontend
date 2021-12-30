@@ -3,8 +3,7 @@
     <KK67Logo
       class="grow-0 my-auto ml-8 mt-6"
       :img-width="70"
-      :black-logo="false"
-      :white-logo="true"
+      :logo-color="LOGO_TYPES.WHITE_LGOO"
     />
     <div class="grow flex justify-end mr-8 mt-8">
       <NavbarButton
@@ -13,50 +12,53 @@
         :key="button.title"
         :title="button.title"
         :focus="button.focus"
+        :path="button.path"
       />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import KK67Logo from './KK67Logo.vue'
+import KK67Logo, { LOGO_TYPES } from './KK67Logo.vue'
 import { defineComponent } from 'vue'
 import NavbarButton, { INavbarButton } from './NavbarButton.vue'
 
 export default defineComponent({
+  name: 'Navbar',
   data() {
     return {
       buttons: [
         {
           title: 'OM OSS',
-          url: '/about',
+          path: '/about',
         },
         {
           title: 'TIMEPLAN',
-          url: '/timetable',
+          path: '/timetable',
         },
         {
           title: 'REKORDER',
-          url: '/records',
+          path: '/records',
         },
         {
           title: 'BILDER',
-          url: '/pictures',
+          path: '/pictures',
         },
         {
           title: 'STEVNER',
-          url: '/meets',
+          path: '/meets',
         },
         {
           title: 'SPONSOR',
-          url: '/sponsor',
+          path: '/sponsor',
         },
         {
           title: 'BLI MEDLEM',
-          url: '/join',
+          path: '/join',
           focus: true,
         },
       ] as INavbarButton[],
+      LOGO_TYPES: LOGO_TYPES,
     }
   },
   components: { NavbarButton, KK67Logo },
