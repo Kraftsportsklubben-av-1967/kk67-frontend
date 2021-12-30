@@ -1,14 +1,12 @@
 <template>
   <div class="text-sm font-bold p-4">
     <router-link
-      v-if="focus"
-      class="
-        bg-white
-        border-8
-        rounded-md
-        border-transparent
-        text-black
-        hover:bg-red-600 hover:text-slate-50
+      v-if="invert()"
+      class="router-link"
+      :class="
+        focus
+          ? 'bg-white text-black hover:bg-red-600 hover:text-slate-50'
+          : 'bg-transparent text-white hover:bg-white hover:text-black'
       "
       :to="path"
     >
@@ -16,17 +14,14 @@
     </router-link>
     <router-link
       v-else
-      class="
-        border-8
-        bg-transparent
-        rounded-md
-        border-transparent
-        text-white
-        hover:bg-white hover:text-black
+      class="router-link"
+      :class="
+        focus
+          ? 'bg-black text-white hover:bg-red-600 hover:text-white'
+          : 'text-black bg-transparent hover:bg-black hover:text-white'
       "
       :to="path"
-    >
-      <strong>{{ title }}</strong>
+      ><strong>{{ title }}</strong>
     </router-link>
   </div>
 </template>
@@ -54,10 +49,21 @@ export default defineComponent({
       required: true,
     },
   },
+  methods: {
+    invert(): boolean {
+      if (this.$route.name === 'Home') {
+        return true
+      }
+      return false
+    },
+
+    selectStyle() {},
+  },
 })
 </script>
 <style scoped>
-button {
+.router-link {
   transition-duration: 0.4s;
+  @apply border-8 rounded-md border-transparent;
 }
 </style>

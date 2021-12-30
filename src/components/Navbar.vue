@@ -1,10 +1,6 @@
 <template>
   <div class="flex">
-    <KK67Logo
-      class="grow-0 my-auto ml-8 mt-6"
-      :img-width="70"
-      :logo-color="LOGO_TYPES.WHITE_LGOO"
-    />
+    <KK67Logo class="grow-0 my-auto ml-8 mt-6" :img-width="70" :logo-color="selectLogo()" />
     <div class="grow flex justify-end mr-8 mt-8">
       <NavbarButton
         class="my-auto mx-2"
@@ -19,12 +15,23 @@
 </template>
 
 <script lang="ts">
-import KK67Logo, { LOGO_TYPES } from './KK67Logo.vue'
 import { defineComponent } from 'vue'
+import KK67Logo, { LOGO_TYPES } from './KK67Logo.vue'
 import NavbarButton, { INavbarButton } from './NavbarButton.vue'
+
+export enum NavbarType {
+  HOMEPAGE,
+  DEFAULT,
+}
 
 export default defineComponent({
   name: 'Navbar',
+  props: {
+    navbarColor: {
+      NavbarType,
+      required: true,
+    },
+  },
   data() {
     return {
       buttons: [
@@ -60,6 +67,17 @@ export default defineComponent({
       ] as INavbarButton[],
       LOGO_TYPES: LOGO_TYPES,
     }
+  },
+  methods: {
+    selectLogo() {
+      switch (this.navbarColor) {
+        case NavbarType.HOMEPAGE:
+          return LOGO_TYPES.WHITE_LGOO
+        case NavbarType.DEFAULT:
+          return LOGO_TYPES.DEFAULT_LOGO
+      }
+      return LOGO_TYPES.DEFAULT_LOGO
+    },
   },
   components: { NavbarButton, KK67Logo },
 })
