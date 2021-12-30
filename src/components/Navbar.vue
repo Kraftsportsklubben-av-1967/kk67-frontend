@@ -1,28 +1,65 @@
 <template>
-  <div class="flex h-20 border-2 border-black">
-    <div class="grow-0">LOGO</div>
-    <div class="grow" v-for="button in navBarButtons" :key="button.title">{{ button.title }}</div>
+  <div class="flex">
+    <KK67Logo
+      class="grow-0 my-auto ml-8 mt-6"
+      :img-width="70"
+      :black-logo="false"
+      :white-logo="true"
+    />
+    <div class="grow flex justify-end mr-8 mt-8">
+      <NavbarButton
+        class="my-auto mx-2"
+        v-for="button in buttons"
+        :key="button.title"
+        :title="button.title"
+        :focus="button.focus"
+      />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
+import KK67Logo from './KK67Logo.vue'
 import { defineComponent } from 'vue'
-interface INavBarButton {
-  title: string
-  url: string
-}
+import NavbarButton, { INavbarButton } from './NavbarButton.vue'
 
 export default defineComponent({
   data() {
     return {
-      navBarButtons: [
+      buttons: [
         {
-          title: 'Test',
-          url: '/test',
+          title: 'OM OSS',
+          url: '/about',
         },
-      ] as INavBarButton[],
+        {
+          title: 'TIMEPLAN',
+          url: '/timetable',
+        },
+        {
+          title: 'REKORDER',
+          url: '/records',
+        },
+        {
+          title: 'BILDER',
+          url: '/pictures',
+        },
+        {
+          title: 'STEVNER',
+          url: '/meets',
+        },
+        {
+          title: 'SPONSOR',
+          url: '/sponsor',
+        },
+        {
+          title: 'BLI MEDLEM',
+          url: '/join',
+          focus: true,
+        },
+      ] as INavbarButton[],
     }
   },
+  components: { NavbarButton, KK67Logo },
 })
 </script>
 
