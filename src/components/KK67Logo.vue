@@ -4,6 +4,7 @@
       @click="goToHomepage()"
       :src="selectLogo()"
       alt="kk67-logo"
+      class="block mx-auto"
       :style="`width: ${imgWidth}%; margin-top: 2px; image-rendering: crisp-edges;`"
     />
   </div>
