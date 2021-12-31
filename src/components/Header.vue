@@ -1,28 +1,39 @@
 <template>
-  <div class="w-full" style="background-color: black; height: 35rem">
+  <div class="w-full" :style="`${updateHeaderBody()} height: 35rem;`">
     <div
       id="header-background-image"
       class="bg-center bg-no-repeat h-full"
       style="background-image: url(../../assets/header.jpeg)"
-      v-if="showBackground"
+      v-if="showBackground()"
     >
-      <navbar class="h-24" />
+      <Navbar class="h-24" :navbarColor="NavbarType.HOMEPAGE" />
+    </div>
+    <div v-else>
+      <Navbar class="h-24" :navbarColor="NavbarType.DEFAULT" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Navbar from './Navbar.vue'
+import Navbar, { NavbarType } from './Navbar.vue'
 export default defineComponent({
-  props: {
-    showBackground: {
-      type: Boolean,
-      required: true,
+  data() {
+    return {
+      NavbarType,
+    }
+  },
+  methods: {
+    updateHeaderBody(): string {
+      return this.showBackground() ? 'background-color: black; ' : ''
+    },
+
+    showBackground(): boolean {
+      return this.$route.name === 'Home'
     },
   },
   components: {
-    navbar: Navbar,
+    Navbar,
   },
 })
 </script>

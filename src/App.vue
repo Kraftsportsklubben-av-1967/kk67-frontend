@@ -1,23 +1,25 @@
-<script setup lang="ts">
-import Footer from './components/Footer.vue'
-import Content from './components/Content.vue'
-import Header from './components/Header.vue'
-</script>
-
 <template>
-  <div class="flex flex-col h-screen justify-between">
-    <Header class="h-40" :showBackground="true" />
-    <Content />
-    <Footer />
-  </div>
+  <Header class="h-40" />
+  <router-view />
+  <Footer />
 </template>
+
+<script lang="ts">
+import Footer from './components/Footer.vue'
+import Header from './components/Header.vue'
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  methods: {},
+  components: {
+    Footer,
+    Header,
+  },
+})
+</script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
 }
 </style>
