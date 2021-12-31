@@ -56,8 +56,6 @@ export default defineComponent({
       }
       return false
     },
-
-    selectStyle() {},
   },
 })
 </script>

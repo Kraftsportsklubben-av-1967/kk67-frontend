@@ -4,12 +4,12 @@
       id="header-background-image"
       class="bg-center bg-no-repeat h-full"
       style="background-image: url(../../assets/header.jpeg)"
-      v-if="showBackground"
+      v-if="showBackground()"
     >
-      <Navbar class="h-24" :navbarColor="navbarType" />
+      <Navbar class="h-24" :navbarColor="NavbarType.HOMEPAGE" />
     </div>
     <div v-else>
-      <Navbar class="h-24" :navbarColor="navbarType" />
+      <Navbar class="h-24" :navbarColor="NavbarType.DEFAULT" />
     </div>
   </div>
 </template>
@@ -18,16 +18,6 @@
 import { defineComponent } from 'vue'
 import Navbar, { NavbarType } from './Navbar.vue'
 export default defineComponent({
-  props: {
-    showBackground: {
-      type: Boolean,
-      required: true,
-    },
-    navbarType: {
-      NavbarType,
-      required: true,
-    },
-  },
   data() {
     return {
       NavbarType,
@@ -35,7 +25,11 @@ export default defineComponent({
   },
   methods: {
     updateHeaderBody(): string {
-      return this.navbarType ? '' : 'background-color: black;'
+      return this.showBackground() ? 'background-color: black; ' : ''
+    },
+
+    showBackground(): boolean {
+      return this.$route.name === 'Home'
     },
   },
   components: {
