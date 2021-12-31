@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full" :style="`${updateHeaderBody()} height: 35rem;`">
+  <div class="w-full h-40 mb-12" :style="`${updateHeaderBody()} height: 35rem;`">
     <div
       id="header-background-image"
       class="bg-center bg-no-repeat h-full"
