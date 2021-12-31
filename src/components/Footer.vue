@@ -1,15 +1,66 @@
 <template>
-  <footer class="bg-black border-red-600 border-t-4 h-40 text-white">
-    <div class="flex flex-row text-center">
-      <div class="w-1/3">LOGO</div>
-      <div class="w-1/3">TABLE</div>
-      <div class="w-1/3">NEWSLETTER</div>
+  <footer
+    class="
+      bg-black
+      border-red-600 border-t-4
+      h-48
+      text-white
+      flex flex-row
+      justify-between
+      pt-10
+      text-md
+      font-bold
+    "
+  >
+    <div class="grow-0 justify-items-center ml-8">
+      <KK67Logo :img-width="70" :logo-color="LOGO_TYPES.WHITE_LGOO" />
     </div>
+    <div class="flex flex-row text-center justify-evenly w-3/5">
+      <div>
+        <h2>Sosiale medier</h2>
+        <Media />
+      </div>
+      <div class="text-left">
+        <h2>Kontakt</h2>
+        <p class="text-sm font-normal">
+          Styrleder <br />
+          {{ leaderContact.name }} <br />
+          +47 {{ leaderContact.number }} <br />
+          {{ leaderContact.email }} <br />
+        </p>
+      </div>
+      <div class="text-left">
+        <h2>Addresse</h2>
+        <p class="text-sm font-normal">
+          Mellomveien 5 (Buran) <br />
+          7042 Trondheim
+        </p>
+      </div>
+    </div>
+    <div class="w-1/5">NEWSLETTER</div>
   </footer>
 </template>
 
 <script lang="ts">
-export default {}
+import { defineComponent } from 'vue'
+import KK67Logo, { LOGO_TYPES } from './KK67Logo.vue'
+import Media from './Media.vue'
+export default defineComponent({
+  data() {
+    return {
+      LOGO_TYPES: LOGO_TYPES,
+      leaderContact: {
+        name: 'Jostein Fiveltun',
+        number: '134 45 678',
+        email: 'kk67.styreleder@gmail.com',
+      },
+    }
+  },
+  components: {
+    KK67Logo,
+    Media,
+  },
+})
 </script>
 
 <style></style>
