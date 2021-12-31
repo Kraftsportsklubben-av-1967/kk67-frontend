@@ -18,8 +18,4 @@ export default defineComponent({
 })
 </script>
 
-<style>
-#app {
-  text-align: center;
-}
-</style>
+<style></style>
