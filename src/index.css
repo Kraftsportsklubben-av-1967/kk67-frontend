@@ -8,3 +8,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.header-red-underline {
+  @apply font-bold text-6xl border-b-8 border-red-700 w-fit pr-6;
+}
