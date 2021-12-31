@@ -1,5 +1,5 @@
 <template>
-  <Header class="h-40" />
+  <Header />
   <router-view />
   <Footer />
 </template>
