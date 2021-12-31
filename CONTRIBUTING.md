@@ -77,13 +77,13 @@ Commit messages also need to be written in present time.
 ## Code reviews
 
 Everytime a member of the group creates a merge request, it needs to reviewed and verified by atleast one person before merging it.
-After the MR has been verfiied and accepted, the creator of the MR needs to merge it into the master branch.
+After the PR has been verfiied and accepted, the creator of the PR needs to merge it into the master branch.
 
 Remember to squash commits when merging, since commit messages after dosen't make much sense in the master branch.
 
 ## Workflow
 
-Everything that is merged or committed and pushed to `master` goes straight to production (need pipelines here) if all the tests are passing (see .gitlab-ci.yml). Because of that, the preferred workflow is to create a new MR (Merge Request) in GitLab. There you can request a code review from one of your teammates before your contribution is merged to `main`. When you create an MR, your code will run in GitLab CI/CD, where it will be tested and deployed to a review deployment.
+Everything that is merged or committed and pushed to `master` goes straight to production (need pipelines here) if all the tests are passing (need GitHub actions configured). Because of that, the preferred workflow is to create a new PR (Pull Request) in GitHub. There you can request a code review from one of your teammates before your contribution is merged to `master`. 
 
 ## Folders
 
@@ -91,8 +91,25 @@ Everything that is merged or committed and pushed to `master` goes straight to p
 
 ## Source code
 
-The source code is written in TypeScript (https://www.typescriptlang.org) and is located in the `src` folder. The application starts with the `src/index.ts` file.
+The source code is written in with [**Vue3**](https://v3.vuejs.org/) and [**TypeScript**](https://www.typescriptlang.org) and is located in the `src` folder. The application starts with the `src/main.ts` file.
 
+### Tailwind
+
+In order to avoid dealing with large unmaintanable _CSS_ files, we're using [**TailwinCSS**](https://tailwindcss.com/)
+
+#### Get started with new tools
+
+A quick introduction to the various tools we use can be found here
+
+- [**Vue**](https://www.youtube.com/watch?v=nhBVL41-_Cw&ab_channel=Fireship)
+- [**TypeScript**](https://www.youtube.com/watch?v=zQnBQ4tB3ZA&ab_channel=Fireship)
+- [**TypeScript Tips**](https://www.youtube.com/watch?v=ahCwqrYpIuM&ab_channel=Fireship)
+
+- [**TailwindCSS**](https://www.youtube.com/watch?v=mr15Xzb1Ook&ab_channel=Fireship)
+
+
+<!--
+# //TODO add testing library for vue
 ## Test
 
 Jest (https://jestjs.io) is used for testing. All files within the `src` folder with the `<FILENAME>.test.ts` format will automatically be picked up by Jest.
@@ -106,6 +123,7 @@ You can start jest with watch mode with:
 - `yarn jest:watch`
 
 You can run one single test file by running `yarn jest:watch <FILENAME>`, for example `yarn jest:watch src/..<FILENAME>.test.ts`.
+-->
 
 ## Editor
 
@@ -119,6 +137,7 @@ Editorconfig for VSCode:
 
 - ESLint
 - TailwindCSS
+- Volar
 - Prettier - Code formatter
 - Bracket Pair Colorizer
 - Vim (for legends)
