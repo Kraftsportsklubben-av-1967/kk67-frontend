@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import Footer from './components/Footer.vue'
+import Footer from './components/Footer/index.vue'
 import Header from './components/Header.vue'
 import { defineComponent } from 'vue'
 

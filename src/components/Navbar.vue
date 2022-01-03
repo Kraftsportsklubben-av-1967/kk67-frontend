@@ -1,6 +1,6 @@
 <template>
-  <div class="flex">
-    <KK67Logo class="grow-0 my-auto ml-8 mt-6" :img-width="70" :logo-color="selectLogo()" />
+  <nav class="flex">
+    <KK67Logo class="grow-0 my-auto ml-8 mt-6" :logo-color="selectLogo()" />
     <div class="grow flex justify-end mr-8 mt-8">
       <NavbarButton
         class="my-auto mx-2"
@@ -11,7 +11,7 @@
         :path="button.path"
       />
     </div>
-  </div>
+  </nav>
 </template>
 
 <script lang="ts">
@@ -26,12 +26,6 @@ export enum NavbarType {
 
 export default defineComponent({
   name: 'Navbar',
-  props: {
-    navbarColor: {
-      NavbarType,
-      required: true,
-    },
-  },
   data() {
     return {
       buttons: [
@@ -70,11 +64,9 @@ export default defineComponent({
   },
   methods: {
     selectLogo() {
-      switch (this.navbarColor) {
-        case NavbarType.HOMEPAGE:
-          return LOGO_TYPES.WHITE_LGOO
-        case NavbarType.DEFAULT:
-          return LOGO_TYPES.DEFAULT_LOGO
+      console.log(this.$route.name)
+      if (this.$route.name === 'Home') {
+        return LOGO_TYPES.WHITE_LGOO
       }
       return LOGO_TYPES.DEFAULT_LOGO
     },
