@@ -11,10 +11,13 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "proxy": "lcp --proxyUrl https://www.styrkeloft.no"
   },
   "dependencies": {
     "autoprefixer": "^10.4.0",
+    "ical.js": "^1.4.0",
+    "local-cors-proxy": "^1.1.0",
     "postcss": "^8.4.5",
     "tailwindcss": "^3.0.8",
     "vue": "^3.2.25",
