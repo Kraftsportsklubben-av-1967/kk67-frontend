@@ -11,5 +11,7 @@ export default defineConfig({
     '@components': pathResolve('/src/components'),
     '@pages': pathResolve('/src/pages'),
     '@assets': pathResolve('/assets/'),
+    '@views': pathResolve('/views/'),
+    '@utils': pathResolve('/utils/'),
   },
 })
