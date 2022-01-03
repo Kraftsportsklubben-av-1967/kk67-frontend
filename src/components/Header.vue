@@ -6,10 +6,10 @@
       style="background-image: url(../../assets/header.jpeg)"
       v-if="showBackground()"
     >
-      <Navbar class="h-24" :navbarColor="NavbarType.HOMEPAGE" />
+      <Navbar class="h-24" />
     </div>
     <div v-else>
-      <Navbar class="h-24" :navbarColor="NavbarType.DEFAULT" />
+      <Navbar class="h-24" />
     </div>
   </div>
 </template>

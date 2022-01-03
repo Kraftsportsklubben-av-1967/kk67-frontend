@@ -5,7 +5,7 @@
       :src="selectLogo()"
       alt="kk67-logo"
       class="block mx-auto"
-      :style="`width: ${imgWidth}%; margin-top: 2px; image-rendering: crisp-edges;`"
+      :style="`margin-top: 2px; image-rendering: crisp-edges;`"
     />
   </div>
 </template>
@@ -25,10 +25,6 @@ export default defineComponent({
   props: {
     logoColor: {
       type: String as PropType<LOGO_TYPES>,
-      required: true,
-    },
-    imgWidth: {
-      type: Number,
       required: true,
     },
   },
