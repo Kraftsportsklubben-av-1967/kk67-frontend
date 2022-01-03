@@ -19,11 +19,6 @@ import { defineComponent } from 'vue'
 import KK67Logo, { LOGO_TYPES } from './KK67Logo.vue'
 import NavbarButton, { INavbarButton } from './NavbarButton.vue'
 
-export enum NavbarType {
-  HOMEPAGE,
-  DEFAULT,
-}
-
 export default defineComponent({
   name: 'Navbar',
   data() {
@@ -64,7 +59,6 @@ export default defineComponent({
   },
   methods: {
     selectLogo() {
-      console.log(this.$route.name)
       if (this.$route.name === 'Home') {
         return LOGO_TYPES.WHITE_LGOO
       }

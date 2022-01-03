@@ -13,7 +13,7 @@ const routes = [
   { path: '/records', name: 'Records', component: () => import('../views/Comitee.vue') },
   { path: '/pictures', name: 'Pictures', component: () => import('../views/Comitee.vue') },
   { path: '/sponsor', name: 'Sponsor', component: () => import('../views/Comitee.vue') },
-  { path: '/meets', name: 'Meets', component: () => import('../views/Comitee.vue') },
+  { path: '/meets', name: 'Meets', component: () => import('../views/Meets/index.vue') },
   { path: '/join', name: 'Join', component: () => import('../views/Comitee.vue') },
 ]
 
