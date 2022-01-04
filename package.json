@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "autoprefixer": "^10.4.0",
-    "ical.js": "^1.4.0",
     "local-cors-proxy": "^1.1.0",
     "postcss": "^8.4.5",
     "tailwindcss": "^3.0.8",

@@ -2,8 +2,22 @@
   <Layout>
     <template v-slot:sidebar></template>
     <template v-slot:main>
-      <div v-for="meet in meets">
-        <h1>{{ meet.title }}</h1>
+      <div class="flex flex-wrap w-full justify-between flex-col">
+        <Card v-for="meet in previousMeets" class="mb-8 h-40" style="width: 80%">
+          <template v-slot:header>
+            <h1>{{ meet.title }}</h1>
+          </template>
+          <template v-slot:body>
+            <p v-if="meet.description">Info: {{ meet.description }}</p>
+            <br v-else />
+            <div class="flex justify-between md:flex-row flex-col md:pb-0 pb-2">
+              <a :href="meet.link" class="hover:opacity-80 hover:underline text-red-600"
+                >Resultat</a
+              >
+              <p>Dato: {{ meet.date.toLocaleDateString() }}</p>
+            </div>
+          </template>
+        </Card>
       </div>
     </template>
   </Layout>
@@ -11,67 +25,39 @@
 <script lang="ts">
 import Layout from '@/components/Layout.vue'
 import { defineComponent } from 'vue'
-import { fetchXML } from './fetchXML'
-import { removeUndefinedFromArray } from '../../utils/removeUndefinedFromArray'
+import { IMeet, IUpcommingMeet, getPreviousMeets, getUpcommingMeets } from './loadData'
+import Card from '@/components/Card/Card.vue'
 
-const UPCOMING_MEETS = 'http://styrkeloft.no/stevner/?page=ical&skipHeader=1&&k=13'
-const PREVIOUS_MEETS = 'resultatservice_integrasjon/rss_protokoll.php?m=1&klubb_id=13'
+/**
+ * Cache meet data into session storage. // * This could be refactored into a general cacher.. or vuex..
+ */
+async function cacheMeets(): Promise<IMeet[]> {
+  if (window.sessionStorage.getItem('meets')) {
+    return JSON.parse(window.sessionStorage.getItem('meets')!, (key, value) => {
+      return key === 'date' ? new Date(value) : value
+    }) as IMeet[]
+  }
 
-interface IMeet {
-  title: string
-  description?: string
-  link: string
-  date: Date
+  const meets = await getPreviousMeets()
+  window.sessionStorage.setItem('meets', JSON.stringify(meets))
+  return meets
 }
 
 export default defineComponent({
   name: 'Meets',
   components: {
     Layout,
+    Card,
   },
   async created() {
-    // TODO : need something clever here...
-    // fetch(UPCOMING_MEETS, {
-    //   mode: 'no-cors',
-    //   method: 'GET',
-    // })
-    //   .then((res) => res.blob())
-    //   .then((blob) => console.log(blob))
-
-    // TODO: refactor this pile of shit
-    fetchXML(PREVIOUS_MEETS).then((data) => {
-      console.log(data)
-      const channelTag = data.querySelector('channel')
-      if (channelTag) {
-        const items = Array.from(channelTag.children).filter(
-          (element) => element.nodeName === 'item',
-        )
-        console.log(items)
-        const meets = removeUndefinedFromArray(
-          items.map((item) => {
-            const title = item.querySelector('title')
-            const date = item.querySelector('pubDate')
-            const description = item.querySelector('description')
-            const link = item.querySelector('link')
-
-            if (!title || !date || !description || !link) {
-              return undefined
-            }
-            return {
-              title: title.innerHTML,
-              date: new Date(date.innerHTML),
-              link: link.innerHTML,
-              description: description.innerHTML,
-            } as IMeet
-          }),
-        )
-        this.meets = meets
-      }
-    })
+    this.upcommingMeets = await getUpcommingMeets()
+    this.previousMeets = await cacheMeets()
+    console.log(this.upcommingMeets)
   },
   data() {
     return {
-      meets: [] as IMeet[],
+      previousMeets: [] as IMeet[],
+      upcommingMeets: [] as IUpcommingMeet[],
     }
   },
 })
