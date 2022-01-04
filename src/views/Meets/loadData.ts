@@ -9,7 +9,7 @@ export interface IMeet {
 }
 
 async function fetchXML(endpoint: string): Promise<Document> {
-  return fetch(`http://localhost:8010/proxy/${endpoint}`, {
+  return fetch(endpoint, {
     method: 'GET',
   })
     .then((res) => res.text())
@@ -44,8 +44,8 @@ export async function getPreviousMeets(): Promise<IMeet[]> {
   )
 }
 
-async function fetchiCAL(): Promise<string> {
-  return fetch(`http://localhost:8010/proxy/${UPCOMING_MEETS}`, {
+async function fetchiCAL(endpoint: string): Promise<string> {
+  return fetch(endpoint, {
     method: 'GET',
   }).then((res) => res.text())
 }
@@ -58,7 +58,7 @@ export interface IUpcommingMeet {
 }
 
 export async function getUpcommingMeets() {
-  return (await fetchiCAL())
+  return (await fetchiCAL(UPCOMING_MEETS))
     .split('BEGIN:VEVENT')
     .slice(1)
     .map((event: string) => {

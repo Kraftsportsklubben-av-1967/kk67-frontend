@@ -50,7 +50,19 @@ cd kk67
 yarn
 ```
 
-8. Start dev mode
+8. add lcp (local host proxy, [**link**](https://github.com/garmeeh/local-cors-proxy)) to $PATH
+
+```sh
+yarn global add local-cors-proxy
+```
+
+9. set up env variables in a `.env` file (not to be pushed to repo). Ask **Marius** for key.
+
+```sh
+VITE_GOOGLE_API_KEY=<key>
+```
+
+10. Start dev mode
 
 ```sh
 yarn dev
@@ -83,7 +95,7 @@ Remember to squash commits when merging, since commit messages after dosen't mak
 
 ## Workflow
 
-Everything that is merged or committed and pushed to `master` goes straight to production (need pipelines here) if all the tests are passing (need GitHub actions configured). Because of that, the preferred workflow is to create a new PR (Pull Request) in GitHub. There you can request a code review from one of your teammates before your contribution is merged to `master`. 
+Everything that is merged or committed and pushed to `master` goes straight to production (need pipelines here) if all the tests are passing (need GitHub actions configured). Because of that, the preferred workflow is to create a new PR (Pull Request) in GitHub. There you can request a code review from one of your teammates before your contribution is merged to `master`.
 
 ## Folders
 
@@ -106,7 +118,6 @@ A quick introduction to the various tools we use can be found here
 - [**TypeScript Tips**](https://www.youtube.com/watch?v=ahCwqrYpIuM&ab_channel=Fireship)
 
 - [**TailwindCSS**](https://www.youtube.com/watch?v=mr15Xzb1Ook&ab_channel=Fireship)
-
 
 <!--
 # //TODO add testing library for vue
@@ -151,7 +162,3 @@ Editorconfig for VSCode:
   "typescript.autoImportSuggestions.enabled": false
 }
 ```
-
-## Insomnia
-
-You might know Postman, the Collaboration Platform for API Development. We use a similar tool when we fetch data from APIs.

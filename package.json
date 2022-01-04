@@ -9,7 +9,7 @@
   },
   "description": "A website for the powerlifting club KK67",
   "scripts": {
-    "dev": "vite",
+    "dev": "cross-env NODE_ENV=development yarn proxy & vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "proxy": "lcp --proxyUrl https://www.styrkeloft.no"
@@ -25,6 +25,7 @@
   "devDependencies": {
     "@types/node": "^17.0.5",
     "@vitejs/plugin-vue": "^2.0.0",
+    "cross-env": "^7.0.3",
     "vite": "^2.7.2"
   },
   "contributors": [
