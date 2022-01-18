@@ -3,7 +3,7 @@
     <div
       id="header-background-image"
       class="bg-center bg-no-repeat h-full"
-      style="background-image: url(../../assets/header.jpeg)"
+      style="background-image: url(../../assets/logo/header.jpeg)"
       v-if="showBackground()"
     >
       <Navbar class="h-24" />
