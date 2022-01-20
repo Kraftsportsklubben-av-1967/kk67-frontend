@@ -1,12 +1,12 @@
 <template>
-  <div class="flex flex-col h-screen justify-between">
+  <div class="flex flex-col justify-between">
     <Layout>
       <template v-slot:sidebar>
         <div class="flex flex-col">
-          <div class="font-bold text-6xl border-b-8 border-red-700 pr-6" style="width: fit-content">
+          <div class="header-red-underline">
             <h1>Nyheter</h1>
           </div>
-          <div class="mt-6 font-bold text-sm" style="width: fit-content">
+          <div class="mt-6 font-bold text-sm w-fit">
             <p>Følg oss på sosiale medier!</p>
           </div>
           <div>
