@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-row">
     <div v-for="img in images" class="pr-2.5">
-      <a :href="img.url">
+      <a :href="img.url" target="_blank">
         <img
           :alt="img.alt"
           :src="'../../icons/' + img.src"
