@@ -1,6 +1,6 @@
 <template>
-  <nav class="flex">
-    <KK67Logo class="grow-0 my-auto ml-8 mt-6" :logo-color="selectLogo()" />
+  <div class="flex">
+    <KK67Logo class="grow-0 my-auto ml-8 mt-6" :logo-color="logoColor" />
     <div class="grow flex justify-end mr-8 mt-8">
       <NavbarButton
         class="my-auto mx-2"
@@ -11,21 +11,21 @@
         :path="button.path"
       />
     </div>
-  </nav>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import KK67Logo, { LOGO_TYPES } from './KK67Logo.vue'
+import KK67Logo, { LOGO_TYPES } from '../KK67Logo.vue'
 import NavbarButton, { INavbarButton } from './NavbarButton.vue'
 
-export enum NavbarType {
-  HOMEPAGE,
-  DEFAULT,
-}
-
 export default defineComponent({
-  name: 'Navbar',
+  name: 'NavbarDesktop',
+  props: {
+    logoColor: {
+      default: LOGO_TYPES.DEFAULT_LOGO,
+    },
+  },
   data() {
     return {
       buttons: [
@@ -59,20 +59,8 @@ export default defineComponent({
           focus: true,
         },
       ] as INavbarButton[],
-      LOGO_TYPES: LOGO_TYPES,
     }
-  },
-  methods: {
-    selectLogo() {
-      console.log(this.$route.name)
-      if (this.$route.name === 'Home') {
-        return LOGO_TYPES.WHITE_LGOO
-      }
-      return LOGO_TYPES.DEFAULT_LOGO
-    },
   },
   components: { NavbarButton, KK67Logo },
 })
 </script>
-
-<style scoped></style>
