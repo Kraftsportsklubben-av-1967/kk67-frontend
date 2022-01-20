@@ -13,5 +13,6 @@ export default defineConfig({
     '@assets': pathResolve('/assets/'),
     '@views': pathResolve('/views/'),
     '@utils': pathResolve('/utils/'),
+    '@public': pathResolve('/public/'),
   },
 })

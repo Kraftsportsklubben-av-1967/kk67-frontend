@@ -10,6 +10,7 @@
   "description": "A website for the powerlifting club KK67",
   "scripts": {
     "dev": "vite",
+    "dev:host": "vite --host",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview"
   },

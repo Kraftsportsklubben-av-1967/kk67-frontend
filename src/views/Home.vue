@@ -6,10 +6,10 @@
           <div class="header-red-underline">
             <h1>Nyheter</h1>
           </div>
-          <div class="mt-6 font-bold text-sm w-fit">
+          <div class="mt-6 text-xl w-fit">
             <p>Følg oss på sosiale medier!</p>
           </div>
-          <div>
+          <div class="mt-4">
             <Media />
           </div>
         </div>

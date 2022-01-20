@@ -33,8 +33,3 @@ export default defineComponent({
   name: 'FooterContact',
 })
 </script>
-<style>
-.anchor-hover:hover {
-  @apply text-gray-400 duration-300;
-}
-</style>

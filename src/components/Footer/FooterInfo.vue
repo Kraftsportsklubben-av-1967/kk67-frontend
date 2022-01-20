@@ -5,21 +5,21 @@
     </div>
     <div class="flex md:flex-row flex-col text-center justify-evenly w-3/5">
       <div class="md:text-left">
-        <h2>Sosiale medier</h2>
-        <Media />
+        <p class="text-lg">Sosiale medier</p>
+        <Media class="mt-2" />
       </div>
       <div class="md:text-left">
-        <h2>Kontakt</h2>
-        <p class="text-sm font-normal">
+        <p class="text-lg">Kontakt</p>
+        <p class="text-sm">
           Styreleder <br />
           {{ leaderContact.name }} <br />
           +47 {{ leaderContact.number }} <br />
-          {{ leaderContact.email }} <br />
+          <a class="anchor-hover">{{ leaderContact.email }}</a> <br />
         </p>
       </div>
       <div class="md:text-left">
-        <h2>Addresse</h2>
-        <p class="text-sm font-normal">
+        <p class="text-lg">Addresse</p>
+        <p class="text-sm">
           Mellomveien 5 (Buran) <br />
           7042 Trondheim
         </p>
