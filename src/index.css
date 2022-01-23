@@ -8,3 +8,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.anchor-link {
+  @apply hover:opacity-80 hover:underline text-red-600;
+}
