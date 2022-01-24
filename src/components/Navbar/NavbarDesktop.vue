@@ -1,7 +1,7 @@
 <template>
-  <div class="flex">
-    <KK67Logo class="grow-0 my-auto ml-8 mt-6" :logo-color="logoColor" />
-    <div class="grow flex justify-end mr-8 mt-8">
+  <div class="flex mx-8 justify-between">
+    <KK67Logo class="my-auto mt-6 ml-2" :logo-color="logoColor" />
+    <div class="flex justify-end mt-8">
       <NavbarButton
         class="my-auto mx-2"
         v-for="button in buttons"

@@ -1,31 +1,26 @@
 <template>
-  <div class="flex md:flex-row justify-between flex-col flex-wrap gap-2">
-    <div class="md:grow-0 justify-items-center ml-8">
-      <KK67Logo :logo-color="LOGO_TYPES.WHITE_LGOO" />
+  <div class="flex sm:flex-row flex-col text-left justify-between footer-row">
+    <KK67Logo :logo-color="LOGO_TYPES.WHITE_LGOO" v-if="showLogo" />
+    <div class="my-2">
+      <p class="text-lg">Sosiale medier</p>
+      <Media class="mt-2 lg:justify-between black-box" />
     </div>
-    <div class="flex md:flex-row flex-col text-center justify-evenly w-3/5">
-      <div class="md:text-left">
-        <p class="text-lg">Sosiale medier</p>
-        <Media class="mt-2" />
-      </div>
-      <div class="md:text-left">
-        <p class="text-lg">Kontakt</p>
-        <p class="text-sm">
-          Styreleder <br />
-          {{ leaderContact.name }} <br />
-          +47 {{ leaderContact.number }} <br />
-          <a class="anchor-hover">{{ leaderContact.email }}</a> <br />
-        </p>
-      </div>
-      <div class="md:text-left">
-        <p class="text-lg">Addresse</p>
-        <p class="text-sm">
-          Mellomveien 5 (Buran) <br />
-          7042 Trondheim
-        </p>
-      </div>
+    <div>
+      <p>Kontakt</p>
+      <p>Styreleder</p>
+      <p>{{ leaderContact.name }}</p>
+      <p>+47 {{ leaderContact.number }}</p>
+      <p>
+        <a class="anchor-hover" :href="`mailto:${leaderContact.email}?subject=Melding til KK67`">{{
+          leaderContact.email
+        }}</a>
+      </p>
     </div>
-    <div class="md:text-left w-1/5 text-center">NEWSLETTER</div>
+    <div>
+      <p>Addresse</p>
+      <p>Mellomveien 5 (Buran)</p>
+      <p>7042 Trondheim</p>
+    </div>
   </div>
 </template>
 
@@ -40,15 +35,17 @@ export default defineComponent({
       LOGO_TYPES: LOGO_TYPES,
       leaderContact: {
         name: 'Jostein Fiveltun',
-        number: '134 45 678',
+        number: '922 86 110',
         email: 'kk67.styreleder@gmail.com',
       },
+      showLogo: true,
     }
   },
-  methods: {
-    phoneView(): boolean {
-      return window.matchMedia('(min-width: 768px)').matches
-    },
+  created() {
+    this.showLogo = window.outerWidth > 1096
+    window.addEventListener('resize', () => {
+      this.showLogo = window.outerWidth > 1096
+    })
   },
   components: {
     KK67Logo,
@@ -56,3 +53,21 @@ export default defineComponent({
   },
 })
 </script>
+<style scoped>
+.black-box {
+  outline: 2px solid black;
+  outline-offset: -2px;
+}
+
+.footer-row > div {
+  @apply my-2 p-4;
+}
+
+.footer-row div p {
+  @apply text-sm;
+}
+
+.footer-row div p:first-child {
+  @apply text-lg;
+}
+</style>

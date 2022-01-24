@@ -20,9 +20,6 @@ export default defineComponent({
       default: LOGO_TYPES.DEFAULT_LOGO,
     },
   },
-  created() {
-    console.log(this.logoColor)
-  },
 })
 </script>
 <style scoped>

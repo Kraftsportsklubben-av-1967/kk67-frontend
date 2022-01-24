@@ -24,8 +24,9 @@ export default defineComponent({
     }
   },
   created() {
+    this.showDekstop = window.outerWidth > 1130
     window.addEventListener('resize', () => {
-      this.showDekstop = window.outerWidth > 1096
+      this.showDekstop = window.outerWidth > 1130
     })
   },
   methods: {
