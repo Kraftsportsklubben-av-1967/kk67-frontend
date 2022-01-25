@@ -25,13 +25,6 @@
           :date="contentCard.date"
           :text="contentCard.text"
         />
-        <!-- <template v-slot:header>
-            <h1>NM utstyrsfritt for ungdom, junior og veteran.</h1>
-          </template>
-          <template v-slot:text> 21-23. april. </template>
-          <template v-slot:body>
-            <p>Her kommer det tekst</p>
-          </template> -->
       </template>
     </Layout>
   </div>
