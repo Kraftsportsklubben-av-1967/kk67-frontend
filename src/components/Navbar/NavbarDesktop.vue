@@ -3,7 +3,7 @@
     <KK67Logo class="my-auto mt-6 ml-2" :logo-color="logoColor" />
     <div class="flex justify-end mt-8">
       <NavbarButton
-        class="my-auto mx-2"
+        class="my-auto mx-2 text-sm"
         v-for="button in buttons"
         :key="button.title"
         :title="button.title"
