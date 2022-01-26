@@ -20,13 +20,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Navbar, { NavbarType } from './Navbar.vue'
+import Navbar from './Navbar/index.vue'
 export default defineComponent({
-  data() {
-    return {
-      NavbarType,
-    }
-  },
   methods: {
     updateHeaderBody(): string {
       return this.showBackground() ? 'background-color: black; height: 35rem ' : 'height: 12.5rem'
@@ -37,7 +32,7 @@ export default defineComponent({
     },
   },
   components: {
-    Navbar,
+    Navbar: Navbar,
   },
 })
 </script>

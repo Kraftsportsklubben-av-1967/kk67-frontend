@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row">
+  <div class="flex flex-">
     <div v-for="img in images" class="pr-2.5">
       <a :href="img.url" target="_blank">
         <img
