@@ -10,7 +10,7 @@
             <p>Følg oss på sosiale medier!</p>
           </div>
           <div class="mt-4">
-            <Media />
+            <Media class="justify-start" />
           </div>
         </div>
       </template>
