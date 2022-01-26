@@ -7,26 +7,21 @@
     <div
       id="header-background-image"
       class="bg-center bg-no-repeat h-full"
-      style="background-image: url(../../assets/header.jpeg)"
+      style="background-image: url(../../assets/logo/header.jpeg)"
       v-if="showBackground()"
     >
-      <Navbar class="h-24" :navbarColor="NavbarType.HOMEPAGE" />
+      <Navbar class="h-24" />
     </div>
     <div v-else>
-      <Navbar class="h-24" :navbarColor="NavbarType.DEFAULT" />
+      <Navbar class="h-24" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Navbar, { NavbarType } from './Navbar.vue'
+import Navbar from './Navbar/index.vue'
 export default defineComponent({
-  data() {
-    return {
-      NavbarType,
-    }
-  },
   methods: {
     updateHeaderBody(): string {
       return this.showBackground() ? 'background-color: black; height: 35rem ' : 'height: 12.5rem'
@@ -37,7 +32,7 @@ export default defineComponent({
     },
   },
   components: {
-    Navbar,
+    Navbar: Navbar,
   },
 })
 </script>

@@ -6,19 +6,11 @@
           <div class="header-red-underline">
             <h1>Nyheter</h1>
           </div>
-          <div class="mt-6 font-bold text-sm w-fit">
+          <div class="mt-6 text-xl w-fit">
             <p>Følg oss på sosiale medier!</p>
           </div>
-          <div class="flex flex-row">
-            <div v-for="img in images">
-              <a :href="img.url">
-                <img
-                  :alt="img.alt"
-                  :src="'@assets/' + img.src"
-                  style="width: 5rem; object-fit: scale-down"
-                />
-              </a>
-            </div>
+          <div class="mt-4">
+            <Media class="justify-start" />
           </div>
         </div>
       </template>
@@ -29,22 +21,13 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import Layout from '../components/Layout.vue'
-
-interface IPicture {
-  src: string
-  alt: string
-  url: string
-}
+import Media from '../components/Media.vue'
 
 export default defineComponent({
   name: 'Home',
-  data() {
-    return {
-      images: [] as IPicture[],
-    }
-  },
   components: {
     Layout,
+    Media,
   },
 })
 </script>

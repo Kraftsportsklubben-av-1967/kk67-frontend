@@ -9,7 +9,7 @@
       <Card class="w-6/12">
         <template v-slot:header>Hvor finner du oss</template>
         <template v-slot:body
-          >Vi holder til i mellomveien 5 på Buran i Trondheim i et tilfluktsrommet under Voldsminde
+          >Vi holder til i mellomveien 5 på Buran i Trondheim i et tilfluktsrom under Voldsminde
           barnehage. <br />
           <br />
 
