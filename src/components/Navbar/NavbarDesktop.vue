@@ -1,9 +1,9 @@
 <template>
-  <nav class="flex">
-    <KK67Logo class="grow-0 my-auto ml-8 mt-6" :logo-color="selectLogo()" />
-    <div class="grow flex justify-end mr-8 mt-8">
+  <div class="flex mx-8 justify-between">
+    <KK67Logo class="my-auto mt-6 ml-2" :logo-color="logoColor" />
+    <div class="flex justify-end mt-8">
       <NavbarButton
-        class="my-auto mx-2"
+        class="my-auto mx-2 text-sm"
         v-for="button in buttons"
         :key="button.title"
         :title="button.title"
@@ -11,16 +11,21 @@
         :path="button.path"
       />
     </div>
-  </nav>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import KK67Logo, { LOGO_TYPES } from './KK67Logo.vue'
+import KK67Logo, { LOGO_TYPES } from '../KK67Logo.vue'
 import NavbarButton, { INavbarButton } from './NavbarButton.vue'
 
 export default defineComponent({
-  name: 'Navbar',
+  name: 'NavbarDesktop',
+  props: {
+    logoColor: {
+      default: LOGO_TYPES.DEFAULT_LOGO,
+    },
+  },
   data() {
     return {
       buttons: [
@@ -54,7 +59,6 @@ export default defineComponent({
           focus: true,
         },
       ] as INavbarButton[],
-      LOGO_TYPES: LOGO_TYPES,
     }
   },
   methods: {
@@ -68,5 +72,3 @@ export default defineComponent({
   components: { NavbarButton, KK67Logo },
 })
 </script>
-
-<style scoped></style>

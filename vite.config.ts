@@ -8,10 +8,13 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      '@': pathResolve('/src'),
-      '@components': pathResolve('/src/components'),
-      '@pages': pathResolve('/src/pages'),
-      '@assets': pathResolve('/assets/'),
+      '@': pathResolve('./src'),
+      '@components': pathResolve('./src/components'),
+      '@pages': pathResolve('./src/pages'),
+      '@assets': pathResolve('./assets/'),
+      '@views': pathResolve('./views/'),
+      '@utils': pathResolve('./utils/'),
+      '@public': pathResolve('./public/'),
     },
   },
 })
