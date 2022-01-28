@@ -16,9 +16,8 @@
       </template>
       <template v-slot:main>
         <content-card
-          class="flex flex-col justify-between mt-4"
-          id="nyheter"
-          v-for="contentCard in data"
+          class="my-10"
+          v-for="contentCard in cards"
           :key="contentCard.title"
           :imgSrc="contentCard.imgSrc"
           :title="contentCard.title"
@@ -45,21 +44,21 @@ export default defineComponent({
   },
   data() {
     return {
-      data: [
+      cards: [
         {
-          imgSrc: '../../assets/logo/knut_test.jpeg',
+          imgSrc: '../../assets/logo/knut_søt.png',
           title: 'Wallahi',
           date: '21-23. april.',
           text: 'Se knut spise pølse',
         },
         {
-          imgSrc: '../../assets/logo/knut_test.jpeg',
+          imgSrc: '../../assets/logo/knut_søt.png',
           title: 'Wallahi',
           date: '21-23. april.',
           text: 'Se knut spise pølse',
         },
         {
-          imgSrc: '../../assets/logo/knut_test.jpeg',
+          imgSrc: '../../assets/logo/knut_søt.png',
           title: 'Wallahi',
           date: '21-23. april.',
           text: 'Se knut spise pølse',
