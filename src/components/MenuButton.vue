@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <router-link :to="path" class="hover:text-gray-500">
+  <div class="router-link">
+    <router-link :to="path">
       <p class="font-medium text-md pb-4">
         <span v-if="focus" class="text-red-600 pr-2">&#11044;</span>
         {{ title }}
@@ -35,3 +35,12 @@ export default defineComponent({
   },
 })
 </script>
+<style scoped lang="scss">
+.router-link:hover {
+  @apply text-gray-500;
+
+  span {
+    @apply text-red-500;
+  }
+}
+</style>

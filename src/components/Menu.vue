@@ -13,7 +13,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import MenuButton, { IMenuButton } from './MenuButton.vue'
-import NavbarButton from './NavbarButton.vue'
+import NavbarButton from './Navbar/NavbarButton.vue'
 
 export default defineComponent({
   name: 'Menu',
@@ -55,25 +55,21 @@ export default defineComponent({
   },
 
   methods: {
-    selectFocus(buttons: any) {
-      var url = window.location.href
+    selectFocus() {
+      const URL = window.location.href
 
-      buttons.forEach((_element: any) => {
-        if (url.endsWith(_element.path)) {
-          _element.focus = true
-        } else {
-          _element.focus = false
-        }
+      this.buttons.forEach((button) => {
+        button.focus = URL.endsWith(button.path)
       })
     },
   },
   watch: {
-    $route(to, from) {
-      this.selectFocus(this.buttons)
+    $route(_to, _from) {
+      this.selectFocus()
     },
   },
-  created: function () {
-    this.selectFocus(this.buttons)
+  created() {
+    this.selectFocus()
   },
 
   components: { MenuButton, NavbarButton },
