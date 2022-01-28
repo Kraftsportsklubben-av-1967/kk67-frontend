@@ -7,6 +7,12 @@ body {
     'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-y: hidden;
+}
+
+html {
+  overflow: scroll;
+  overflow-x: hidden;
 }
 
 .header-red-underline {
@@ -15,4 +21,13 @@ body {
 
 .anchor-hover:hover {
   @apply text-gray-400 duration-300 cursor-pointer;
+}
+
+::-webkit-scrollbar {
+  width: 0; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
+}
+/* Optional: show position indicator in red */
+::-webkit-scrollbar-thumb {
+  background: #ff0000;
 }
