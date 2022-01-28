@@ -1,5 +1,5 @@
 <template>
-  <div class="flex mx-8 justify-between">
+  <div class="flex mx-10 justify-between">
     <KK67Logo class="my-auto mt-6 ml-2" :logo-color="logoColor" />
     <div class="flex justify-end mt-8">
       <NavbarButton
