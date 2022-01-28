@@ -4,7 +4,8 @@
       @click="goToHomepage()"
       :src="selectLogo()"
       alt="kk67-logo"
-      :style="`width: ${imgWidth}%; margin-top: 2px; image-rendering: crisp-edges;`"
+      class="block mx-auto"
+      :style="`margin-top: 2px; image-rendering: crisp-edges;`"
     />
   </div>
 </template>
@@ -18,16 +19,12 @@ export enum LOGO_TYPES {
   DEFAULT_LOGO = 'kk-logo.png',
 }
 
-const ASSETS_URL = '../../assets/'
+const ASSETS_URL = '../../assets/logo/'
 export default defineComponent({
   name: 'KK67Logo',
   props: {
     logoColor: {
       type: String as PropType<LOGO_TYPES>,
-      required: true,
-    },
-    imgWidth: {
-      type: Number,
       required: true,
     },
   },

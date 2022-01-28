@@ -1,7 +1,7 @@
 <template>
-  <div class="text-sm font-bold p-4">
+  <div class="font-bold p-4">
     <router-link
-      v-if="invert()"
+      v-if="invert"
       class="router-link"
       :class="
         focus
@@ -48,9 +48,16 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    overrideInvert: {
+      type: Boolean,
+      default: false,
+    },
   },
-  methods: {
+  computed: {
     invert(): boolean {
+      if (this.overrideInvert) {
+        return true
+      }
       if (this.$route.name === 'Home') {
         return true
       }
