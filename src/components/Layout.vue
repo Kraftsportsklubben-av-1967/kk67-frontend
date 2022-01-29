@@ -1,7 +1,7 @@
 <template>
-  <div class="flex-grow flex lg:flex-row flex-col lg:justify-between layout-container">
-    <div class="lg:w-2/6 w-full"><slot name="sidebar"></slot></div>
-    <div class="lg:w-4/6 lg:pl-6 w-full lg:mt-0 mt-6"><slot name="main"></slot></div>
+  <div class="flex flex-col lg:flex-row lg:justify-between mx-auto md:w-4/5 sm:w-3/4 xs:w-5/6">
+    <aside class="lg:w-2/6 w-full"><slot name="sidebar"></slot></aside>
+    <main class="lg:w-4/6 lg:pl-6 w-full lg:mt-0 mt-6"><slot name="main"></slot></main>
   </div>
 </template>
 
