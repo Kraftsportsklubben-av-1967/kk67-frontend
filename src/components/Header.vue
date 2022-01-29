@@ -1,5 +1,5 @@
 <template>
-  <div
+  <header
     class="w-full mb-12"
     :class="showBackground() ? 'h-40' : 'h-10'"
     :style="`${updateHeaderBody()}`"
@@ -15,7 +15,7 @@
     <div v-else>
       <Navbar class="h-24" />
     </div>
-  </div>
+  </header>
 </template>
 
 <script lang="ts">

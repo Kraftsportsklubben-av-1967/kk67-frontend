@@ -40,12 +40,28 @@ const routes = [
       },
     ],
   },
-  { path: '/timetable', name: 'Timetable', component: () => import('../views/About/index.vue') },
-  { path: '/records', name: 'Records', component: () => import('../views/About/index.vue') },
-  { path: '/pictures', name: 'Pictures', component: () => import('../views/About/index.vue') },
-  { path: '/sponsor', name: 'Sponsor', component: () => import('../views/About/index.vue') },
-  { path: '/meets', name: 'Meets', component: () => import('../views/About/index.vue') },
-  { path: '/join', name: 'Join', component: () => import('../views/About/index.vue') },
+  { path: '/timetable', name: 'Timetable', component: () => import('../views/About/Comitee.vue') },
+  { path: '/records', name: 'Records', component: () => import('../views/About/Comitee.vue') },
+  { path: '/pictures', name: 'Pictures', component: () => import('../views/About/Comitee.vue') },
+  { path: '/sponsor', name: 'Sponsor', component: () => import('../views/About/Comitee.vue') },
+  {
+    path: '/meets',
+    name: 'Meets',
+    component: () => import('../views/Meets/index.vue'),
+    children: [
+      {
+        path: '',
+        name: 'UpcommingMeets',
+        component: () => import('../views/Meets/UpcommingMeets.vue'),
+      },
+      {
+        path: 'previousMeets',
+        name: 'PreviousMeets',
+        component: () => import('../views/Meets/PreviousMeets.vue'),
+      },
+    ],
+  },
+  { path: '/join', name: 'Join', component: () => import('../views/About/Comitee.vue') },
 ]
 // ! TODO update paths
 

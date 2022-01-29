@@ -32,6 +32,6 @@ html {
   background: #ff0000;
 }
 
-.header-red-underline {
-  @apply font-bold text-6xl border-b-8 border-red-700 w-fit pr-6;
+.anchor-link {
+  @apply hover:opacity-80 hover:underline text-red-600;
 }
