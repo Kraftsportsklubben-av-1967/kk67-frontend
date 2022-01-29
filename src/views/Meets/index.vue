@@ -1,6 +1,15 @@
 <template>
   <Layout>
-    <template v-slot:sidebar></template>
+    <template v-slot:sidebar>
+      <div class="flex flex-col">
+        <div class="header-red-underline">
+          <h1>Stevner</h1>
+        </div>
+        <div class="mt-8">
+          <Menu :buttons="menuButtons" current-path="/meets" />
+        </div>
+      </div>
+    </template>
     <template v-slot:main>
       <div class="flex flex-wrap w-full justify-between flex-col">
         <router-view />
@@ -9,24 +18,33 @@
   </Layout>
 </template>
 <script lang="ts">
-import Layout from '@/components/Layout.vue'
+import Layout from '@components/Layout.vue'
 import { defineComponent } from 'vue'
-import { IMeet, IUpcommingMeet, getUpcommingMeets } from './loadData'
-import Card from '@/components/Card/Card.vue'
+import Card from '@components/Card/Card.vue'
+import Menu from '@components/Menu/Menu.vue'
 
 export default defineComponent({
   name: 'Meets',
   components: {
     Layout,
     Card,
+    Menu,
   },
-  async created() {
-    this.upcommingMeets = await getUpcommingMeets()
-  },
+
   data() {
     return {
-      previousMeets: [] as IMeet[],
-      upcommingMeets: [] as IUpcommingMeet[],
+      menuButtons: [
+        {
+          title: 'Kommende stevner',
+          path: '/',
+          focus: false,
+        },
+        {
+          title: 'Tidligere stevner',
+          path: '/previousMeets',
+          focus: false,
+        },
+      ],
     }
   },
 })
