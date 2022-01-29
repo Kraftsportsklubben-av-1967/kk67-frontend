@@ -59,7 +59,8 @@ yarn global add local-cors-proxy
 9. set up env variables in a `.env` file (not to be pushed to repo). Ask **Marius** for key.
 
 ```sh
-VITE_GOOGLE_API_KEY=<key>
+VITE_GOOGLE_API_KEY = "<key>"
+VITE_PROXY_PORT= "<unused_port_number>"
 ```
 
 10. Start dev mode
@@ -68,6 +69,15 @@ VITE_GOOGLE_API_KEY=<key>
 yarn dev
 ```
 
+11. Optionally you can host it to your local network such as this.
+
+```sh
+yarn dev:host
+```
+
+> All yarn scrips can be found in **package.json**
+
+<br />
 Open http://localhost:3000 on your favourite browser.
 
 Cheers, hopefully!
