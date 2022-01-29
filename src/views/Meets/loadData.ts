@@ -7,33 +7,46 @@ export interface IMeet {
   link: string
   date: Date
 }
-
+export enum MeetType {
+  UPCOMING,
+  PREVIOUS,
+}
 /**
  * Cache meet data into session storage. .
  */
-export async function cacheMeets(
-  sessionKey: string,
-  previousMeet: boolean,
-): Promise<IMeet[] | IUpcommingMeet[]> {
+export async function cacheMeets<T>(sessionKey: string, meetType: MeetType): Promise<T> {
   if (window.sessionStorage.getItem(sessionKey)) {
-    if (previousMeet) {
-      return JSON.parse(window.sessionStorage.getItem(sessionKey)!, (key, value) => {
-        return key === 'date' ? new Date(value) : value
-      }) as IMeet[]
+    switch (meetType) {
+      case MeetType.PREVIOUS:
+        return loadPreviousMeets(sessionKey) as T
+      case MeetType.UPCOMING:
+        return loadUpcommingMeets(sessionKey) as T
     }
-    return JSON.parse(window.sessionStorage.getItem(sessionKey)!, (key, value) => {
-      return key === ('startDate' || 'endDate') ? new Date(value) : value
-    }) as IUpcommingMeet[]
   }
 
-  let meets: IMeet[] | IUpcommingMeet[] = []
-  if (previousMeet) {
-    meets = await getPreviousMeets()
-  } else {
-    meets = await getUpcommingMeets()
+  let meets
+  switch (meetType) {
+    case MeetType.PREVIOUS:
+      meets = await getPreviousMeets()
+      break
+    case MeetType.UPCOMING:
+      meets = await getUpcommingMeets()
+      break
   }
   window.sessionStorage.setItem(sessionKey, JSON.stringify(meets))
-  return meets
+  return meets as unknown as T
+}
+
+function loadPreviousMeets(sessionKey: string) {
+  return JSON.parse(window.sessionStorage.getItem(sessionKey)!, (key, value) => {
+    return key === 'date' ? new Date(value) : value
+  })
+}
+
+function loadUpcommingMeets(sessionKey: string) {
+  return JSON.parse(window.sessionStorage.getItem(sessionKey)!, (key, value) => {
+    return key === ('startDate' || 'endDate') ? new Date(value) : value
+  })
 }
 
 async function fetchXML(endpoint: string): Promise<Document> {

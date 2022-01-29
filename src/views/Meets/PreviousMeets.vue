@@ -16,8 +16,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { IMeet, cacheMeets } from './loadData'
-import Card from '@/components/Card/Card.vue'
+import { IMeet, cacheMeets, MeetType } from './loadData'
+import Card from '@components/Card/Card.vue'
 
 export default defineComponent({
   name: 'PreviousMeets',
@@ -27,7 +27,7 @@ export default defineComponent({
     }
   },
   async created() {
-    this.previousMeets = (await cacheMeets('previousMeets', false)) as IMeet[]
+    this.previousMeets = await cacheMeets<IMeet[]>('previousMeets', MeetType.PREVIOUS)
   },
   components: {
     Card: Card,
