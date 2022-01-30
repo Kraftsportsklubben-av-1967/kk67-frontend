@@ -48,7 +48,6 @@ export default defineComponent({
 <style scoped>
 img {
   transition-duration: 0.4s;
-  filter: invert(100);
 }
 
 img:hover {

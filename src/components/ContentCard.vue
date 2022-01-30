@@ -1,5 +1,5 @@
 <template>
-  <div class="border rounded-xl shadow-lg p-8 block wid">
+  <div class="border rounded-xl shadow-lg p-8 block wid max-w-max" id="maindiv">
     <div class="text-3xl font-extrabold">
       <h1>{{ title }}</h1>
     </div>
@@ -52,12 +52,15 @@ export default defineComponent({
 </script>
 
 <style scoped>
+#maindiv {
+  width: 95vw;
+}
 .imgfit {
   height: 400px;
   width: 100%;
   object-fit: cover;
   border-radius: 0.75rem;
-  object-position: 10% 17%;
+  /* object-position: 10% 17%; */
 }
 .clockfit {
   height: 2%;

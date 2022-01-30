@@ -3,7 +3,7 @@
     <KK67Logo :logo-color="LOGO_TYPES.WHITE_LGOO" v-if="showLogo" />
     <div class="my-2">
       <p class="text-lg">Sosiale medier</p>
-      <Media class="mt-2 lg:justify-between black-box" />
+      <Media class="mt-2 lg:justify-between filter invert" />
     </div>
     <div>
       <p>Kontakt</p>
