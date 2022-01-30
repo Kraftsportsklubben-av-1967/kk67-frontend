@@ -40,7 +40,7 @@ const routes = [
       },
     ],
   },
-  { path: '/timetable', name: 'Timetable', component: () => import('../views/About/Comitee.vue') },
+  { path: '/schedule', name: 'Simetable', component: () => import('../views/Schedule.vue') },
   { path: '/records', name: 'Records', component: () => import('../views/About/Comitee.vue') },
   { path: '/pictures', name: 'Pictures', component: () => import('../views/About/Comitee.vue') },
   { path: '/sponsor', name: 'Sponsor', component: () => import('../views/About/Comitee.vue') },

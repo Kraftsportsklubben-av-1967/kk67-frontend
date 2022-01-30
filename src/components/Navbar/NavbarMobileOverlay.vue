@@ -14,7 +14,7 @@
       </div>
       <div>
         <NavbarButton
-          v-for="button in buttons"
+          v-for="button in navbarButtons"
           class="text-xl mt-4 opacity-100"
           :key="button.title"
           :path="button.path"
@@ -27,45 +27,16 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import NavbarButton, { INavbarButton } from '@components/Navbar/NavbarButton.vue'
 
 export default defineComponent({
   name: 'NavbarMobileOverlay',
-  data() {
-    return {
-      buttons: [
-        {
-          title: 'OM OSS',
-          path: '/about',
-        },
-        {
-          title: 'TIMEPLAN',
-          path: '/timetable',
-        },
-        {
-          title: 'REKORDER',
-          path: '/records',
-        },
-        {
-          title: 'BILDER',
-          path: '/pictures',
-        },
-        {
-          title: 'STEVNER',
-          path: '/meets',
-        },
-        {
-          title: 'SPONSOR',
-          path: '/sponsor',
-        },
-        {
-          title: 'BLI MEDLEM',
-          path: '/join',
-          focus: true,
-        },
-      ] as INavbarButton[],
-    }
+  props: {
+    navbarButtons: {
+      type: [] as PropType<INavbarButton[]>,
+      required: true,
+    },
   },
   components: { NavbarButton },
 })

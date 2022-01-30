@@ -1,5 +1,5 @@
 <template>
-  <NavbarMobileOverlay v-if="toggled" @click="toggleOverlay" />
+  <NavbarMobileOverlay v-if="toggled" @click="toggleOverlay" :navbar-buttons="navbarButtons" />
   <div class="flex justify-between">
     <KK67Logo :logo-color="logoColor" class="my-auto ml-8 mt-6" />
     <div class="mr-8 mt-8 cursor-pointer hover:opacity-70 duration-500" @click="toggleOverlay">
@@ -12,9 +12,10 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
 import KK67Logo, { LOGO_TYPES } from '@components/KK67Logo.vue'
 import NavbarMobileOverlay from '@components/Navbar/NavbarMobileOverlay.vue'
+import { INavbarButton } from './NavbarButton.vue'
 
 export default defineComponent({
   name: 'NavbarMobile',
@@ -23,6 +24,10 @@ export default defineComponent({
   props: {
     logoColor: {
       default: LOGO_TYPES.DEFAULT_LOGO,
+    },
+    navbarButtons: {
+      type: [] as PropType<INavbarButton[]>,
+      required: true,
     },
   },
   data() {
