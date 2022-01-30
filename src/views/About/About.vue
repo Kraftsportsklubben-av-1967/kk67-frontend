@@ -2,39 +2,30 @@
   <div class="flex w-full flex-col">
     <div>
       <Card>
+        <template v-slot:header>
+          <span v-html="about.content.aboutKK.heading"></span>
+        </template>
         <template v-slot:body>
-          <p>
-            Kraftsportsklubben av 1967 (KK-67) er en av de eldste styrkeløftklubbene i Norge.
-            Klubben har fostret flere landslagsutøvere, norgesrekordholdere, europarekordholdere og
-            verdensrekordholdere. Vi som trener på KK-67 er stolte av å være en del av et
-            kjempeflott treningsmiljø for folk i alle aldre og nivå.',
-          </p>
+          <span v-html="about.content.aboutKK.body"></span>
         </template>
       </Card>
     </div>
     <div class="flex flex-row justify-between mt-4">
       <Card class="w-2/5">
         <template v-slot:header>
-          <h1>Åpningstider</h1>
+          <span v-html="about.content.openingTime.heading"></span>
         </template>
         <template v-slot:body>
-          <p>
-            Det er stort sett folk på trening hver dag! <br />
-            Kjernetiden er mandag, onsdag og fredag mellom kl. 17:00 - 20:00.
-          </p>
+          <span v-html="about.content.openingTime.body"></span>
         </template>
       </Card>
       <Card class="w-7/12">
         <template v-slot:header>
-          <h1>Grasrotandelen</h1>
+          <span v-html="about.content.lotterySupport.heading"></span>
         </template>
-        <template v-slot:body
-          ><p>
-            KK-67 kan motta tilskud fra grasrotandelen! Det betyr at 5% av det du betaler når du
-            tipper hos <i>norsk tipping</i> går til klubben! For å få til dette må du oppgi klubbens
-            organisasjonsnummer neste gang du tipper <br /><strong>996 808 378</strong>
-          </p></template
-        >
+        <template v-slot:body>
+          <span v-html="about.content.lotterySupport.body"></span>
+          </template>
       </Card>
     </div>
   </div>
@@ -42,10 +33,16 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import Card from '@components/Card.vue'
+import { about } from '../../../assets/aboutUsInfo'
 
 export default defineComponent({
   components: {
     Card,
+  },
+  data() {
+    return {
+      about,
+    }
   },
 })
 </script>

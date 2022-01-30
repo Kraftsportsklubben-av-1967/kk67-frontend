@@ -7,23 +7,19 @@
     />
     <div class="mt-8 flex flex-row justify-between">
       <Card class="w-6/12">
-        <template v-slot:header>Hvor finner du oss</template>
-        <template v-slot:body
-          >Vi holder til i mellomveien 5 på Buran i Trondheim i et tilfluktsrom under Voldsminde
-          barnehage. <br />
-          <br />
-
-          For å finne inngangen til KK går du inn porten til barnehagen til motsatt ende der er det
-          en hvit dør med et lite KK-67 skilt til venstre for døren. Her kan du bruke nøkkelbrikke
-          for å låse deg inn.</template
-        >
+        <template v-slot:header>
+          <span v-html="location.content.location.heading"></span>
+        </template>
+        <template v-slot:body>
+          <span v-html="location.content.location.body"></span>
+        </template>
       </Card>
       <Card class="w-5/12 h-fit">
-        <template v-slot:header>Postaddresse</template>
+        <template v-slot:header>
+          <span v-html="location.content.postalAdress.heading"></span>
+        </template>
         <template v-slot:body>
-          KK-67 <br />
-          Postboks 1072 <br />
-          7042 TRONDHEIM <br />
+          <span v-html="location.content.postalAdress.body"></span>
         </template>
       </Card>
     </div>
@@ -37,6 +33,7 @@ import { getEnvVar } from '../../utils/getEnvVar'
 import { initMap } from '../../utils/initMap'
 import Card from '@components/Card.vue'
 import GMaps = google.maps
+import { location } from '../../../assets/aboutUsInfo'
 
 const KK67_LOCATION: GMaps.LatLngLiteral = {
   lat: 63.437656,
@@ -59,6 +56,11 @@ export default defineComponent({
   },
   components: {
     Card,
+  },
+  data() {
+    return {
+      location,
+    }
   },
 })
 </script>
