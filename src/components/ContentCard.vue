@@ -1,24 +1,31 @@
 <template>
-  <div class="border rounded-xl shadow-lg p-8 block wid max-w-max" id="maindiv">
-    <div class="text-3xl font-extrabold">
+  <article class="border rounded-xl shadow-lg flex flex-col">
+    <div class="text-3xl font-extrabold mt-8">
       <h1>{{ title }}</h1>
     </div>
-    <div class="text-lg font-bold text-zinc-800 mt-2">
-      <div class="flex flex-row w-full">
-        <img src="../../assets/logo/clock.png" class="clockfit" />
+    <div class="text-lg font-bold my-2">
+      <div class="flex flex-row">
+        <img
+          src="../../assets/logo/clock.png"
+          class="clockfit"
+          style="width: fit-content"
+          alt="clock_image"
+        />
         <p class="mb-auto">{{ date }}</p>
       </div>
     </div>
-    <div class="img mt-2">
-      <img :src="imgSrc" alt="" class="imgfit" />
-    </div>
+    <img :src="imgSrc" alt="card_image" class="w-full my-2" />
     <div class="text-md font-semibold text-left mt-2">
       <p>{{ text }}</p>
     </div>
-    <div class="rounded-full text-white w-32 shadow-lg mt-4">
-      <button class="button">LES MER</button>
+    <div>
+      <button
+        class="rounded-2xl p-1 duration-500 font-bold text-white w-32 shadow-lg mt-4 text-lg bg-black hover:bg-red-600 mb-4"
+      >
+        LES MER
+      </button>
     </div>
-  </div>
+  </article>
 </template>
 
 <script lang="ts">
@@ -52,15 +59,8 @@ export default defineComponent({
 </script>
 
 <style scoped>
-#maindiv {
-  width: 95vw;
-}
-.imgfit {
-  height: 400px;
-  width: 100%;
-  object-fit: cover;
-  border-radius: 0.75rem;
-  /* object-position: 10% 17%; */
+article > div {
+  @apply px-4 lg:px-8 w-full;
 }
 .clockfit {
   height: 2%;
@@ -70,18 +70,5 @@ export default defineComponent({
   max-height: 6rem;
   min-width: 1.5rem;
   max-width: 1.5rem;
-}
-.button {
-  transition-duration: 0.4s;
-  height: 40px;
-  width: 100%;
-  font-weight: 800;
-  font-size: large;
-  background-color: black;
-  border-radius: 9999px;
-}
-.button:hover {
-  transition-duration: 0.4s;
-  @apply bg-transparent text-white hover:bg-red-600 hover:text-black;
 }
 </style>

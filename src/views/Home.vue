@@ -15,11 +15,11 @@
         </div>
       </template>
       <template v-slot:main>
-        <content-card
+        <ContentCard
           class="my-10"
           v-for="contentCard in cards"
           :key="contentCard.title"
-          :imgSrc="contentCard.imgSrc"
+          :imgSrc="resolvePath(contentCard.imgSrc)"
           :title="contentCard.title"
           :date="contentCard.date"
           :text="contentCard.text"
@@ -35,6 +35,8 @@ import Layout from '../components/Layout.vue'
 import Media from '../components/Media.vue'
 import ContentCard from '../components/ContentCard.vue'
 
+const ASSETS_URL = '../../assets/logo/'
+
 export default defineComponent({
   name: 'Home',
   components: {
@@ -46,25 +48,30 @@ export default defineComponent({
     return {
       cards: [
         {
-          imgSrc: '../../assets/logo/knut_søt.png',
+          imgSrc: 'knut_søt.png',
           title: 'Wallahi',
           date: '21-23. april.',
           text: 'Se knut spise pølse',
         },
         {
-          imgSrc: '../../assets/logo/knut_søt.png',
+          imgSrc: 'knut_søt.png',
           title: 'Wallahi',
           date: '21-23. april.',
           text: 'Se knut spise pølse',
         },
         {
-          imgSrc: '../../assets/logo/knut_søt.png',
+          imgSrc: 'knut_søt.png',
           title: 'Wallahi',
           date: '21-23. april.',
           text: 'Se knut spise pølse',
         },
       ],
     }
+  },
+  methods: {
+    resolvePath(path: string) {
+      return ASSETS_URL + path
+    },
   },
 })
 </script>
