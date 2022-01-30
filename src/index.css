@@ -31,3 +31,7 @@ html {
 ::-webkit-scrollbar-thumb {
   background: #ff0000;
 }
+
+.anchor-link {
+  @apply hover:opacity-80 hover:underline text-red-600;
+}

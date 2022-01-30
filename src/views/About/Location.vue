@@ -35,7 +35,7 @@ import { defineComponent, onMounted, ref } from 'vue'
 import { Loader } from '@googlemaps/js-api-loader'
 import { getEnvVar } from '../../utils/getEnvVar'
 import { initMap } from '../../utils/initMap'
-import Card from '@components/Card.vue'
+import Card from '@components/Card/Card.vue'
 import GMaps = google.maps
 
 const KK67_LOCATION: GMaps.LatLngLiteral = {

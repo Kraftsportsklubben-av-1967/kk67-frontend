@@ -41,7 +41,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Card from '@components/Card.vue'
+import Card from '@components/Card/Card.vue'
 
 export default defineComponent({
   components: {
