@@ -14,20 +14,59 @@
           </div>
         </div>
       </template>
-      <template v-slot:main>**HER SKAL KORT LIGGE**</template>
+      <template v-slot:main>
+        <content-card
+          class="my-10"
+          v-for="contentCard in cards"
+          :key="contentCard.title"
+          :imgSrc="contentCard.imgSrc"
+          :title="contentCard.title"
+          :date="contentCard.date"
+          :text="contentCard.text"
+        />
+      </template>
     </Layout>
   </div>
 </template>
+
 <script lang="ts">
 import { defineComponent } from 'vue'
 import Layout from '../components/Layout.vue'
 import Media from '../components/Media.vue'
+import ContentCard from '../components/ContentCard.vue'
 
 export default defineComponent({
   name: 'Home',
   components: {
     Layout,
     Media,
+    ContentCard,
+  },
+  data() {
+    return {
+      cards: [
+        {
+          imgSrc: '../../assets/logo/knut_søt.png',
+          title: 'Wallahi',
+          date: '21-23. april.',
+          text: 'Se knut spise pølse',
+        },
+        {
+          imgSrc: '../../assets/logo/knut_søt.png',
+          title: 'Wallahi',
+          date: '21-23. april.',
+          text: 'Se knut spise pølse',
+        },
+        {
+          imgSrc: '../../assets/logo/knut_søt.png',
+          title: 'Wallahi',
+          date: '21-23. april.',
+          text: 'Se knut spise pølse',
+        },
+      ],
+    }
   },
 })
 </script>
+
+<style scoped></style>
