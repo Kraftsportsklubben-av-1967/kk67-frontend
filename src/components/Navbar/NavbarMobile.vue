@@ -1,8 +1,8 @@
 <template>
   <NavbarMobileOverlay v-if="toggled" @click="toggleOverlay" :navbar-buttons="navbarButtons" />
-  <div class="flex justify-between">
-    <KK67Logo :logo-color="logoColor" class="my-auto ml-8 mt-6" />
-    <div class="mr-8 mt-8 cursor-pointer hover:opacity-70 duration-500" @click="toggleOverlay">
+  <div class="flex justify-between mx-10 h-fit mt-6">
+    <KK67Logo :logo-color="logoColor" class="my-auto" />
+    <div class="block my-auto cursor-pointer hover:opacity-70 duration-500" @click="toggleOverlay">
       <div v-if="!toggled">
         <div class="hamburger-line" :class="invert ? 'bg-black' : 'bg-white'"></div>
         <div class="hamburger-line" :class="invert ? 'bg-black' : 'bg-white'"></div>

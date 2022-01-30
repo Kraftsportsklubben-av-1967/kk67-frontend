@@ -1,9 +1,7 @@
 <template>
-  <nav v-if="showDekstop" aria-label="desktop-nav">
-    <Navbar-desktop :logo-color="selectLogo()" :navbar-buttons="buttons" />
-  </nav>
-  <nav v-else aria-label="mobile-nav">
-    <Navbar-mobile :logo-color="selectLogo()" :navbar-buttons="buttons" />
+  <nav class="h-fit">
+    <Navbar-desktop v-if="showDekstop" :logo-color="selectLogo()" :navbar-buttons="buttons" />
+    <Navbar-mobile v-else :logo-color="selectLogo()" :navbar-buttons="buttons" />
   </nav>
 </template>
 <script lang="ts">

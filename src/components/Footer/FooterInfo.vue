@@ -53,21 +53,20 @@ export default defineComponent({
   },
 })
 </script>
-<style scoped>
-.black-box {
-  outline: 2px solid black;
-  outline-offset: -2px;
-}
+<style scoped lang="scss">
+.footer-row {
+  @apply py-4;
 
-.footer-row > div {
-  @apply my-2 p-4;
-}
+  > div {
+    @apply my-2 px-4;
+  }
 
-.footer-row div p {
-  @apply text-sm;
-}
+  div p {
+    @apply text-sm;
+  }
 
-.footer-row div p:first-child {
-  @apply text-lg;
+  div p:first-child {
+    @apply text-lg;
+  }
 }
 </style>

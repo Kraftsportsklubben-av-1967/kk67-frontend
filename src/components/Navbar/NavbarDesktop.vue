@@ -1,7 +1,7 @@
 <template>
   <div class="flex mx-10 justify-between">
-    <KK67Logo class="my-auto mt-6 ml-2" :logo-color="logoColor" />
-    <div class="flex justify-end mt-8">
+    <KK67Logo class="my-auto ml-2" :logo-color="logoColor" />
+    <div class="flex justify-end my-auto">
       <NavbarButton
         class="my-auto mx-2 text-sm"
         v-for="button in navbarButtons"
