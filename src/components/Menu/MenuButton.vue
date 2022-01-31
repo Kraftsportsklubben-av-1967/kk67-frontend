@@ -1,8 +1,8 @@
 <template>
-  <div class="router-link">
-    <router-link :to="path">
+  <div class="router-link duration-500 ease-in-out">
+    <router-link :to="path" @mouseenter="hover = true" @mouseleave="hover = false">
       <p class="font-medium text-md pb-4">
-        <span v-if="focus" class="text-red-600 pr-2">&#11044;</span>
+        <span v-if="focus || hover" class="text-red-600 pr-2">&#11044;</span>
         {{ title }}
       </p>
     </router-link>
@@ -32,6 +32,11 @@ export default defineComponent({
       type: Boolean,
       required: true,
     },
+  },
+  data() {
+    return {
+      hover: false,
+    }
   },
 })
 </script>
