@@ -1,10 +1,6 @@
 <template>
-  <Loader v-if="loading">
-    <template>
-      <div class="w-screen"></div>
-    </template>
-  </Loader>
-  <Card v-for="meet in upcommingMeets" class="mb-8 h-fit">
+  <Loader v-if="loading" class="my-auto" />
+  <Card v-else v-for="meet in upcommingMeets" class="mb-8 h-fit">
     <template v-slot:header>
       <h1>{{ meet.title }}</h1>
     </template>
@@ -51,9 +47,9 @@ export default defineComponent({
     Card,
     Loader,
   },
-  methods: {
-    loading() {
-      return this.upcommingMeets.length === 0 // or something like this
+  computed: {
+    loading(): boolean {
+      return this.upcommingMeets.length === 0
     },
   },
 })

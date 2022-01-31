@@ -1,13 +1,12 @@
 <template>
   <div
-    class="border-solid border-t-red-600 border-gray-400 rounded-full w-96 h-96 flex justify-center"
-    id="loader"
-  ></div>
+    class="border-solid border-t-red-600 border-gray-200 rounded-full w-48 h-48 flex justify-center loader"
+  />
 </template>
 
 <style scoped>
-#loader {
-  border-width: 55px;
+.loader {
+  border-width: 7.5px;
   animation: spin 1.5s linear infinite;
   margin: auto;
 }
