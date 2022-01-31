@@ -32,8 +32,8 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import Layout from '../components/Layout.vue'
-import Media from '../components/Media.vue'
-import ContentCard from '../components/ContentCard.vue'
+import Media from '../components/Media/Media.vue'
+import ContentCard from '../components/Card/ContentCard.vue'
 
 const ASSETS_URL = '../../assets/logo/'
 
