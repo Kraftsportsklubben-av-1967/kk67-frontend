@@ -7,6 +7,7 @@
         </div>
         <div class="mt-8">
           <Menu :buttons="menuButtons" current-path="/meets" />
+          <News />
         </div>
       </div>
     </template>
@@ -22,6 +23,8 @@ import Layout from '@components/Layout.vue'
 import { defineComponent } from 'vue'
 import Card from '@components/Card/Card.vue'
 import Menu from '@components/Menu/Menu.vue'
+import News from '@components/Media/News.vue'
+import { IMenuButton } from '@components/Menu/MenuButton.vue'
 
 export default defineComponent({
   name: 'Meets',
@@ -29,6 +32,7 @@ export default defineComponent({
     Layout,
     Card,
     Menu,
+    News,
   },
 
   data() {
@@ -44,7 +48,7 @@ export default defineComponent({
           path: '/previousMeets',
           focus: false,
         },
-      ],
+      ] as IMenuButton[],
     }
   },
 })

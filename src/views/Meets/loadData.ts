@@ -1,5 +1,5 @@
 import { removeUndefinedFromArray } from '../../utils/removeUndefinedFromArray'
-import { UPCOMING_MEETS, PREVIOUS_MEETS } from './constants'
+import { UPCOMING_MEETS, PREVIOUS_MEETS, NEWS } from './constants'
 
 export interface IMeet {
   title: string
@@ -49,16 +49,32 @@ function loadUpcommingMeets(sessionKey: string) {
   })
 }
 
-async function fetchXML(endpoint: string): Promise<Document> {
+enum DOMString {
+  TEXT_HTML = 'text/html',
+  TEXT_XML = 'text/xml',
+  APP_XML = 'application/xml',
+  APP_XHTML = 'application/xhtml+xml',
+  IMAGE = 'image/svg+xml',
+}
+
+async function fetchDocument(endpoint: string, docType: DOMString): Promise<Document> {
   return fetch(endpoint, {
     method: 'GET',
   })
     .then((res) => res.text())
-    .then((str) => new window.DOMParser().parseFromString(str, 'text/xml'))
+    .then((str) =>
+      new window.DOMParser().parseFromString(str, docType as unknown as DOMParserSupportedType),
+    )
+}
+
+export async function getNews(): Promise<undefined> {
+  const news = await fetchDocument(NEWS, DOMString.TEXT_HTML)
+  console.log(news)
+  return undefined
 }
 
 export async function getPreviousMeets(): Promise<IMeet[]> {
-  const meetData = await fetchXML(PREVIOUS_MEETS)
+  const meetData = await fetchDocument(PREVIOUS_MEETS, DOMString.APP_XML)
 
   const channel = meetData.querySelector('channel')
   if (!channel) {
