@@ -1,4 +1,9 @@
 <template>
+  <Loader v-if="loading">
+    <template>
+      <div class="w-screen"></div>
+    </template>
+  </Loader>
   <Card v-for="meet in upcommingMeets" class="mb-8 h-fit">
     <template v-slot:header>
       <h1>{{ meet.title }}</h1>
@@ -30,6 +35,7 @@
 import { defineComponent } from 'vue'
 import { IUpcommingMeet, cacheMeets, MeetType } from './loadData'
 import Card from '@components/Card/Card.vue'
+import Loader from '@components/Loader.vue'
 
 export default defineComponent({
   name: 'PreviousMeets',
@@ -43,6 +49,12 @@ export default defineComponent({
   },
   components: {
     Card,
+    Loader,
+  },
+  methods: {
+    loading() {
+      return this.upcommingMeets.length === 0 // or something like this
+    },
   },
 })
 </script>
