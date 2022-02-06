@@ -5,7 +5,7 @@
       <h1>{{ header }}</h1>
     </div>
     <div class="mt-8">
-      <template name="menu"> </template>
+      <slot name="main"></slot>
     </div>
   </div>
 </template>

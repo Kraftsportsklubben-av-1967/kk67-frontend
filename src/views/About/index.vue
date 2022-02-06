@@ -6,7 +6,7 @@
           <h1>Om oss</h1>
         </div>
         <div class="mt-8">
-          <Menu :buttons="menuButtons" :show-join-button="true" class="p" current-path="/about" />
+          <Menu :buttons="menuButtons" :show-join-button="true" current-path="/about" />
         </div>
       </div>
     </template>

@@ -1,14 +1,14 @@
 <template>
   <Layout>
     <template v-slot:sidebar
-      ><Sidebar header="Timeplan"> <!--<Menu />--> </Sidebar></template
-    >
+      ><Sidebar header="Timeplan">
+        <template v-slot:main
+          ><Menu :buttons="menuButtons" :show-join-button="false" current-path="/schedule" />
+        </template> </Sidebar
+    ></template>
     <template v-slot:main>
       <div class="flex w-full flex-col">
-        <Card class="w-full">
-          <template v-slot:header><h1>Timeplan</h1></template>
-          <template v-slot:body><p>Ting og tang</p></template>
-        </Card>
+        <router-view />
       </div>
     </template>
   </Layout>
@@ -22,6 +22,22 @@ import Card from '@components/Card/Card.vue'
 
 export default defineComponent({
   name: 'Schedule',
+  data() {
+    return {
+      menuButtons: [
+        {
+          title: 'Åpningstider',
+          path: '/',
+          focus: false,
+        },
+        {
+          title: 'Stevner',
+          path: '/meets',
+          focus: false,
+        },
+      ],
+    }
+  },
   components: { Layout, Sidebar, Menu, Card },
 })
 </script>

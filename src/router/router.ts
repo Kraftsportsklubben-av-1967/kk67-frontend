@@ -40,7 +40,23 @@ const routes = [
       },
     ],
   },
-  { path: '/schedule', name: 'Simetable', component: () => import('../views/Schedule.vue') },
+  {
+    path: '/schedule',
+    name: 'Simetable',
+    component: () => import('../views/Schedule/index.vue'),
+    children: [
+      {
+        path: '',
+        name: 'Schedule',
+        component: () => import('../views/Schedule/Schedule.vue'),
+      },
+      {
+        path: 'meets',
+        name: 'MeetInfo',
+        component: () => import('../views/Schedule/MeetInfo.vue'),
+      },
+    ],
+  },
   { path: '/records', name: 'Records', component: () => import('../views/About/Comitee.vue') },
   { path: '/pictures', name: 'Pictures', component: () => import('../views/About/Comitee.vue') },
   { path: '/sponsor', name: 'Sponsor', component: () => import('../views/About/Comitee.vue') },
