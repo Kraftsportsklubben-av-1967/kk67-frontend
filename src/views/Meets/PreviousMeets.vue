@@ -1,4 +1,5 @@
 <template>
+  <Loader v-if="loading" class="my-auto" />
   <Card v-for="meet in previousMeets" class="mb-8 h-fit">
     <template v-slot:header>
       <h1>{{ meet.title }}</h1>
@@ -18,6 +19,7 @@
 import { defineComponent } from 'vue'
 import { IMeet, cacheMeets, MeetType } from './loadData'
 import Card from '@components/Card/Card.vue'
+import Loader from '@components/Loader.vue'
 
 export default defineComponent({
   name: 'PreviousMeets',
@@ -29,8 +31,14 @@ export default defineComponent({
   async created() {
     this.previousMeets = await cacheMeets<IMeet[]>('previousMeets', MeetType.PREVIOUS)
   },
+  computed: {
+    loading(): boolean {
+      return this.previousMeets.length === 0
+    },
+  },
   components: {
-    Card: Card,
+    Card,
+    Loader,
   },
 })
 </script>

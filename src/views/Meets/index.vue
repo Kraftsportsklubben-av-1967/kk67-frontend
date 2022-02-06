@@ -11,7 +11,7 @@
       </div>
     </template>
     <template v-slot:main>
-      <div class="flex flex-wrap w-full justify-between flex-col">
+      <div class="flex flex-wrap w-full justify-between flex-col h-full">
         <router-view />
       </div>
     </template>
