@@ -1,9 +1,7 @@
 <template>
-  <nav v-if="showDekstop" aria-label="desktop-nav">
-    <Navbar-desktop :logo-color="selectLogo()" />
-  </nav>
-  <nav v-else aria-label="mobile-nav">
-    <Navbar-mobile :logo-color="selectLogo()" />
+  <nav class="h-fit">
+    <Navbar-desktop v-if="showDekstop" :logo-color="selectLogo()" :navbar-buttons="buttons" />
+    <Navbar-mobile v-else :logo-color="selectLogo()" :navbar-buttons="buttons" />
   </nav>
 </template>
 <script lang="ts">
@@ -21,6 +19,37 @@ export default defineComponent({
   data() {
     return {
       showDekstop: true,
+      buttons: [
+        {
+          title: 'OM OSS',
+          path: '/about',
+        },
+        {
+          title: 'TIMEPLAN',
+          path: '/schedule',
+        },
+        {
+          title: 'REKORDER',
+          path: '/records',
+        },
+        {
+          title: 'BILDER',
+          path: '/pictures',
+        },
+        {
+          title: 'STEVNER',
+          path: '/meets',
+        },
+        {
+          title: 'SPONSOR',
+          path: '/sponsor',
+        },
+        {
+          title: 'BLI MEDLEM',
+          path: '/join',
+          focus: true,
+        },
+      ],
     }
   },
   created() {

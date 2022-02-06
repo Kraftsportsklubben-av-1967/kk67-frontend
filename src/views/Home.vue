@@ -16,7 +16,7 @@
       </template>
       <template v-slot:main>
         <ContentCard
-          class="my-10"
+          class="mb-14"
           v-for="contentCard in cards"
           :key="contentCard.title"
           :imgSrc="resolvePath(contentCard.imgSrc)"

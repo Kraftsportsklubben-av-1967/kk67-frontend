@@ -14,7 +14,12 @@
         <p class="mb-auto">{{ date }}</p>
       </div>
     </div>
-    <img :src="imgSrc" alt="card_image" class="w-full my-2" />
+    <img
+      :src="imgSrc"
+      alt="card_image"
+      class="w-full my-2 block"
+      style="object-fit: cover; height: 30em; object-position: top"
+    />
     <div class="text-md font-semibold text-left mt-2">
       <p>{{ text }}</p>
     </div>

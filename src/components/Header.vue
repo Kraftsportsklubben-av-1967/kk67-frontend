@@ -1,19 +1,15 @@
 <template>
-  <header
-    class="w-full mb-12"
-    :class="showBackground() ? 'h-40' : 'h-10'"
-    :style="`${updateHeaderBody()}`"
-  >
+  <header class="w-full pt-6" :style="`${updateHeaderBody()}`">
     <div
       id="header-background-image"
       class="bg-center bg-no-repeat h-full"
       style="background-image: url(../../assets/logo/header.jpeg)"
-      v-if="showBackground()"
+      v-if="$route.name === 'Home'"
     >
-      <Navbar class="h-24" />
+      <Navbar />
     </div>
-    <div v-else>
-      <Navbar class="h-24" />
+    <div v-else class="mx-auto">
+      <Navbar />
     </div>
   </header>
 </template>
@@ -24,11 +20,9 @@ import Navbar from './Navbar/index.vue'
 export default defineComponent({
   methods: {
     updateHeaderBody(): string {
-      return this.showBackground() ? 'background-color: black; height: 35rem ' : 'height: 12.5rem'
-    },
-
-    showBackground(): boolean {
       return this.$route.name === 'Home'
+        ? 'background-color: black; height: 35rem '
+        : 'height: 10rem;'
     },
   },
   components: {
