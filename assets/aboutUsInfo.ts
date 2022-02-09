@@ -72,7 +72,18 @@ export const location: ILocation = {
   },
 }
 
-export const comitee = {
+export interface IComitee {
+  content: {
+    members: {
+      title: String
+      name: String
+      phoneNumber: String
+      email: String
+    }[]
+  }
+}
+
+export const comitee: IComitee = {
   content: {
     members: [
       {
@@ -107,4 +118,38 @@ export const comitee = {
       },
     ],
   },
+}
+
+export interface ITrainers {
+  content: {
+    about: {
+      title: string
+      content: string
+    }
+    trainers: {
+        name: string
+        level: string
+    }[]
+  }
+}
+
+export const trainers: ITrainers = {
+  content: {
+    about: {
+      title: `Om klubbtrenere`,
+      content: `KK-67 har flere klubbtrenere som lager treningsprogrammer
+                til medlemmene i klubben. Om du har behov for treningsprogram tar
+                du kontakt med en av klubbtrenerne når du er på trening.`
+    },
+    trainers: [
+      {
+        name: `Jostein Fiveltun`,
+        level: `Regionstrener`,
+      },
+      {
+        name: `Joar Finsaas`,
+        level: `Klubbtrener`
+      }
+    ]
+  }
 }

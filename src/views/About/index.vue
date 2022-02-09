@@ -1,5 +1,6 @@
 <template>
-  <Layout>
+<div class="p-4">
+    <Layout>
     <template v-slot:sidebar>
       <div class="flex flex-col">
         <div class="header-red-underline">
@@ -14,6 +15,7 @@
       <router-view />
     </template>
   </Layout>
+</div>
 </template>
 
 <script lang="ts">
