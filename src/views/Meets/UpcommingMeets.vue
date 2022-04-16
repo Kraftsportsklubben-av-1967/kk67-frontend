@@ -1,5 +1,5 @@
 <template>
-  <Loader v-if="loading" class="my-auto" />
+  <Loader v-if="loading" class="my-auto w-48 h-48" />
   <Card v-else v-for="meet in upcommingMeets" class="mb-8 h-fit">
     <template v-slot:header>
       <h1>{{ meet.title }}</h1>

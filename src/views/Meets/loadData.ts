@@ -1,5 +1,5 @@
 import { removeUndefinedFromArray } from '../../utils/removeUndefinedFromArray'
-import { UPCOMING_MEETS, PREVIOUS_MEETS } from './constants'
+import { UPCOMING_MEETS, PREVIOUS_MEETS, NEWS } from './constants'
 
 export interface IMeet {
   title: string
@@ -37,6 +37,17 @@ export async function cacheMeets<T>(sessionKey: string, meetType: MeetType): Pro
   return meets as unknown as T
 }
 
+export async function cacheNews(sessionKey: string): Promise<INews[]> {
+  if (window.sessionStorage.getItem(sessionKey)) {
+    return JSON.parse(window.sessionStorage.getItem(sessionKey)!) as INews[]
+  }
+
+  const news = await getNews()
+  console.log(news)
+  window.sessionStorage.setItem(sessionKey, JSON.stringify(news))
+  return news
+}
+
 function loadPreviousMeets(sessionKey: string) {
   return JSON.parse(window.sessionStorage.getItem(sessionKey)!, (key, value) => {
     return key === 'date' ? new Date(value) : value
@@ -49,16 +60,45 @@ function loadUpcommingMeets(sessionKey: string) {
   })
 }
 
-async function fetchXML(endpoint: string): Promise<Document> {
+enum DOMString {
+  TEXT_HTML = 'text/html',
+  TEXT_XML = 'text/xml',
+  APP_XML = 'application/xml',
+  APP_XHTML = 'application/xhtml+xml',
+  IMAGE = 'image/svg+xml',
+}
+
+async function fetchDocument(endpoint: string, docType: DOMString): Promise<Document> {
   return fetch(endpoint, {
     method: 'GET',
   })
     .then((res) => res.text())
-    .then((str) => new window.DOMParser().parseFromString(str, 'text/xml'))
+    .then((str) =>
+      new window.DOMParser().parseFromString(str, docType as unknown as DOMParserSupportedType),
+    )
+}
+export interface INews {
+  title: string | null
+  url?: string
+}
+export async function getNews(): Promise<INews[]> {
+  const news = await fetchDocument(NEWS, DOMString.TEXT_HTML)
+  const container = news.getElementsByClassName('slide-entry-wrap')[0]
+  const articles = Array.from(container.children)
+  const articletitles = []
+  const articlelinks = []
+  return articles
+    .map((article) => article.getElementsByClassName('slide-entry-title entry-title')[0])
+    .map((article) => {
+      return {
+        title: article.textContent,
+        url: article.innerHTML.match(/href="([^"]*)/)![1],
+      }
+    })
 }
 
 export async function getPreviousMeets(): Promise<IMeet[]> {
-  const meetData = await fetchXML(PREVIOUS_MEETS)
+  const meetData = await fetchDocument(PREVIOUS_MEETS, DOMString.APP_XML)
 
   const channel = meetData.querySelector('channel')
   if (!channel) {

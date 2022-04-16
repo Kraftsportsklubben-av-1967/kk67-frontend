@@ -8,7 +8,7 @@
 import { defineComponent } from 'vue'
 import NavbarDesktop from './NavbarDesktop.vue'
 import NavbarMobile from './NavbarMobile.vue'
-import { LOGO_TYPES } from '@components/KK67Logo.vue'
+import { LOGO_TYPES } from '@components/Media/KK67Logo.vue'
 
 export default defineComponent({
   name: 'Navbar',

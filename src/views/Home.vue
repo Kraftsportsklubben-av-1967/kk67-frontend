@@ -3,9 +3,10 @@
     <Layout>
       <template v-slot:sidebar>
         <div class="flex flex-col">
-          <div class="header-red-underline">
+          <div class="header-red-underline mb-4">
             <h1>Nyheter</h1>
           </div>
+          <News class="my-5 w-10/12" />
           <div class="mt-6 text-xl w-fit">
             <p>Følg oss på sosiale medier!</p>
           </div>
@@ -31,9 +32,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Layout from '../components/Layout.vue'
-import Media from '../components/Media.vue'
-import ContentCard from '../components/ContentCard.vue'
+import Layout from '@/components/Layout.vue'
+import Media from '@/components/Media/Media.vue'
+import ContentCard from '@/components/Card/ContentCard.vue'
+import News from '@/components/Media/News.vue'
 
 const ASSETS_URL = '../../assets/logo/'
 
@@ -43,6 +45,7 @@ export default defineComponent({
     Layout,
     Media,
     ContentCard,
+    News,
   },
   data() {
     return {

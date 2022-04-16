@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import KK67Logo, { LOGO_TYPES } from '../KK67Logo.vue'
+import KK67Logo, { LOGO_TYPES } from '../Media/KK67Logo.vue'
 import NavbarButton, { INavbarButton } from './NavbarButton.vue'
 
 export default defineComponent({

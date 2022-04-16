@@ -21,6 +21,7 @@ import { defineComponent } from 'vue'
 import Layout from '@components/Layout.vue'
 import Card from '@components/Card/Card.vue'
 import Menu from '@components/Menu/Menu.vue'
+import { IMenuButton } from '@components/Menu/MenuButton.vue'
 export default defineComponent({
   name: 'About',
   components: { Layout, Card, Menu },
@@ -57,7 +58,7 @@ export default defineComponent({
           path: '/volunteer',
           focus: false,
         },
-      ],
+      ] as IMenuButton[],
     }
   },
 })

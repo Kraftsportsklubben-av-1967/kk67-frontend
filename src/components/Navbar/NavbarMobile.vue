@@ -13,7 +13,7 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import KK67Logo, { LOGO_TYPES } from '@components/KK67Logo.vue'
+import KK67Logo, { LOGO_TYPES } from '@components/Media/KK67Logo.vue'
 import NavbarMobileOverlay from '@components/Navbar/NavbarMobileOverlay.vue'
 import { INavbarButton } from './NavbarButton.vue'
 

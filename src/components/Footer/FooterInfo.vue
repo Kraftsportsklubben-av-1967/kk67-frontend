@@ -26,8 +26,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import KK67Logo, { LOGO_TYPES } from '../KK67Logo.vue'
-import Media from '../Media.vue'
+import KK67Logo, { LOGO_TYPES } from '../Media/KK67Logo.vue'
+import Media from '../Media/Media.vue'
 export default defineComponent({
   name: 'FooterInfo',
   data() {
