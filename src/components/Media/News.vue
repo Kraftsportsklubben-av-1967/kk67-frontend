@@ -1,6 +1,6 @@
 <template>
   <article class="p-1 inline-block w-full">
-    <div v-for="nyheter in news" :key="nyheter" class="flex flex-row">
+    <div v-for="nyheter in news" :key="nyheter.title!" class="flex flex-row">
       <span class="text-red-600 pr-2">&#11044;</span>
       <div class="">
         <a :href="nyheter.url" target="_blank" class="anchor-link">
@@ -8,10 +8,7 @@
         </a>
       </div>
     </div>
-    <img :src="newsImg" alt="" class="w-full my-2" />
-    <div class="text-md text-left mt-2">
-      <slot name="body">{{ link }}</slot>
-    </div>
+    <img src="../../../assets/logo/adno-test.png" alt="" class="w-full my-2" />
   </article>
 </template>
 <script lang="ts">

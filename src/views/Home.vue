@@ -6,7 +6,7 @@
           <div class="header-red-underline">
             <h1>Nyheter</h1>
           </div>
-          <News class="my-5 w-10/12"></News>
+          <News class="my-5 w-10/12" />
           <div class="mt-6 text-xl w-fit">
             <p>Følg oss på sosiale medier!</p>
           </div>
@@ -32,10 +32,10 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import Layout from '../components/Layout.vue'
-import Media from '../components/Media/Media.vue'
-import ContentCard from '../components/Card/ContentCard.vue'
-import News from '../components/Media/News.vue'
+import Layout from '@/components/Layout.vue'
+import Media from '@/components/Media/Media.vue'
+import ContentCard from '@/components/Card/ContentCard.vue'
+import News from '@/components/Media/News.vue'
 
 const ASSETS_URL = '../../assets/logo/'
 

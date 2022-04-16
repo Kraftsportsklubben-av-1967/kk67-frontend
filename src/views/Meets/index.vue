@@ -7,7 +7,6 @@
         </div>
         <div class="mt-8">
           <Menu :buttons="menuButtons" current-path="/meets" />
-          <News />
         </div>
       </div>
     </template>
