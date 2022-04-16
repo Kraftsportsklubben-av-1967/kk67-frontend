@@ -3,7 +3,7 @@
     <Layout>
       <template v-slot:sidebar>
         <div class="flex flex-col">
-          <div class="header-red-underline">
+          <div class="header-red-underline mb-4">
             <h1>Nyheter</h1>
           </div>
           <News class="my-5 w-10/12" />

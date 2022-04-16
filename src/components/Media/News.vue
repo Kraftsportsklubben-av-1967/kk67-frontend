@@ -1,5 +1,6 @@
 <template>
-  <article class="p-1 inline-block w-full">
+  <Loader v-if="loading" class="w-20 h-20" style="margin-left: 2rem" :width="10" :height="10" />
+  <article v-else class="p-1 inline-block w-full">
     <div v-for="nyheter in news" :key="nyheter.title!" class="flex flex-row">
       <span class="text-red-600 pr-2">&#11044;</span>
       <div class="">
@@ -8,13 +9,14 @@
         </a>
       </div>
     </div>
-    <img src="../../../assets/logo/adno-test.png" alt="" class="w-full my-2" />
   </article>
+  <img src="../../../assets/logo/adno-test.png" alt="" class="w-1/3 mt-6" />
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
 
-import { getNews, INews } from '../../views/Meets/loadData'
+import { cacheNews, INews } from '../../views/Meets/loadData'
+import Loader from '../Loader.vue'
 
 export default defineComponent({
   name: 'News',
@@ -24,7 +26,13 @@ export default defineComponent({
     }
   },
   async created() {
-    this.news = await getNews()
+    this.news = await cacheNews('nsf-news')
   },
+  computed: {
+    loading(): boolean {
+      return this.news.length === 0
+    },
+  },
+  components: { Loader },
 })
 </script>

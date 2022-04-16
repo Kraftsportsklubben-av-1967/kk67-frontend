@@ -37,6 +37,17 @@ export async function cacheMeets<T>(sessionKey: string, meetType: MeetType): Pro
   return meets as unknown as T
 }
 
+export async function cacheNews(sessionKey: string): Promise<INews[]> {
+  if (window.sessionStorage.getItem(sessionKey)) {
+    return JSON.parse(window.sessionStorage.getItem(sessionKey)!) as INews[]
+  }
+
+  const news = await getNews()
+  console.log(news)
+  window.sessionStorage.setItem(sessionKey, JSON.stringify(news))
+  return news
+}
+
 function loadPreviousMeets(sessionKey: string) {
   return JSON.parse(window.sessionStorage.getItem(sessionKey)!, (key, value) => {
     return key === 'date' ? new Date(value) : value
@@ -81,7 +92,7 @@ export async function getNews(): Promise<INews[]> {
     .map((article) => {
       return {
         title: article.textContent,
-        url: article.innerHTML.match(/href="([^"]*)/)[1],
+        url: article.innerHTML.match(/href="([^"]*)/)![1],
       }
     })
 }

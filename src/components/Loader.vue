@@ -1,11 +1,12 @@
 <template>
   <div
-    class="border-solid border-t-red-600 border-gray-200 rounded-full w-48 h-48 flex justify-center loader"
+    class="border-solid border-t-red-600 border-gray-200 rounded-full flex justify-center loader"
   />
 </template>
 
 <style scoped>
 .loader {
+  box-sizing: border-box;
   border-width: 7.5px;
   animation: spin 1.5s linear infinite;
   margin: auto;
@@ -19,3 +20,11 @@
   }
 }
 </style>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+  name: 'Loader',
+})
+</script>
