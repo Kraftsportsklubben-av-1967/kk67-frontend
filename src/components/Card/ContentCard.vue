@@ -25,7 +25,20 @@
     </div>
     <div>
       <button
-        class="rounded-2xl p-1 duration-500 font-bold text-white w-32 shadow-lg mt-4 text-lg bg-black hover:bg-red-600 mb-4"
+        class="
+          rounded-2xl
+          p-1
+          duration-500
+          font-bold
+          text-white
+          w-32
+          shadow-lg
+          mt-4
+          text-lg
+          bg-black
+          hover:bg-red-600
+          mb-4
+        "
       >
         LES MER
       </button>

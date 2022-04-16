@@ -6,6 +6,7 @@
           <div class="header-red-underline">
             <h1>Nyheter</h1>
           </div>
+          <News class="my-5 w-10/12"></News>
           <div class="mt-6 text-xl w-fit">
             <p>Følg oss på sosiale medier!</p>
           </div>
@@ -34,6 +35,7 @@ import { defineComponent } from 'vue'
 import Layout from '../components/Layout.vue'
 import Media from '../components/Media/Media.vue'
 import ContentCard from '../components/Card/ContentCard.vue'
+import News from '../components/Media/News.vue'
 
 const ASSETS_URL = '../../assets/logo/'
 
@@ -43,6 +45,7 @@ export default defineComponent({
     Layout,
     Media,
     ContentCard,
+    News,
   },
   data() {
     return {

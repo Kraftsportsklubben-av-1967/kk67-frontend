@@ -66,11 +66,24 @@ async function fetchDocument(endpoint: string, docType: DOMString): Promise<Docu
       new window.DOMParser().parseFromString(str, docType as unknown as DOMParserSupportedType),
     )
 }
-
-export async function getNews(): Promise<undefined> {
+export interface INews {
+  title: string | null
+  url?: string
+}
+export async function getNews(): Promise<INews[]> {
   const news = await fetchDocument(NEWS, DOMString.TEXT_HTML)
-  console.log(news)
-  return undefined
+  const container = news.getElementsByClassName('slide-entry-wrap')[0]
+  const articles = Array.from(container.children)
+  const articletitles = []
+  const articlelinks = []
+  return articles
+    .map((article) => article.getElementsByClassName('slide-entry-title entry-title')[0])
+    .map((article) => {
+      return {
+        title: article.textContent,
+        url: article.innerHTML.match(/href="([^"]*)/)[1],
+      }
+    })
 }
 
 export async function getPreviousMeets(): Promise<IMeet[]> {
