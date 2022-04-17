@@ -16,13 +16,15 @@
         </div>
       </template>
       <template v-slot:main>
+        <Loader v-if="!loading" class="h-48 w-48" style="margin-top: 1rem" />
         <ContentCard
+          v-else
           class="mb-14"
           v-for="contentCard in cards"
           :key="contentCard.title"
-          :imgSrc="resolvePath(contentCard.imgSrc)"
+          :imgSrc="contentCard.imgSrc"
           :title="contentCard.title"
-          :date="contentCard.date"
+          :date="contentCard.date.getUTCDate()"
           :text="contentCard.text"
         />
       </template>
@@ -36,8 +38,8 @@ import Layout from '@/components/Layout.vue'
 import Media from '@/components/Media/Media.vue'
 import ContentCard from '@/components/Card/ContentCard.vue'
 import News from '@/components/Media/News.vue'
-
-const ASSETS_URL = '../../assets/logo/'
+import Loader from '@components/Loader.vue'
+import { ICard, loadIGPosts } from '../loaders'
 
 export default defineComponent({
   name: 'Home',
@@ -46,34 +48,20 @@ export default defineComponent({
     Media,
     ContentCard,
     News,
+    Loader,
   },
   data() {
     return {
-      cards: [
-        {
-          imgSrc: 'knut_søt.png',
-          title: 'Wallahi',
-          date: '21-23. april.',
-          text: 'Se knut spise pølse',
-        },
-        {
-          imgSrc: 'knut_søt.png',
-          title: 'Wallahi',
-          date: '21-23. april.',
-          text: 'Se knut spise pølse',
-        },
-        {
-          imgSrc: 'knut_søt.png',
-          title: 'Wallahi',
-          date: '21-23. april.',
-          text: 'Se knut spise pølse',
-        },
-      ],
+      cards: [] as ICard[],
     }
   },
-  methods: {
-    resolvePath(path: string) {
-      return ASSETS_URL + path
+  async created() {
+    this.cards = await loadIGPosts()
+    console.log(this.cards)
+  },
+  computed: {
+    loading(): boolean {
+      return this.cards.length === 0
     },
   },
 })

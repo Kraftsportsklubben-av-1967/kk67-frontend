@@ -11,7 +11,6 @@ import Footer from './components/Footer/index.vue'
 import Header from './components/Header.vue'
 import { defineComponent } from 'vue'
 import NavbarMobileOverlay from '@components/Navbar/NavbarMobileOverlay.vue'
-
 export default defineComponent({
   components: {
     Footer,

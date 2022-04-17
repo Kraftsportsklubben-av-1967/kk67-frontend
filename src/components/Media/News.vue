@@ -1,5 +1,5 @@
 <template>
-  <Loader v-if="loading" class="w-20 h-20" style="margin-left: 2rem" :width="10" :height="10" />
+  <Loader v-if="loading" class="w-20 h-20" style="margin-left: 2rem" />
   <article v-else class="p-1 inline-block w-full">
     <div v-for="nyheter in news" :key="nyheter.title!" class="flex flex-row">
       <span class="text-red-600 pr-2">&#11044;</span>
@@ -10,7 +10,7 @@
       </div>
     </div>
   </article>
-  <img src="../../../assets/logo/adno-test.png" alt="" class="w-1/3 mt-6" />
+  <img src="../../../assets/logo/adno-test.png" alt="" class="w-40 mt-6" />
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
