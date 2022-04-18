@@ -41,10 +41,6 @@ export default defineComponent({
           path: '/meets',
         },
         {
-          title: 'SPONSOR',
-          path: '/sponsor',
-        },
-        {
           title: 'BLI MEDLEM',
           path: '/join',
           focus: true,

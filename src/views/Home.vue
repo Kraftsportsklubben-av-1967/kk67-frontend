@@ -16,14 +16,19 @@
         </div>
       </template>
       <template v-slot:main>
+        <Loader v-if="loading" class="h-60 w-60" style="margin-top: 6rem" />
         <ContentCard
-          class="mb-14"
+          v-else
+          class="mb-14 hover:shadow-xl ease-in-out hover:mx-4"
+          style="transition-duration: 0.5s"
           v-for="contentCard in cards"
           :key="contentCard.title"
-          :imgSrc="resolvePath(contentCard.imgSrc)"
+          :src="contentCard.src"
           :title="contentCard.title"
-          :date="contentCard.date"
+          :date="parseDate(contentCard.date)"
           :text="contentCard.text"
+          :url="contentCard.url"
+          :type="contentCard.type"
         />
       </template>
     </Layout>
@@ -36,8 +41,8 @@ import Layout from '@/components/Layout.vue'
 import Media from '@/components/Media/Media.vue'
 import ContentCard from '@/components/Card/ContentCard.vue'
 import News from '@/components/Media/News.vue'
-
-const ASSETS_URL = '../../assets/logo/'
+import Loader from '@components/Loader.vue'
+import { ICard, loadIGPosts } from '../loaders'
 
 export default defineComponent({
   name: 'Home',
@@ -46,34 +51,29 @@ export default defineComponent({
     Media,
     ContentCard,
     News,
+    Loader,
   },
   data() {
     return {
-      cards: [
-        {
-          imgSrc: 'knut_søt.png',
-          title: 'Wallahi',
-          date: '21-23. april.',
-          text: 'Se knut spise pølse',
-        },
-        {
-          imgSrc: 'knut_søt.png',
-          title: 'Wallahi',
-          date: '21-23. april.',
-          text: 'Se knut spise pølse',
-        },
-        {
-          imgSrc: 'knut_søt.png',
-          title: 'Wallahi',
-          date: '21-23. april.',
-          text: 'Se knut spise pølse',
-        },
-      ],
+      cards: [] as ICard[],
     }
   },
+  async created() {
+    this.cards = await loadIGPosts()
+  },
+  computed: {
+    loading(): boolean {
+      return this.cards.length === 0
+    },
+  },
   methods: {
-    resolvePath(path: string) {
-      return ASSETS_URL + path
+    parseDate(date: Date): string {
+      return date.toLocaleString('no-NO', {
+        day: 'numeric',
+        weekday: 'long',
+        month: 'long',
+        year: 'numeric',
+      })
     },
   },
 })

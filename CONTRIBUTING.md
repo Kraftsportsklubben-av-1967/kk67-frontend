@@ -61,6 +61,7 @@ yarn global add local-cors-proxy
 ```sh
 VITE_GOOGLE_API_KEY = "<key>"
 VITE_PROXY_PORT= "<unused_port_number>"
+VITE_FB_API_KEY= "<key>"
 ```
 
 10. Start dev mode
