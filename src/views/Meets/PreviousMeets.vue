@@ -5,11 +5,13 @@
       <h1>{{ meet.title }}</h1>
     </template>
     <template v-slot:body>
-      <p v-if="meet.description">Info: {{ meet.description }}</p>
-      <br v-else />
-      <div class="flex justify-between md:flex-row flex-col md:pb-0 pb-2">
-        <a :href="meet.link" target="_blank" class="anchor-link">Resultat</a>
-        <p>Dato: {{ meet.date.toLocaleDateString() }}</p>
+      <div class="flex justify-between flex-col md:pb-0 pb-2">
+        <p v-if="meet.description">Info: {{ meet.description }}</p>
+        <br v-else />
+        <div class="flex justify-between md:flex-row flex-col md:pb-0 pb-2">
+          <a :href="meet.link" target="_blank" class="anchor-link">Resultat</a>
+          <p>Dato: {{ meet.date.toLocaleDateString() }}</p>
+        </div>
       </div>
     </template>
   </Card>
@@ -17,7 +19,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { IMeet, cacheMeets, MeetType } from './loadData'
+import { IMeet, cacheMeets, MeetType } from '../../loaders/loadData'
 import Card from '@components/Card/Card.vue'
 import Loader from '@components/Loader.vue'
 

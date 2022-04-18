@@ -1,7 +1,7 @@
 <template>
   <article class="border rounded-xl shadow-lg flex flex-col">
-    <div class="text-3xl font-extrabold mt-8">
-      <h1>{{ title }}</h1>
+    <div class="text-2xl font-extrabold mt-8">
+      <h2>{{ title }}</h2>
     </div>
     <div class="text-lg font-bold my-2">
       <div class="flex flex-row">
@@ -14,34 +14,19 @@
         <p class="mb-auto">{{ date }}</p>
       </div>
     </div>
-    <img
-      :src="imgSrc"
-      alt="card_image"
-      class="w-full my-2 block"
-      style="object-fit: cover; height: 30em; object-position: top"
-    />
-    <div class="text-md font-semibold text-left mt-2">
+    <video v-if="type === 'VIDEO'" :src="src" controls style="object-fit: contain" />
+    <img v-else :src="src" alt="card_image" class="w-full my-2 block" style="object-fit: contain" />
+    <div class="text-md font-normal text-left text-lg mt-2">
       <p>{{ text }}</p>
     </div>
     <div>
-      <button
-        class="
-          rounded-2xl
-          p-1
-          duration-500
-          font-bold
-          text-white
-          w-32
-          shadow-lg
-          mt-4
-          text-lg
-          bg-black
-          hover:bg-red-600
-          mb-4
-        "
-      >
-        LES MER
-      </button>
+      <a :href="url" target="_blank">
+        <button
+          class="rounded-2xl p-1 duration-500 font-bold text-white w-32 shadow-lg mt-4 text-lg bg-black hover:bg-red-600 mb-4"
+        >
+          LES MER
+        </button>
+      </a>
     </div>
   </article>
 </template>
@@ -51,11 +36,15 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'ContentCard',
   props: {
-    imgSrc: {
+    src: {
       type: String,
       required: true,
     },
     title: {
+      type: String,
+      required: true,
+    },
+    type: {
       type: String,
       required: true,
     },
@@ -66,6 +55,9 @@ export default defineComponent({
     text: {
       type: String,
       required: true,
+    },
+    url: {
+      type: String,
     },
   },
   computed: {

@@ -7,8 +7,8 @@ interface IFBResponse {
 }
 
 // FB from facebook javascript SDK
-async function loadMedia(): Promise<IFBResponse> {
-  return new Promise((resolve, _reject) => {
+function loadMedia(): Promise<IFBResponse> {
+  return new Promise((resolve) => {
     FB.api(
       `/${INSTAGRAM_ID}/media`,
       'GET',
@@ -16,23 +16,23 @@ async function loadMedia(): Promise<IFBResponse> {
         transport: 'cors',
         access_token: FB_TOKEN,
       },
-      function (response: IFBResponse) {
-        resolve(response)
-      },
+      (response: IFBResponse) => resolve(response),
     )
   })
 }
 
-export interface ICard {
-  imgSrc: string
-  title: string
-  date: Date
-  text: string
-  url: string
+interface IIGPost {
+  media_type: string
+  media_url: string
+  timestamp: string
+  permalink: string
+  caption: string
+  id: string
+  type: string
 }
 
-async function mapIGPost(id: string | number): Promise<ICard> {
-  return new Promise((resolve, _reject) => {
+function mapIGPost(id: string | number): Promise<IIGPost> {
+  return new Promise((resolve) => {
     FB.api(
       `${id}`,
       'GET',
@@ -40,18 +40,41 @@ async function mapIGPost(id: string | number): Promise<ICard> {
         fields: 'media_type, media_url, timestamp, permalink, caption',
         access_token: FB_TOKEN,
       },
-      function (res) {
-        resolve(res)
-      },
+      (res: IIGPost) => resolve(res),
     )
   })
 }
 
+export interface ICard {
+  src: string
+  title: string
+  date: Date
+  text: string
+  url: string
+}
+
 export async function loadIGPosts(): Promise<ICard[]> {
+  if (window.sessionStorage.getItem('ig-posts')) {
+    return JSON.parse(window.sessionStorage.getItem('ig-posts')!, (key, value) => {
+      return key === 'date' ? new Date(value) : value
+    }) as ICard[]
+  }
+
   const media = await loadMedia()
-  const result: ICard[] = []
+  const result = Promise.all(
+    media.data.map(async (res) => {
+      const post = await mapIGPost(res.id)
+      return {
+        date: new Date(post.timestamp),
+        src: post.media_url,
+        url: post.permalink,
+        text: post.caption,
+        type: post.media_type,
+        title: '@Kraftsporstklubben_av_1967',
+      } as ICard
+    }),
+  )
 
-  media.data.forEach(async (post) => result.push(await mapIGPost(post.id)))
-
+  window.sessionStorage.setItem('ig-posts', JSON.stringify(await result))
   return result
 }

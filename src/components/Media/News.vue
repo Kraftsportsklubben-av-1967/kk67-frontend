@@ -10,12 +10,15 @@
       </div>
     </div>
   </article>
-  <img src="../../../assets/logo/adno-test.png" alt="" class="w-40 mt-6" />
+
+  <a href="https://www.antidoping.no/" target="_blank" class="w-fit mt-6"
+    ><img src="../../../assets/logo/adno-test.png" alt="" class="duration-500 antidoping-icon"
+  /></a>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
 
-import { cacheNews, INews } from '../../views/Meets/loadData'
+import { cacheNews, INews } from '../../loaders/loadData'
 import Loader from '../Loader.vue'
 
 export default defineComponent({
@@ -36,3 +39,13 @@ export default defineComponent({
   components: { Loader },
 })
 </script>
+<style lang="scss">
+.antidoping-icon {
+  width: 8rem;
+  &:hover {
+    margin-left: 0.25rem;
+    width: 7.75rem;
+    filter: opacity(80%);
+  }
+}
+</style>

@@ -1,5 +1,5 @@
-import { removeUndefinedFromArray } from '../../utils/removeUndefinedFromArray'
-import { UPCOMING_MEETS, PREVIOUS_MEETS, NEWS } from './constants'
+import { removeUndefinedFromArray } from '../utils/removeUndefinedFromArray'
+import { UPCOMING_MEETS, PREVIOUS_MEETS, NEWS } from '../views/Meets/constants'
 
 export interface IMeet {
   title: string
@@ -43,7 +43,6 @@ export async function cacheNews(sessionKey: string): Promise<INews[]> {
   }
 
   const news = await getNews()
-  console.log(news)
   window.sessionStorage.setItem(sessionKey, JSON.stringify(news))
   return news
 }

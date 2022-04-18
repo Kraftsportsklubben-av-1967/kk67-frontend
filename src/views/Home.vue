@@ -16,16 +16,19 @@
         </div>
       </template>
       <template v-slot:main>
-        <Loader v-if="!loading" class="h-48 w-48" style="margin-top: 1rem" />
+        <Loader v-if="loading" class="h-60 w-60" style="margin-top: 6rem" />
         <ContentCard
           v-else
-          class="mb-14"
+          class="mb-14 hover:shadow-xl ease-in-out hover:mx-4"
+          style="transition-duration: 0.5s"
           v-for="contentCard in cards"
           :key="contentCard.title"
-          :imgSrc="contentCard.imgSrc"
+          :src="contentCard.src"
           :title="contentCard.title"
-          :date="contentCard.date.getUTCDate()"
+          :date="parseDate(contentCard.date)"
           :text="contentCard.text"
+          :url="contentCard.url"
+          :type="contentCard.type"
         />
       </template>
     </Layout>
@@ -57,11 +60,20 @@ export default defineComponent({
   },
   async created() {
     this.cards = await loadIGPosts()
-    console.log(this.cards)
   },
   computed: {
     loading(): boolean {
       return this.cards.length === 0
+    },
+  },
+  methods: {
+    parseDate(date: Date): string {
+      return date.toLocaleString('no-NO', {
+        day: 'numeric',
+        weekday: 'long',
+        month: 'long',
+        year: 'numeric',
+      })
     },
   },
 })

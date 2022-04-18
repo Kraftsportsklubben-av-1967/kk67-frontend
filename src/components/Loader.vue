@@ -8,7 +8,7 @@
 .loader {
   box-sizing: border-box;
   border-width: 7.5px;
-  animation: spin 1.5s linear infinite;
+  animation: spin 1.9s linear infinite;
   margin: auto;
 }
 @keyframes spin {
