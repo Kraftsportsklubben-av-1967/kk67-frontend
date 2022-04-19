@@ -5,7 +5,16 @@
         <div class="header-red-underline" style="font-size: 3.75rem">
           <h2>Bli medlem</h2>
         </div>
-        <div class="mt-8"></div>
+        <div class="mt-8">
+          <h2 class="text-lg"><em>Videre spørsmål?</em></h2>
+          <br />
+          <p>Ta kontakt med oss vel!</p>
+          <p>
+            <a class="anchor-link" href="mailto:kk67.styreleder@gmail.com"
+              >@kk67.styrleder@gmail.com</a
+            >
+          </p>
+        </div>
       </div>
     </template>
     <template v-slot:main>
@@ -39,6 +48,29 @@
             </template>
           </Card>
         </div>
+        <Card class="mt-4">
+          <template v-slot:header>
+            <h1>Informasjon on betaling og innmelding</h1>
+          </template>
+          <template v-slot:body>
+            <p>
+              Alle betalinger skal gå til kontonr <strong>4202.53.58206</strong>. Husk å merk
+              betalingen med navn!
+            </p>
+            <br />
+            <p>
+              I tillegg til å betale må du ta kontakt med leder
+              <strong>Jostein Fiveltun</strong>, samt signere kontrakt med klubben. Dette gjøres ved
+              å kontakte et av styres medlemmer på trening.
+            </p>
+            <br />
+            <p>
+              For medlemmer som ønsker å konkurrere må det også signeres en antidopingkontrakt fra
+              Antidoping Norge. Uten denne vil det ikke bli bestilt lisens, frist 1 uke før
+              deltagelse på stevne.
+            </p>
+          </template>
+        </Card>
       </div>
     </template>
   </Layout>
