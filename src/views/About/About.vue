@@ -7,7 +7,7 @@
             Kraftsportsklubben av 1967 (KK-67) er en av de eldste styrkeløftklubbene i Norge.
             Klubben har fostret flere landslagsutøvere, norgesrekordholdere, europarekordholdere og
             verdensrekordholdere. Vi som trener på KK-67 er stolte av å være en del av et
-            kjempeflott treningsmiljø for folk i alle aldre og nivå.',
+            kjempeflott treningsmiljø for folk i alle aldre og nivå.
           </p>
         </template>
       </Card>
@@ -31,8 +31,8 @@
         <template v-slot:body
           ><p>
             KK-67 kan motta tilskudd fra grasrotandelen! Det betyr at 5% av det du betaler når du
-            tipper hos <i>norsk tipping</i> går til klubben! For å få til dette må du oppgi klubbens
-            organisasjonsnummer neste gang du tipper <br /><strong>996 808 378</strong>
+            tipper hos <em>norsk tipping</em> går til klubben! For å få til dette må du oppgi
+            klubbens organisasjonsnummer neste gang du tipper <br /><strong>996 808 378</strong>
           </p></template
         >
       </Card>

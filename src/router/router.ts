@@ -77,7 +77,7 @@ const routes = [
       },
     ],
   },
-  { path: '/join', name: 'Join', component: () => import('../views/About/Comitee.vue') },
+  { path: '/join', name: 'Join', component: () => import('../views/Member/index.vue') },
 ]
 // ! TODO update paths
 

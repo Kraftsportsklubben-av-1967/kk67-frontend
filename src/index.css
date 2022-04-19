@@ -15,7 +15,26 @@ html {
 }
 
 .header-red-underline {
-  @apply font-bold text-7xl border-b-8 border-red-700 w-fit pr-6;
+  @apply font-bold text-6xl border-b-8 border-red-700 w-fit pr-6 xl:text-7xl;
+}
+
+/* sm */
+@media (min-width: 640px) {
+}
+/* md */
+@media (min-width: 768px) {
+}
+/* lg */
+
+@media (min-width: 1024px) {
+}
+/* xl */
+
+@media (min-width: px) {
+}
+/* 2xl */
+
+@media (min-width: 640px) {
 }
 
 .anchor-hover:hover {
