@@ -2,6 +2,16 @@ export const PRODUCTION = import.meta.env.NODE_DEV === 'production'
 export const HOSTNAME = window.location.hostname
 export const PROXY_PORT = import.meta.env.VITE_PROXY_PORT
 
-export const FB_TOKEN = import.meta.env.VITE_FB_API_KEY
+export const PROXY_URL = PRODUCTION
+  ? 'https://styrkeloft.no/'
+  : `http://${HOSTNAME}:${PROXY_PORT}/proxy`
+
+export const PREVIOUS_MEETS = `${PROXY_URL}/resultatservice_integrasjon/rss_protokoll.php?m=1&klubb_id=13`
+export const UPCOMING_MEETS = `${PROXY_URL}/stevner/?page=ical&skipHeader=1&&k=13`
+export const NEWS = `${PROXY_URL}/?format=feed&type=rss`
+
+export const FB_USER_TOKEN = import.meta.env.VITE_FB_USER_KEY
+export const FB_PAGE_TOKEN = import.meta.env.VITE_FB_PAGE_KEY
 export const INSTAGRAM_ID = '17841404742485905'
+export const FB_PAGE_ID = '284710781586877'
 export const FB_GRAPH_API = 'https://graph.facebook.com/v13.0'

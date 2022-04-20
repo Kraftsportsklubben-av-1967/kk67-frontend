@@ -18,7 +18,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 
-import { cacheNews, INews } from '../../loaders/loadData'
+import { loadNews, INews } from '../../loaders'
 import Loader from '../Loader.vue'
 
 export default defineComponent({
@@ -29,7 +29,7 @@ export default defineComponent({
     }
   },
   async created() {
-    this.news = await cacheNews('nsf-news')
+    this.news = await loadNews()
   },
   computed: {
     loading(): boolean {
