@@ -56,12 +56,13 @@ yarn
 yarn global add local-cors-proxy
 ```
 
-9. set up env variables in a `.env` file (not to be pushed to repo). Ask **Marius** for key.
+9. set up env variables in a `.env` file (**not** to be pushed to repo). Ask **Marius** for key.
 
 ```sh
 VITE_GOOGLE_API_KEY = "<key>"
-VITE_PROXY_PORT= "<unused_port_number>"
-VITE_FB_API_KEY= "<key>"
+VITE_PROXY_PORT = "<unused_port_number>"
+VITE_FB_USER_KEY = "<key>"
+VITE_FB_PAGE_KEY = "<key>"
 ```
 
 10. Start dev mode
