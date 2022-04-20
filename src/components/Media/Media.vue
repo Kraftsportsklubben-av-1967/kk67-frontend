@@ -21,7 +21,7 @@ interface IPicture {
 }
 
 export default defineComponent({
-  name: 'Home',
+  name: 'Media',
   data() {
     return {
       images: [
