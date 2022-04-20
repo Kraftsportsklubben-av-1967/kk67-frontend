@@ -15,8 +15,14 @@
       </div>
     </div>
     <video v-if="type === 'VIDEO'" :src="src" controls style="object-fit: contain" />
-    <img v-else :src="src" alt="card_image" class="w-full my-2 block" style="object-fit: contain" />
-    <div class="text-md font-normal text-left text-lg mt-2">
+    <img
+      v-else-if="src"
+      :src="src"
+      alt="card_image"
+      class="w-full my-2 block"
+      style="object-fit: contain"
+    />
+    <div class="text-md font-normal text-left text-xl mt-2">
       <p>{{ text }}</p>
     </div>
     <div>
@@ -38,15 +44,12 @@ export default defineComponent({
   props: {
     src: {
       type: String,
-      required: true,
     },
     title: {
       type: String,
-      required: true,
     },
     type: {
       type: String,
-      required: true,
     },
     date: {
       type: String,

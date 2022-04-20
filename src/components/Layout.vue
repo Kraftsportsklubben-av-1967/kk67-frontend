@@ -5,7 +5,7 @@
     <aside class="lg:w-2/6 w-full">
       <slot name="sidebar"></slot>
     </aside>
-    <main class="lg:w-4/6 lg:pl-10 w-full lg:mt-0 mt-6">
+    <main class="lg:w-4/6 lg:pl-10 w-full lg:mt-0 mt-6 lg:ml-20">
       <slot name="main"></slot>
     </main>
   </div>
