@@ -19,10 +19,10 @@
         <Loader v-if="loading" class="h-60 w-60" style="margin-top: 6rem" />
         <ContentCard
           v-else
-          class="mb-14 hover:shadow-xl ease-in-out hover:mx-4"
+          class="mb-14 hover:shadow-2xl ease-in-out"
           style="transition-duration: 0.5s"
           v-for="contentCard in cards"
-          :key="contentCard.title"
+          :key="contentCard.id"
           :src="contentCard.src"
           :title="contentCard.title"
           :date="parseDate(contentCard.date)"
@@ -42,7 +42,7 @@ import Media from '@/components/Media/Media.vue'
 import ContentCard from '@/components/Card/ContentCard.vue'
 import News from '@/components/Media/News.vue'
 import Loader from '@components/Loader.vue'
-import { ICard, loadIGPosts } from '../loaders'
+import { ICard, loadPosts } from '../loaders'
 
 export default defineComponent({
   name: 'Home',
@@ -59,7 +59,7 @@ export default defineComponent({
     }
   },
   async created() {
-    this.cards = await loadIGPosts()
+    this.cards = await loadPosts()
   },
   computed: {
     loading(): boolean {

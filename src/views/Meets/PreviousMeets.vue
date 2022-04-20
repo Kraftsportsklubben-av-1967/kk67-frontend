@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { IMeet, cacheMeets, MeetType } from '../../loaders/loadData'
+import { IMeet, cacheMeets, MeetType } from '../../loaders'
 import Card from '@components/Card/Card.vue'
 import Loader from '@components/Loader.vue'
 

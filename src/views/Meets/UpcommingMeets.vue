@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { IUpcommingMeet, cacheMeets, MeetType } from '../../loaders/loadData'
+import { IUpcommingMeet, cacheMeets, MeetType } from '../../loaders'
 import Card from '@components/Card/Card.vue'
 import Loader from '@components/Loader.vue'
 

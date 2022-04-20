@@ -19,6 +19,7 @@
     "@googlemaps/js-api-loader": "^1.12.12",
     "autoprefixer": "^10.4.0",
     "local-cors-proxy": "^1.1.0",
+    "lodash": "^4.17.21",
     "postcss": "^8.4.5",
     "tailwindcss": "^3.0.8",
     "vue": "^3.2.25",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@types/google.maps": "^3.47.2",
+    "@types/lodash": "^4.14.182",
     "@types/node": "^17.0.5",
     "@vitejs/plugin-vue": "^2.0.0",
     "cross-env": "^7.0.3",
