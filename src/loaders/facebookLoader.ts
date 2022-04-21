@@ -1,3 +1,4 @@
+import { removeUndefinedFromArrayAsync } from '../utils/removeUndefinedFromArrayAsync'
 import { FB_PAGE_ID, FB_PAGE_TOKEN } from '../constants'
 import { ICard } from './loadData'
 
@@ -35,7 +36,7 @@ interface IFBPost {
     id: string
   }
   created_time: string
-  message: string
+  message?: string
   full_picture: string
   id: string
 }
@@ -56,9 +57,14 @@ function getFBPost(id: string | number): Promise<IFBPost> {
 
 export async function loadFBPosts(): Promise<ICard[]> {
   const posts = await loadPosts()
-  return Promise.all(
+  return removeUndefinedFromArrayAsync(
     posts.data.map(async (res: IFBResponseData) => {
       const post = await getFBPost(res.id)
+
+      if (!post.message || post.message === '') {
+        return undefined
+      }
+
       return {
         date: new Date(post.created_time),
         id: post.id,
