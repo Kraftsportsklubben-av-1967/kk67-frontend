@@ -19,8 +19,8 @@
     </template>
     <template v-slot:main>
       <div class="flex w-full flex-col">
-        <div class="flex flex-row justify-between mt-4">
-          <Card class="w-7/12">
+        <div class="flex flex-col lg:flex-row justify-between mt-4">
+          <Card class="w-full lg:w-7/12">
             <template v-slot:header>
               <h1>Fordeler</h1>
             </template>
@@ -34,7 +34,7 @@
               <p>Dette er bare noen av fordelene ved å bli medlem hos KK-67!</p>
             </template>
           </Card>
-          <Card class="w-2/5">
+          <Card class="w-full lg:w-2/5 lg:mt-0 mt-4">
             <template v-slot:header>
               <h1>Priser</h1>
             </template>

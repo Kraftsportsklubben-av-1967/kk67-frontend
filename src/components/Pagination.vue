@@ -53,7 +53,7 @@ export default defineComponent({
 </script>
 <style scoped lang="scss">
 button {
-  @apply p-4 border-2 font-bold px-6;
+  @apply p-2 md:p-4 border-2 font-bold px-3 md:px-6;
   &:hover {
     @apply shadow-2xl ease-linear duration-500 bg-black text-white;
   }

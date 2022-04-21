@@ -12,8 +12,8 @@
         </template>
       </Card>
     </div>
-    <div class="flex flex-row justify-between mt-4">
-      <Card class="w-2/5">
+    <div class="flex flex-col lg:flex-row justify-between mt-4">
+      <Card class="w-full lg:w-2/5">
         <template v-slot:header>
           <h1>Åpningstider</h1>
         </template>
@@ -24,7 +24,7 @@
           </p>
         </template>
       </Card>
-      <Card class="w-7/12">
+      <Card class="w-full lg:w-7/12 lg:mt-0 mt-4">
         <template v-slot:header>
           <h1>Grasrotandelen</h1>
         </template>
