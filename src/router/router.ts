@@ -62,7 +62,7 @@ const routes = [
     ],
   },
   { path: '/records', name: 'Records', component: () => import('../views/About/Comitee.vue') },
-  { path: '/pictures', name: 'Pictures', component: () => import('../views/About/Comitee.vue') },
+  { path: '/pictures', name: 'Pictures', component: () => import('../views/Pictures/index.vue') },
   { path: '/sponsor', name: 'Sponsor', component: () => import('../views/About/Comitee.vue') },
   {
     path: '/meets',
