@@ -1,6 +1,6 @@
 <template>
   <NavbarMobileOverlay v-if="toggled" @click="toggleOverlay" :navbar-buttons="navbarButtons" />
-  <div class="flex justify-between mx-10 h-fit">
+  <div class="flex justify-between mx-8 h-fit">
     <KK67Logo :logo-color="logoColor" class="my-auto" />
     <div class="block my-auto cursor-pointer hover:opacity-70 duration-500" @click="toggleOverlay">
       <div v-if="!toggled">

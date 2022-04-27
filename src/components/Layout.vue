@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col h-full lg:flex-row lg:justify-between mx-12 lg:mx-auto md:w-5/6 sm:w-3/4 xs:w-5/6"
+    class="flex flex-col h-full lg:flex-row lg:justify-between mx-8 sm:mx-auto md:w-5/6 sm:w-3/4 xs:w-5/6"
   >
     <aside class="lg:w-2/6 w-full">
       <slot name="sidebar"></slot>
