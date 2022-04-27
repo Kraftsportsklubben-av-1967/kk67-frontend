@@ -16,7 +16,7 @@ html {
 }
 
 .header-red-underline {
-  @apply font-bold text-6xl border-b-8 border-red-700 w-fit pr-6 xl:text-7xl;
+  @apply font-bold text-4xl lg:text-5xl border-b-8 border-red-700 w-fit pr-6 xl:text-6xl;
 }
 
 /* sm */
@@ -24,14 +24,13 @@ html {
 }
 /* md */
 @media (min-width: 768px) {
+  /* lg */
 }
-/* lg */
-
 @media (min-width: 1024px) {
 }
-/* xl */
 
-@media (min-width: px) {
+/* xl */
+@media (min-width: 1280px) {
 }
 /* 2xl */
 

@@ -1,19 +1,20 @@
 <template>
   <Loader v-if="loading" class="h-60 w-60" style="margin-top: 6rem" />
-  <ContentCard
-    v-else
-    class="mb-14 hover:shadow-2xl ease-in-out"
-    style="transition-duration: 0.5s"
-    v-for="contentCard in pages[currentPage]"
-    :key="contentCard.id"
-    :src="contentCard.src"
-    :title="contentCard.title"
-    :date="parseDate(contentCard.date)"
-    :text="contentCard.text"
-    :url="contentCard.url"
-    :type="contentCard.type"
-  />
-  <Pagination :n_buttons="n_pages" :current-page="currentPage" @update="updatePage" />
+  <template v-else>
+    <ContentCard
+      class="mb-14 hover:shadow-2xl ease-in-out"
+      style="transition-duration: 0.5s"
+      v-for="contentCard in pages[currentPage]"
+      :key="contentCard.id"
+      :src="contentCard.src"
+      :title="contentCard.title"
+      :date="parseDate(contentCard.date)"
+      :text="contentCard.text"
+      :url="contentCard.url"
+      :type="contentCard.type"
+    />
+    <Pagination :n_buttons="n_pages" :current-page="currentPage" @update="updatePage" />
+  </template>
 </template>
 
 <script lang="ts">
@@ -49,7 +50,7 @@ export default defineComponent({
   },
   computed: {
     loading(): boolean {
-      return this.pages.length === 0
+      return this.cards.length === 0
     },
     n_pages(): number {
       return this.pages.length ?? 0

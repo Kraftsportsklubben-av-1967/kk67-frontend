@@ -34,6 +34,7 @@ export default defineComponent({
     updatePage(n: number) {
       if (n > 0 && n < this.n_buttons) {
         this.$emit('update', n)
+        window.scrollTo({ top: 0, behavior: 'smooth' })
       }
     },
     focus(n: number): boolean {
