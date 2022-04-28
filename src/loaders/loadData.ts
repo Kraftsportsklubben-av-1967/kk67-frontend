@@ -1,6 +1,7 @@
 import { loadFBPosts } from './facebookLoader'
 import { loadIGPosts } from './instagramLoader'
 import _ from 'lodash'
+import { SESSION_POSTS_KEY } from '../constants'
 
 export enum DOMString {
   TEXT_HTML = 'text/html',
@@ -31,8 +32,8 @@ export interface ICard {
 }
 
 export async function loadPosts(): Promise<ICard[]> {
-  if (window.sessionStorage.getItem('posts')) {
-    return JSON.parse(window.sessionStorage.getItem('posts')!, (k, v) => {
+  if (window.sessionStorage.getItem(SESSION_POSTS_KEY)) {
+    return JSON.parse(window.sessionStorage.getItem(SESSION_POSTS_KEY)!, (k, v) => {
       return k === 'date' ? new Date(v) : v
     }) as ICard[]
   }
@@ -44,6 +45,6 @@ export async function loadPosts(): Promise<ICard[]> {
   // TODO this is O(n²) complexity... would be better if we could ONLY query Facebook posts from the api to remove this duplicate removal funciton
 
   const result = output.sort((a: ICard, b: ICard) => b.date.getTime() - a.date.getTime())
-  window.sessionStorage.setItem('posts', JSON.stringify(result))
+  window.sessionStorage.setItem(SESSION_POSTS_KEY, JSON.stringify(result))
   return result
 }

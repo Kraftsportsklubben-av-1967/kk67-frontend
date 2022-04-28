@@ -1,4 +1,4 @@
-import { RECORDS, STYRKELOFT_URL } from '../constants'
+import { RECORDS, SESSION_RECORDS_KEY, STYRKELOFT_URL } from '../constants'
 import { fetchDocument, DOMString } from './loadData'
 
 export interface IRecord {
@@ -37,11 +37,11 @@ async function getRecords(): Promise<IRecord[]> {
 }
 
 export async function loadRecords(): Promise<IRecord[]> {
-  if (window.sessionStorage.getItem('records')) {
-    return JSON.parse(window.sessionStorage.getItem('records')!) as IRecord[]
+  if (window.sessionStorage.getItem(SESSION_RECORDS_KEY)) {
+    return JSON.parse(window.sessionStorage.getItem(SESSION_RECORDS_KEY)!) as IRecord[]
   }
   const records = await getRecords()
-  window.sessionStorage.setItem('records', JSON.stringify(records))
+  window.sessionStorage.setItem(SESSION_RECORDS_KEY, JSON.stringify(records))
   return records
 }
 
