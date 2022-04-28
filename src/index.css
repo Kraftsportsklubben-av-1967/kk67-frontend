@@ -16,7 +16,8 @@ html {
 }
 
 .header-red-underline {
-  @apply font-bold text-4xl lg:text-5xl border-b-8 border-red-700 w-fit pr-6 xl:text-6xl;
+  @apply font-bold border-b-8 border-red-700 w-fit pr-6;
+  @apply text-4xl lg:text-5xl xl:text-6xl;
 }
 
 /* sm */
@@ -34,7 +35,7 @@ html {
 }
 /* 2xl */
 
-@media (min-width: 640px) {
+@media (min-width: 1536px) {
 }
 
 .anchor-hover:hover {
@@ -51,5 +52,5 @@ html {
 }
 
 .anchor-link {
-  @apply hover:opacity-80 hover:underline text-red-600;
+  @apply hover:opacity-80 hover:underline text-red-600 duration-75 ease-in-out;
 }

@@ -13,7 +13,7 @@
         <Card>
           <template v-slot:body>
             <p>
-              Lokalet bærer preg av som dere ser på bildene under at det ble startet opp i 1967 og
+              Lokalet bærer preg av, som dere ser på bildene under, at det ble startet opp i 1967 og
               nostalgien henger fortsatt igjen i veggene. Å trene på KK-67 er unikt eller hardcore
               som de fleste ville kalt det
             </p>
@@ -22,18 +22,18 @@
       </template>
     </Layout>
     <div
-      class="flex flex-col mx-12 mt-10 lg:flex-row justify-between lg:px-0 md:w-5/6 sm:w-3/4 xs:w-5/6 lg:mx-auto"
+      class="flex flex-col mx-8 mt-10 md:flex-row justify-between lg:px-0 md:w-5/6 sm:w-3/4 xs:w-5/6 sm:mx-auto"
     >
       <div v-for="(_, i) in 3" class="flex flex-col justify-between mb-4">
         <div
           v-for="(_, j) in 6"
-          class="my-6 border rounded-sm hover:shadow-2xl duration-300 ease-linear hover:cursor-pointer"
+          class="my-3 sm:my-6 border rounded-sm hover:shadow-2xl duration-300 ease-linear hover:cursor-pointer"
         >
           <div class="container" @click="focus(3 * j + i + 1)">
             <img
               :src="getPictureN(3 * j + i + 1)"
               :alt="`KK-${3 * j + 1 + 1}-min.jpg`"
-              style="object-fit: cover; margin: 0"
+              style="object-fit: contain; margin: 0"
             />
             <div class="overlay">
               <h2
@@ -46,13 +46,13 @@
         </div>
       </div>
     </div>
-    <Card class="mx-auto md:w-5/6 sm:w-3/4 xs:w-5/6">
+    <Card class="md:mx-auto md:w-5/6 sm:w-3/4 xs:w-5/6 mx-8">
       <template v-slot:header>
         <h2>Fotograf:</h2>
       </template>
       <template v-slot:body>
         <p>
-          Bilder tatt av KK utdøver <em>Njord Fornes</em>
+          Bilder tatt av KK utøver <em>Njord Fornes</em>
           <a href="https://www.instagram.com/njordfornes/" class="anchor-link pl-2" target="_blank"
             >@njordfornes</a
           >
@@ -103,7 +103,6 @@ export default defineComponent({
 img {
   display: block;
   width: 100%;
-  height: auto;
 }
 
 /* sm */
@@ -112,8 +111,14 @@ img {
 /* md */
 @media (min-width: 768px) {
   /* lg */
+  img {
+    width: 20rem;
+  }
 }
 @media (min-width: 1024px) {
+  img {
+    width: 22.5rem;
+  }
 }
 
 /* xl */
@@ -133,6 +138,7 @@ img {
 .container {
   position: relative;
   width: 100%;
+  height: auto;
 }
 
 .overlay {
@@ -148,8 +154,10 @@ img {
   background-color: rgba(0, 0, 0, 0);
 }
 
-.container:hover .overlay {
-  background-color: rgba(0, 0, 0, 0.4);
-  opacity: 1;
+@media (hover: hover) and (pointer: fine) {
+  .container:hover .overlay {
+    background-color: rgba(0, 0, 0, 0.4);
+    opacity: 1;
+  }
 }
 </style>

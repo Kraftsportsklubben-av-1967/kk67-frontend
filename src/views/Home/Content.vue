@@ -67,6 +67,7 @@ export default defineComponent({
     },
     updatePage(val: number): void {
       this.currentPage = val
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     },
   },
 })

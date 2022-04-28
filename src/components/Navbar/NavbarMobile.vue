@@ -1,6 +1,8 @@
 <template>
-  <NavbarMobileOverlay v-if="toggled" @click="toggleOverlay" :navbar-buttons="navbarButtons" />
-  <div class="flex justify-between mx-10 h-fit">
+  <Transition>
+    <NavbarMobileOverlay v-if="toggled" @click="toggleOverlay" :navbar-buttons="navbarButtons" />
+  </Transition>
+  <div class="flex justify-between mx-8 h-fit">
     <KK67Logo :logo-color="logoColor" class="my-auto" />
     <div class="block my-auto cursor-pointer hover:opacity-70 duration-500" @click="toggleOverlay">
       <div v-if="!toggled">
@@ -56,5 +58,15 @@ export default defineComponent({
   height: 3px;
   margin: 7px 0;
   background-color: white;
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>

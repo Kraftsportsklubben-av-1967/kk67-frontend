@@ -75,6 +75,10 @@ export default defineComponent({
 article > div {
   @apply px-4 lg:px-8 w-full;
 }
+
+article {
+  overflow-wrap: break-word;
+}
 .clockfit {
   height: 2%;
   width: 2%;

@@ -58,7 +58,7 @@ export default defineComponent({
   @apply py-4;
 
   > div {
-    @apply my-2 px-4;
+    @apply my-2;
   }
 
   div p {

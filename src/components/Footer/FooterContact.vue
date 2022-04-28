@@ -1,5 +1,5 @@
 <template>
-  <div class="md:h-20 text-sm flex sm:flex-row text-left flex-col justify-evenly mx-8 sm:pl-0 pl-6">
+  <div class="md:h-20 text-sm flex sm:flex-row text-left flex-col justify-evenly mx-8 sm:pl-0 pl-2">
     <div class="my-5 lg:mx-auto font-thin text-gray-500">
       <h1 class="font-bold">Oppdaget en feil?</h1>
       <p>Vi tar gjerne imot feedback!</p>
@@ -16,7 +16,7 @@
     <div class="my-5 lg:mx-auto w-fit font-thin text-gray-500">
       <h1 class="font-bold">Utviklet av</h1>
       <p>Nettsiden er utviklet og vedlikeholdt av:</p>
-      <p>Marius Arhaug</p>
+      <p><strong>Marius Arhaug</strong></p>
       <p>
         <a class="anchor-hover" href="https://www.github.com/MariusArhaug" target="_blank"
           >Github</a
