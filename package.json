@@ -12,7 +12,8 @@
     "dev": "cross-env NODE_ENV=development yarn proxy & vite",
     "dev:host": "yarn dev --host",
     "build": "vue-tsc --noEmit && cross-env NODE_ENV=production && vite build",
-    "preview": "yarn build && vite preview",
+    "preview": "vite preview",
+    "preview:build": "yarn build && vite preview",
     "preview:host": "yarn preview --host",
     "proxy": "lcp --proxyUrl https://www.styrkeloft.no --port $(grep PROXY_PORT .env | cut -d '=' -f2) "
   },

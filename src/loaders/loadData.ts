@@ -14,6 +14,7 @@ export enum DOMString {
 export async function fetchDocument(endpoint: string, docType: DOMString): Promise<Document> {
   return fetch(endpoint, {
     method: 'GET',
+    mode: 'cors',
   })
     .then((res) => res.text())
     .then((str) =>

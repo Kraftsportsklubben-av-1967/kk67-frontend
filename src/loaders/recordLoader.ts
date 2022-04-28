@@ -16,11 +16,9 @@ async function getRecords(): Promise<IRecord[]> {
   const container = records.getElementById('resultatservice_container')!
 
   const rows = Array.from(container.children).slice(4)
-  console.log(rows)
   return rows.map((row) => {
     if (row.localName === 'table') {
       const tds = row.querySelectorAll('td')
-      console.log(tds)
       return {
         class: tds[0].querySelector('h3')?.innerHTML,
         rank: tds[1].innerText,
@@ -48,7 +46,6 @@ export async function loadRecords(): Promise<IRecord[]> {
 function updateHref(anchor: HTMLAnchorElement): string {
   const i = anchor.href.indexOf('/r')
   const uri = [anchor.href.slice(0, i), anchor.href.slice(i + 1)]
-  console.log(uri)
 
   return STYRKELOFT_URL + uri[1]
 }
