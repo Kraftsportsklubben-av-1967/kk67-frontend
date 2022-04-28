@@ -59,6 +59,7 @@ export async function loadIGPosts(): Promise<ICard[]> {
         text: post.caption,
         type: post.media_type,
         title: 'Instagram innlegg',
+        comp: post.caption.substring(0, 10),
       } as ICard
     }),
   )

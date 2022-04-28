@@ -82,10 +82,10 @@ const routes = [
     ],
   },
   { path: '/join', name: 'Join', component: () => import('../views/Member/index.vue') },
+  { path: '/:pathMatch(.*)*', redirect: '/' }, // catch all use case
 ]
-// ! TODO update paths
 
 export const router = createRouter({
-  history: createWebHashHistory('/'),
+  history: createWebHashHistory(),
   routes,
 })

@@ -30,6 +30,7 @@ export interface ICard {
   text: string
   url: string
   type?: string
+  comp?: string
 }
 
 export async function loadPosts(): Promise<ICard[]> {
@@ -42,7 +43,7 @@ export async function loadPosts(): Promise<ICard[]> {
   const igposts = await loadIGPosts()
   const fbposts = await loadFBPosts()
 
-  const output = _.uniqBy([...igposts, ...fbposts], 'text')
+  const output = _.uniqBy([...igposts, ...fbposts], 'comp')
   // TODO this is O(n²) complexity... would be better if we could ONLY query Facebook posts from the api to remove this duplicate removal funciton
 
   const result = output.sort((a: ICard, b: ICard) => b.date.getTime() - a.date.getTime())

@@ -39,6 +39,7 @@ interface IFBPost {
   message?: string
   full_picture: string
   id: string
+  type: string
 }
 
 function getFBPost(id: string | number): Promise<IFBPost> {
@@ -47,7 +48,7 @@ function getFBPost(id: string | number): Promise<IFBPost> {
       `${id}`,
       'GET',
       {
-        fields: 'place,via,message,permalink_url, created_time, full_picture',
+        fields: 'place,via,message,permalink_url,created_time,full_picture',
         access_token: FB_PAGE_TOKEN,
       },
       (resp: IFBPost) => resolve(resp),
@@ -72,6 +73,8 @@ export async function loadFBPosts(): Promise<ICard[]> {
         text: post.message,
         title: 'Facebook innlegg',
         url: post.permalink_url,
+        type: post.type,
+        comp: post.message.substring(0, 10),
       } as ICard
     }),
   )
