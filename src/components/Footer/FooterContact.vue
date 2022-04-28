@@ -16,7 +16,7 @@
     <div class="my-5 lg:mx-auto w-fit font-thin text-gray-500">
       <h1 class="font-bold">Utviklet av</h1>
       <p>Nettsiden er utviklet og vedlikeholdt av:</p>
-      <p>Marius Arhaug</p>
+      <p><strong>Marius Arhaug</strong></p>
       <p>
         <a class="anchor-hover" href="https://www.github.com/MariusArhaug" target="_blank"
           >Github</a
