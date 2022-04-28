@@ -6,6 +6,11 @@ const pathResolve = (newPath: string) => path.resolve(__dirname, newPath)
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
+  root: './',
+  build: {
+    outDir: 'dist',
+  },
+  publicDir: 'assets',
   resolve: {
     alias: {
       '@': pathResolve('./src'),
