@@ -77,8 +77,8 @@ export interface IComitee {
     members: {
       title: String
       name: String
-      phoneNumber: String
       email: String
+      phoneNumber: String
     }[]
   }
 }
@@ -89,32 +89,32 @@ export const comitee: IComitee = {
       {
         title: `Styreleder`,
         name: `Jostein Fiveltun`,
-        phoneNumber: `+47 450 54 336`,
         email: 'kk67.styreleder@gmail.com',
+        phoneNumber: `+47 450 54 336`,
       },
       {
         title: `Nestleder`,
         name: `Damian Steinke`,
-        phoneNumber: ``,
         email: '',
+        phoneNumber: ''
       },
       {
         title: `Styremedlem`,
-        name: ``,
-        phoneNumber: ``,
+        name: `Frøya Gathen`,
         email: '',
+        phoneNumber: ``,
       },
       {
         title: `Styremedlem`,
-        name: ``,
-        phoneNumber: ``,
+        name: `Sara Rehnlund`,
         email: '',
+        phoneNumber: ``,
       },
       {
         title: `Kasserer`,
-        name: ``,
+        name: `Knut Einar Skår`,
+        email: 'kk67.kasserer@gmail.com',
         phoneNumber: ``,
-        email: '',
       },
     ],
   },
@@ -126,10 +126,6 @@ export interface ITrainers {
       title: string
       content: string
     }
-    trainers: {
-        name: string
-        level: string
-    }[]
   }
 }
 
@@ -137,19 +133,33 @@ export const trainers: ITrainers = {
   content: {
     about: {
       title: `Om klubbtrenere`,
-      content: `KK-67 har flere klubbtrenere som lager treningsprogrammer
-                til medlemmene i klubben. Om du har behov for treningsprogram tar
-                du kontakt med en av klubbtrenerne når du er på trening.`
+      content: `KK-67 har flere utdannede trenere gjennom <i>Norges Stryrkeløftforbund</i>. Disse hjelper 
+                andre medlemmer med treningsprogrammer og teknikk på frivillig basis. Dersom du trenger 
+                hjelp med trening tar du kontakt med ansvarlig for klubbtrenere <b>Damian Steinke</b>. 
+                Han fordeler utøverne med behov for oppfølging på klubbtrenere. `
     },
-    trainers: [
-      {
-        name: `Jostein Fiveltun`,
-        level: `Regionstrener`,
-      },
-      {
-        name: `Joar Finsaas`,
-        level: `Klubbtrener`
-      }
-    ]
   }
+}
+
+export interface IVoluntaryWork {
+  content: {
+    heading: string
+    body: string
+  }
+}
+
+export const voluntaryWork: IVoluntaryWork = {
+  content: {
+    heading: `Dugnad på KK-67`,
+    body: `KK-67 drives på frivillig basis av klubbens medlemmer, og er <i>ikke</i> et billig treningssenter. 
+            Dette betyr at det er visse forpliktelser når man er medlem i klubben. Som medlem har man et ansvar 
+            ovenfor andre medlemmer, og ovenfor klubben som en helhet, for å bidra til et godt treningsmiljø. 
+            <br /><br />
+            
+            Dette betyr at man skal ta vare på klubb-kamerater og at man hjelper til på trening med avløft, sikring ol. 
+            Ved klubbaktivitet, som stevner eller dugnad er det også forventet at alle som har mulighet stiller 
+            opp og hjelper. I tilleg blir medlemmer i klubben satt opp på vaskeliste med 2 andre klubb-kamerater 
+            1-2 ganger i året.
+            `
+  },
 }

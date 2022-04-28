@@ -5,7 +5,7 @@
         <span v-html="member.title"></span>
       </template>
       <template v-slot:body>
-        <span v-html="member.name + `<br />` + member.phoneNumber + `<br />` + member.email"></span>
+        <span v-html="member.name + `<br />` + member.email + `<br />` + member.phoneNumber"></span>
       </template>
     </Card>
   </div>

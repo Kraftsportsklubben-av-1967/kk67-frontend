@@ -10,17 +10,7 @@
       </template>
     </Card>
   </div>
-  <div class="grid gap-8 mt-4" :class="showMobile ? 'grid-cols-1' : 'grid-cols-2'">
-    <Card v-for="trainer in trainers.content.trainers">
-      <template v-slot:header>
-        <span v-html="trainer.name"></span>
-      </template>
-      <template v-slot:body>
-        <span v-html="trainer.level"></span>
-      </template>
-    </Card>
-  </div>
-  </div>
+</div>
 
 </template>
 
