@@ -78,7 +78,6 @@ export default defineComponent({
   },
   methods: {
     getPictureN(i: number): string {
-      console.log(i)
       return `/public/pictures/KK-${i}-min.jpg`
     },
     focus(i: number) {
