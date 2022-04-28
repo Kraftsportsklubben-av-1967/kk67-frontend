@@ -5,7 +5,7 @@
       class="shadow-lg border rounded-md hover:shadow-xl duration-300"
       style="width: 100%; height: 50vh"
     />
-    <div class="mt-8 flex flex-col lg:flex-row justify-between">
+    <div class="mt-8 flex flex-col lg:flex-row justify-between h-fit">
       <Card class="w-full lg:w-6/12">
         <template v-slot:header>Hvor finner du oss</template>
         <template v-slot:body
@@ -18,7 +18,7 @@
           for å låse deg inn.</template
         >
       </Card>
-      <Card class="w-full lg:w-5/12 h-fit lg:mt-0 mt-4">
+      <Card class="w-full lg:w-5/12 lg:mt-0 mt-4">
         <template v-slot:header>Postaddresse</template>
         <template v-slot:body>
           KK-67 <br />
