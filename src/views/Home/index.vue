@@ -1,25 +1,23 @@
 <template>
-  <div class="flex flex-col justify-between">
-    <Layout>
-      <template v-slot:sidebar>
-        <div class="flex flex-col">
-          <div class="header-red-underline mb-4">
-            <h1>Nyheter</h1>
-          </div>
-          <News class="my-5 w-10/12" />
-          <div class="mt-6 text-xl w-fit">
-            <p>Følg oss på sosiale medier!</p>
-          </div>
-          <div class="mt-4">
-            <Media class="justify-start" />
-          </div>
+  <Layout>
+    <template v-slot:sidebar>
+      <div class="flex flex-col">
+        <div class="header-red-underline mb-4">
+          <h1>Nyheter</h1>
         </div>
-      </template>
-      <template v-slot:main>
-        <Content />
-      </template>
-    </Layout>
-  </div>
+        <News class="my-5 w-10/12" />
+        <div class="mt-6 text-xl w-fit">
+          <p>Følg oss på sosiale medier!</p>
+        </div>
+        <div class="mt-4">
+          <Media class="justify-start" />
+        </div>
+      </div>
+    </template>
+    <template v-slot:main>
+      <Content />
+    </template>
+  </Layout>
 </template>
 
 <script lang="ts">
