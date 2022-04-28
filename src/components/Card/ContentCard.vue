@@ -6,7 +6,7 @@
     <div class="text-lg font-bold my-2">
       <div class="flex flex-row">
         <img
-          src="@assets/logo/clock.png"
+          src="/public/logo/clock.png"
           class="clockfit"
           style="width: fit-content"
           alt="clock_image"

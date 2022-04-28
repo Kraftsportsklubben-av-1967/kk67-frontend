@@ -3,7 +3,7 @@
     <div
       id="header-background-image"
       class="bg-center bg-no-repeat h-full"
-      style="background-image: url(../../assets/logo/header.jpeg)"
+      style="background-image: url(/public/logo/header.jpeg)"
       v-if="$route.name === 'Home'"
     >
       <Navbar />

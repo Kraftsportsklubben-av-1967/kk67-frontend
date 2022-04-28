@@ -19,7 +19,7 @@ export enum LOGO_TYPES {
   DEFAULT_LOGO = 'kk-logo.png',
 }
 
-const ASSETS_URL = '../../assets/logo/'
+const ASSETS_URL = 'public/logo/'
 export default defineComponent({
   name: 'KK67Logo',
   props: {

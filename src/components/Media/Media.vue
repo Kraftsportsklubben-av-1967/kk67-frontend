@@ -4,7 +4,7 @@
       <a :href="img.url" target="_blank">
         <img
           :alt="img.alt"
-          :src="'../../icons/' + img.src"
+          :src="'/public/icons/' + img.src"
           style="width: 2.5rem; object-fit: scale-down"
         />
       </a>

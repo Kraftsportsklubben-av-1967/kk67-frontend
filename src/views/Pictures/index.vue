@@ -79,7 +79,7 @@ export default defineComponent({
   methods: {
     getPictureN(i: number): string {
       console.log(i)
-      return `/assets/pictures/KK-${i}-min.jpg`
+      return `/public/pictures/KK-${i}-min.jpg`
     },
     focus(i: number) {
       this.focused = true
