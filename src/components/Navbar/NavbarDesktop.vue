@@ -1,5 +1,5 @@
 <template>
-  <div class="flex mx-10 justify-between">
+  <div class="flex mx-2 lg:mx-10 justify-between">
     <KK67Logo class="my-auto ml-2" :logo-color="logoColor" />
     <div class="flex justify-end my-auto">
       <NavbarButton
@@ -21,12 +21,13 @@ import NavbarButton, { INavbarButton } from './NavbarButton.vue'
 
 export default defineComponent({
   name: 'NavbarDesktop',
+  inheritAttrs: false,
   props: {
     logoColor: {
       default: LOGO_TYPES.DEFAULT_LOGO,
     },
     navbarButtons: {
-      type: [] as PropType<INavbarButton[]>,
+      type: Array as PropType<Array<INavbarButton>>,
       required: true,
     },
   },

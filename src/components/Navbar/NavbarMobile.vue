@@ -28,7 +28,7 @@ export default defineComponent({
       default: LOGO_TYPES.DEFAULT_LOGO,
     },
     navbarButtons: {
-      type: [] as PropType<INavbarButton[]>,
+      type: Array as PropType<Array<INavbarButton>>,
       required: true,
     },
   },
