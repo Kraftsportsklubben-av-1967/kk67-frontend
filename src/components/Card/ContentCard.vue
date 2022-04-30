@@ -14,7 +14,10 @@
         <p class="mb-auto">{{ date }}</p>
       </div>
     </div>
-    <video v-if="type === 'VIDEO'" :src="src" controls style="object-fit: contain" />
+    <video v-if="type === 'VIDEO'" controls style="object-fit: contain">
+      <source :src="src" />
+    </video>
+
     <img
       v-else-if="src"
       :src="src"

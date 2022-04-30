@@ -21,32 +21,29 @@
         </Card>
       </template>
     </Layout>
-    <div
-      class="flex flex-col mx-8 mt-10 md:flex-row justify-between lg:px-0 md:w-5/6 sm:w-3/4 xs:w-5/6 sm:mx-auto"
-    >
-      <div v-for="(_, i) in 3" class="flex flex-col justify-between mb-4">
+    <div class="flex flex-col mx-8 mt-10 lg:flex-row justify-between md:w-5/6 sm:w-5/6 sm:mx-auto">
+      <div v-for="(_, i) in 3" class="mb-4">
         <div
           v-for="(_, j) in 6"
-          class="my-3 sm:my-6 border rounded-sm hover:shadow-2xl duration-300 ease-linear hover:cursor-pointer"
+          class="border rounded-sm hover:shadow-2xl duration-300 ease-linear hover:cursor-pointer w-full hover-container"
+          @click="focus(3 * j + i + 1)"
         >
-          <div class="container" @click="focus(3 * j + i + 1)">
-            <img
-              :src="getPictureN(3 * j + i + 1)"
-              :alt="`KK-${3 * j + 1 + 1}-min.jpg`"
-              style="object-fit: contain; margin: 0"
-            />
-            <div class="overlay">
-              <h2
-                class="text-white text-4xl lg:text-5xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-              >
-                UTFORSK
-              </h2>
-            </div>
+          <img
+            :src="getPictureN(3 * j + i + 1)"
+            :alt="`KK-${3 * j + 1 + 1}-min.jpg`"
+            style="display: block"
+          />
+          <div class="overlay">
+            <h2
+              class="text-white text-4xl lg:text-5xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            >
+              UTFORSK
+            </h2>
           </div>
         </div>
       </div>
     </div>
-    <Card class="md:mx-auto md:w-5/6 sm:w-3/4 xs:w-5/6 mx-8">
+    <Card class="md:mx-auto md:w-5/6 mx-8">
       <template v-slot:header>
         <h2>Fotograf:</h2>
       </template>
@@ -99,24 +96,13 @@ export default defineComponent({
   opacity: 0;
 }
 
-img {
-  display: block;
-  width: 100%;
-}
+.hover-container {
+  position: relative;
 
-/* sm */
-@media (min-width: 640px) {
-}
-/* md */
-@media (min-width: 768px) {
-  /* lg */
-  img {
-    width: 20rem;
-  }
-}
-@media (min-width: 1024px) {
-  img {
-    width: 22.5rem;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  &:first-child {
+    margin-top: 0rem;
   }
 }
 
@@ -126,18 +112,12 @@ img {
     width: 25rem;
   }
 }
-/* 2xl */
 
+/* 2xl */
 @media (min-width: 1536px) {
   img {
     width: 31rem;
   }
-}
-
-.container {
-  position: relative;
-  width: 100%;
-  height: auto;
 }
 
 .overlay {
@@ -146,15 +126,14 @@ img {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 100%;
+
   opacity: 0;
-  width: 100%;
   transition: 0.5s ease;
   background-color: rgba(0, 0, 0, 0);
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .container:hover .overlay {
+  .hover-container:hover .overlay {
     background-color: rgba(0, 0, 0, 0.4);
     opacity: 1;
   }
