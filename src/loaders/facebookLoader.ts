@@ -48,7 +48,7 @@ function getFBPost(id: string | number): Promise<IFBPost> {
       `${id}`,
       'GET',
       {
-        fields: 'place,via,message,permalink_url,created_time,full_picture',
+        fields: 'place,via,message,permalink_url,created_time,full_picture,attachments',
         access_token: FB_PAGE_TOKEN,
       },
       (resp: IFBPost) => resolve(resp),
