@@ -8,6 +8,16 @@
         <div class="mt-8">
           <Menu :buttons="menuButtons" current-path="/meets" />
         </div>
+        <div>
+          <p>
+            Kommende stevner er hentet fra
+            <a href="https://styrkeloft.no/terminliste" target="_blank" class="anchor-link"
+              >styrkeloft.no</a
+            >
+            sin terminliste, du kan også sjekke ut kommende stevner som <em>ikke</em> er arrangert
+            der også!
+          </p>
+        </div>
       </div>
     </template>
     <template v-slot:main>
