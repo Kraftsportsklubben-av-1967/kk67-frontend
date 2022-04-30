@@ -8,14 +8,24 @@
         <div class="mt-8">
           <Menu :buttons="menuButtons" current-path="/meets" />
         </div>
-        <div>
+        <div v-if="$route.name === 'UpcommingMeets'" class="mt-8">
+          <h3 class="header-red-underline" style="font-size: 1.6rem">Om kommende stevner</h3>
+          <br />
           <p>
             Kommende stevner er hentet fra
             <a href="https://styrkeloft.no/terminliste" target="_blank" class="anchor-link"
               >styrkeloft.no</a
             >
             sin terminliste, du kan også sjekke ut kommende stevner som <em>ikke</em> er arrangert
-            der også!
+            av <strong>KK-67</strong> der også!
+          </p>
+        </div>
+        <div v-else class="mt-8">
+          <h3 class="header-red-underline" style="font-size: 1.8rem">Om tidligere stevner</h3>
+          <br />
+          <p>
+            Tidligere stevner er alle stevner der et medlem av <strong>KK-67</strong> har deltatt i.
+            Dette varierer alt fra klubbstevne, NM, Nordisk, WEC, EM eller VM!
           </p>
         </div>
       </div>
