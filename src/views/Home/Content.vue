@@ -12,6 +12,7 @@
       :text="contentCard.text"
       :url="contentCard.url"
       :type="contentCard.type"
+      :carusell="contentCard.carusell"
     />
     <Pagination :n_buttons="n_pages" :current-page="currentPage" @update="updatePage" />
   </template>

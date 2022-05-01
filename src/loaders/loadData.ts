@@ -31,6 +31,18 @@ export interface ICard {
   url: string
   type?: string
   comp?: string
+  carusell: ICarusell[]
+}
+
+export enum IMediaType {
+  CAROUSEL_ALBUM = 'CAROUSEL_ALBUM',
+  IMAGE = 'IMAGE',
+  VIDEO = 'VIDEO',
+}
+
+export interface ICarusell {
+  media_type: IMediaType
+  media_url: string
 }
 
 export async function loadPosts(): Promise<ICard[]> {
