@@ -37,7 +37,8 @@ export default defineComponent({
       return ASSETS_URL + logo
     },
     goToHomepage() {
-      this.$router.push('/')
+      if (this.$route.name === 'Home') this.$router.go(0) //force refresh of content
+      else this.$router.push('/')
     },
   },
 })
