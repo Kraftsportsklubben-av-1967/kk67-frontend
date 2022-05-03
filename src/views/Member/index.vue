@@ -15,6 +15,16 @@
             >
           </p>
         </div>
+        <div class="mt-10">
+          <h3 class="header-red-underline" style="font-size: 2.5rem">Om styrkeløft</h3>
+          <br />
+          <p>
+            For mer informasjon om styrkeløft, besøk hovedsiden til styrkeloft her:
+            <a href="https://styrkeloft.no" target="_blank" class="anchor-link"
+              ><strong>www.styrkeloft.no</strong></a
+            >
+          </p>
+        </div>
       </div>
     </template>
     <template v-slot:main>

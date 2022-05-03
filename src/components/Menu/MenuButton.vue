@@ -2,7 +2,9 @@
   <div class="router-link duration-500 ease-in-out">
     <router-link :to="path" @mouseenter="hover = true" @mouseleave="hover = false">
       <p class="font-medium text-md pb-4">
-        <span v-if="focus || hover" class="text-red-600 pr-2">&#11044;</span>
+        <Transition>
+          <span v-if="focus || hover" class="text-red-600 pr-2">&#11044;</span>
+        </Transition>
         {{ title }}
       </p>
     </router-link>
@@ -47,5 +49,15 @@ export default defineComponent({
   span {
     @apply text-red-500;
   }
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>

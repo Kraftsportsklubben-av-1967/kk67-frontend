@@ -1,6 +1,6 @@
 <template>
   <div
-    class="border-solid border-t-red-600 border-gray-200 rounded-full flex justify-center loader"
+    class="border-solid border-t-red-600 border-gray-200 rounded-full flex justify-center loader mx-auto"
   />
 </template>
 
@@ -9,7 +9,6 @@
   box-sizing: border-box;
   border-width: 7.5px;
   animation: spin 1.9s linear infinite;
-  margin: auto;
 }
 @keyframes spin {
   from {

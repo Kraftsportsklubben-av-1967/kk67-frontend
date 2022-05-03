@@ -6,7 +6,7 @@
     <div class="text-lg font-bold my-2">
       <div class="flex flex-row">
         <img
-          src="@assets/logo/clock.png"
+          src="/public/logo/clock.png"
           class="clockfit"
           style="width: fit-content"
           alt="clock_image"
@@ -14,14 +14,43 @@
         <p class="mb-auto">{{ date }}</p>
       </div>
     </div>
-    <video v-if="type === 'VIDEO'" :src="src" controls style="object-fit: contain" />
-    <img
-      v-else-if="src"
-      :src="src"
-      alt="card_image"
-      class="w-full my-2 block"
-      style="object-fit: contain"
-    />
+    <template v-if="src">
+      <video v-if="type === 'VIDEO'" controls style="object-fit: contain">
+        <source :src="src" />
+      </video>
+      <figure v-if="type === 'CAROUSEL_ALBUM'">
+        <div class="relative m-auto w-full">
+          <div class="absolute top-0 text-white text-s p-3 font-bold pagination">
+            {{ i + 1 }} / {{ carusell.length }}
+          </div>
+          <img
+            v-if="carusell[i].media_type === 'IMAGE'"
+            :src="carusell[i].media_url"
+            alt="carusell_image"
+            class="fade w-full"
+            style="object-fit: contain: display: block;"
+          />
+          <video v-else controls style="object-fit: contain" :src="carusell[i].media_url" />
+          <a class="prev" v-if="hasPrev" @click="i--">❮</a>
+          <a class="next" v-if="hasNext" @click="i++">❯</a>
+
+          <div class="text-center absolute bottom-4 w-full">
+            <div class="flex flex-row mx-auto justify-center">
+              <template v-for="(_, j) in carusell.length">
+                <span @click="slide(j)" :class="i === j ? 'active dot' : 'dot'" />
+              </template>
+            </div>
+          </div>
+        </div>
+      </figure>
+      <img
+        v-else-if="type === 'IMAGE'"
+        :src="src"
+        alt="card_image"
+        class="w-full my-2 block"
+        style="object-fit: contain"
+      />
+    </template>
     <div class="text-md font-normal text-left text-xl mt-2">
       <p>{{ text }}</p>
     </div>
@@ -38,7 +67,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, PropType } from 'vue'
+import { ICarusell } from '../../loaders'
 export default defineComponent({
   name: 'ContentCard',
   props: {
@@ -62,16 +92,33 @@ export default defineComponent({
     url: {
       type: String,
     },
+    carusell: {
+      type: Array as PropType<Array<ICarusell>>,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      i: 0,
+    }
   },
   computed: {
-    hasHeader(): boolean {
-      return !!this.$slots.header
+    hasPrev(): boolean {
+      return this.i > 0
+    },
+    hasNext(): boolean {
+      return this.i < this.carusell.length - 1
+    },
+  },
+  methods: {
+    slide(n: number) {
+      this.i = n
     },
   },
 })
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 article > div {
   @apply px-4 lg:px-8 w-full;
 }
@@ -87,5 +134,54 @@ article {
   max-height: 6rem;
   min-width: 1.5rem;
   max-width: 1.5rem;
+}
+
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.pagination {
+  &:hover {
+    background: rgba(0, 0, 0, 0.3);
+  }
+  transition: background-color 0.6s ease;
+}
+
+.active,
+.dot:hover {
+  background-color: #4e4e4e;
+}
+
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
 }
 </style>

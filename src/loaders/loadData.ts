@@ -1,6 +1,7 @@
 import { loadFBPosts } from './facebookLoader'
 import { loadIGPosts } from './instagramLoader'
 import _ from 'lodash'
+import { SESSION_POSTS_KEY } from '../constants'
 
 export enum DOMString {
   TEXT_HTML = 'text/html',
@@ -13,6 +14,7 @@ export enum DOMString {
 export async function fetchDocument(endpoint: string, docType: DOMString): Promise<Document> {
   return fetch(endpoint, {
     method: 'GET',
+    mode: 'cors',
   })
     .then((res) => res.text())
     .then((str) =>
@@ -28,11 +30,24 @@ export interface ICard {
   text: string
   url: string
   type?: string
+  comp?: string
+  carusell: ICarusell[]
+}
+
+export enum IMediaType {
+  CAROUSEL_ALBUM = 'CAROUSEL_ALBUM',
+  IMAGE = 'IMAGE',
+  VIDEO = 'VIDEO',
+}
+
+export interface ICarusell {
+  media_type: IMediaType
+  media_url: string
 }
 
 export async function loadPosts(): Promise<ICard[]> {
-  if (window.sessionStorage.getItem('posts')) {
-    return JSON.parse(window.sessionStorage.getItem('posts')!, (k, v) => {
+  if (window.sessionStorage.getItem(SESSION_POSTS_KEY)) {
+    return JSON.parse(window.sessionStorage.getItem(SESSION_POSTS_KEY)!, (k, v) => {
       return k === 'date' ? new Date(v) : v
     }) as ICard[]
   }
@@ -40,10 +55,10 @@ export async function loadPosts(): Promise<ICard[]> {
   const igposts = await loadIGPosts()
   const fbposts = await loadFBPosts()
 
-  const output = _.uniqBy([...igposts, ...fbposts], 'text')
+  const output = _.uniqBy([...igposts, ...fbposts], 'comp')
   // TODO this is O(n²) complexity... would be better if we could ONLY query Facebook posts from the api to remove this duplicate removal funciton
 
-  const result = output.sort((a: ICard, b: ICard) => b.date.getTime() - a.date.getTime())
-  window.sessionStorage.setItem('posts', JSON.stringify(result))
+  const result = [...output].sort((a: ICard, b: ICard) => b.date.getTime() - a.date.getTime())
+  window.sessionStorage.setItem(SESSION_POSTS_KEY, JSON.stringify(result))
   return result
 }

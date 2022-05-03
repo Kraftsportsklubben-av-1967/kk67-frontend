@@ -12,7 +12,7 @@
   </article>
 
   <a href="https://www.antidoping.no/" target="_blank" class="w-fit mt-6"
-    ><img src="../../../assets/logo/adno-test.png" alt="" class="duration-500 antidoping-icon"
+    ><img src="/public/logo/adno.png" alt="" class="duration-500 antidoping-icon"
   /></a>
 </template>
 <script lang="ts">

@@ -1,5 +1,5 @@
 <template>
-  <div class="font-bold p-4">
+  <div class="font-bold p-2 lg:p-4">
     <router-link
       v-if="invert"
       class="router-link"

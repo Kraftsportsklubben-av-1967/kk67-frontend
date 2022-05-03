@@ -1,8 +1,8 @@
 <template>
-  <Loader v-if="loading" class="h-60 w-60" style="margin-top: 6rem" />
+  <Loader v-if="loading" class="h-60 w-60 mt-8 md:mt-20" />
   <template v-else>
     <ContentCard
-      class="mb-14 hover:shadow-2xl ease-in-out"
+      class="mb-14 hover:shadow-2xl ease-in-out max-w-4xl"
       style="transition-duration: 0.5s"
       v-for="contentCard in pages[currentPage]"
       :key="contentCard.id"
@@ -12,6 +12,7 @@
       :text="contentCard.text"
       :url="contentCard.url"
       :type="contentCard.type"
+      :carusell="contentCard.carusell"
     />
     <Pagination :n_buttons="n_pages" :current-page="currentPage" @update="updatePage" />
   </template>

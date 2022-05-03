@@ -19,7 +19,7 @@ export enum LOGO_TYPES {
   DEFAULT_LOGO = 'kk-logo.png',
 }
 
-const ASSETS_URL = '../../assets/logo/'
+const ASSETS_URL = '/public/logo/'
 export default defineComponent({
   name: 'KK67Logo',
   props: {
@@ -37,7 +37,8 @@ export default defineComponent({
       return ASSETS_URL + logo
     },
     goToHomepage() {
-      this.$router.push('/')
+      if (this.$route.name === 'Home') this.$router.go(0) //force refresh of content
+      else this.$router.push('/')
     },
   },
 })

@@ -24,7 +24,7 @@ export async function initMap(
     position: coordinates,
     map: map,
     animation: google.maps.Animation.DROP,
-    icon: '../../assets/kk-logo-mini.png',
+    icon: '/public/kk-logo-mini.png',
   })
   marker.addListener('click', () => {
     marker.getAnimation()
