@@ -40,8 +40,8 @@ $ yarn -v
 6. Clone project
 
 ```sh
-git clone git@github.com:Kraftsportsklubben-av-1967/kk67.git
-cd kk67
+$ git clone git@github.com:Kraftsportsklubben-av-1967/kk67.git
+$ cd kk67
 ```
 
 7. Install dependencies
