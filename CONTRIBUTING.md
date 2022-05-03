@@ -40,7 +40,7 @@ yarn -v
 6. Clone project
 
 ```sh
-git clone git@github.com:Kraftsportsklubben-av-1967/website.git
+git clone git@github.com:Kraftsportsklubben-av-1967/kk67.git
 cd kk67
 ```
 
@@ -56,7 +56,7 @@ yarn
 yarn global add local-cors-proxy
 ```
 
-9. set up env variables in a `.env` file (**not** to be pushed to repo). Ask **Marius** for key.
+9. set up env variables in a `.env` file (**not** to be pushed to repo). Ask **Marius** for key(s).
 
 ```sh
 VITE_GOOGLE_API_KEY = "<key>"
@@ -150,7 +150,7 @@ You can run one single test file by running `yarn jest:watch <FILENAME>`, for ex
 
 ## Editor
 
-We recommend using Visual Studio Code as editor, but whatever you prefer will probably work. You might need to configure your editor to work with TypeScript, ESlint, Prettier, and Editorconfig.
+I recommend using Visual Studio Code as editor, but whatever you prefer will probably work. You might need to configure your editor to work with TypeScript, ESlint, Prettier, and Editorconfig.
 
 ### Visual Studio Code
 
