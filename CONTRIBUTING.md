@@ -10,19 +10,19 @@ MacOS/Ubuntu: https://github.com/nvm-sh/nvm
 Windows: https://nodejs.org/en/download/
 
 ```sh
-nvm install 14
+$ nvm install 14
 ```
 
 1. Make node v14 default
 
 ```sh
-nvm alias default 14
+$ nvm alias default 14
 ```
 
 3. Open a new terminal and verify node version (should return v14.X.X)
 
 ```sh
-node -v
+$ node -v
 ```
 
 4. Install yarn
@@ -34,7 +34,7 @@ node -v
 5. Open a new terminal and verify yarn version (should return 1.X.X)
 
 ```sh
-yarn -v
+$ yarn -v
 ```
 
 6. Clone project
@@ -47,13 +47,13 @@ cd kk67
 7. Install dependencies
 
 ```sh
-yarn
+$ yarn
 ```
 
 8. add lcp (local host proxy, [**link**](https://github.com/garmeeh/local-cors-proxy)) to $PATH
 
 ```sh
-yarn global add local-cors-proxy
+$ yarn global add local-cors-proxy
 ```
 
 9. set up env variables in a `.env` file (**not** to be pushed to repo). Ask **Marius** for key(s).
@@ -68,13 +68,13 @@ VITE_FB_PAGE_KEY = "<key>"
 10. Start dev mode
 
 ```sh
-yarn dev
+$ yarn dev
 ```
 
 11. Optionally you can host it to your local network such as this.
 
 ```sh
-yarn dev:host
+$ yarn dev:host
 ```
 
 > All yarn scrips can be found in **package.json**
