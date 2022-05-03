@@ -24,8 +24,9 @@
           <h3 class="header-red-underline" style="font-size: 1.8rem">Om tidligere stevner</h3>
           <br />
           <p>
-            Tidligere stevner er alle stevner der et medlem av <strong>KK-67</strong> har deltatt i.
-            Dette varierer alt fra klubbstevne, NM, Nordisk, WEC, EM eller VM!
+            Tidligere stevner er alle stevner der et eller flere medlemmer av
+            <strong>KK-67</strong> har deltatt i. Dette varierer alt fra klubbstevne, NM, Nordisk,
+            WEC, EM eller VM!
           </p>
         </div>
       </div>

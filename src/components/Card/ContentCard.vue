@@ -14,40 +14,43 @@
         <p class="mb-auto">{{ date }}</p>
       </div>
     </div>
-    <video v-if="type === 'VIDEO'" controls style="object-fit: contain">
-      <source :src="src" />
-    </video>
-    <figure v-if="type === 'CAROUSEL_ALBUM'">
-      <div class="relative m-auto w-full">
-        <div class="absolute top-0 text-white text-s px-6 py-8 font-bold">
-          {{ i + 1 }} / {{ carusell.length }}
-        </div>
-        <a class="prev" @click="prev">❮</a>
-        <img
-          v-if="carusell[i].media_type === 'IMAGE'"
-          :src="carusell[i].media_url"
-          alt="carusell_image"
-          class="fade w-full"
-          style="object-fit: contain: display: block;"
-        />
-        <video v-else controls style="object-fit: contain" :src="carusell[i].media_url" />
-        <a class="next" @click="next">❯</a>
-        <div class="text-center absolute bottom-4 w-full">
-          <div class="flex flex-row mx-auto justify-center">
-            <template v-for="(_, j) in carusell.length">
-              <span @click="slide(j)" :class="i === j ? 'active dot' : 'dot'" />
-            </template>
+    <template v-if="src">
+      <video v-if="type === 'VIDEO'" controls style="object-fit: contain">
+        <source :src="src" />
+      </video>
+      <figure v-if="type === 'CAROUSEL_ALBUM'">
+        <div class="relative m-auto w-full">
+          <div class="absolute top-0 text-white text-s p-3 font-bold pagination">
+            {{ i + 1 }} / {{ carusell.length }}
+          </div>
+          <img
+            v-if="carusell[i].media_type === 'IMAGE'"
+            :src="carusell[i].media_url"
+            alt="carusell_image"
+            class="fade w-full"
+            style="object-fit: contain: display: block;"
+          />
+          <video v-else controls style="object-fit: contain" :src="carusell[i].media_url" />
+          <a class="prev" v-if="hasPrev" @click="i--">❮</a>
+          <a class="next" v-if="hasNext" @click="i++">❯</a>
+
+          <div class="text-center absolute bottom-4 w-full">
+            <div class="flex flex-row mx-auto justify-center">
+              <template v-for="(_, j) in carusell.length">
+                <span @click="slide(j)" :class="i === j ? 'active dot' : 'dot'" />
+              </template>
+            </div>
           </div>
         </div>
-      </div>
-    </figure>
-    <img
-      v-else-if="src"
-      :src="src"
-      alt="card_image"
-      class="w-full my-2 block"
-      style="object-fit: contain"
-    />
+      </figure>
+      <img
+        v-else-if="type === 'IMAGE'"
+        :src="src"
+        alt="card_image"
+        class="w-full my-2 block"
+        style="object-fit: contain"
+      />
+    </template>
     <div class="text-md font-normal text-left text-xl mt-2">
       <p>{{ text }}</p>
     </div>
@@ -100,21 +103,14 @@ export default defineComponent({
     }
   },
   computed: {
-    hasHeader(): boolean {
-      return !!this.$slots.header
+    hasPrev(): boolean {
+      return this.i > 0
+    },
+    hasNext(): boolean {
+      return this.i < this.carusell.length - 1
     },
   },
   methods: {
-    prev() {
-      if (this.i > 0) {
-        this.i--
-      }
-    },
-    next() {
-      if (this.i < this.carusell.length - 1) {
-        this.i++
-      }
-    },
     slide(n: number) {
       this.i = n
     },
@@ -122,7 +118,7 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 article > div {
   @apply px-4 lg:px-8 w-full;
 }
@@ -151,9 +147,16 @@ article {
   transition: background-color 0.6s ease;
 }
 
+.pagination {
+  &:hover {
+    background: rgba(0, 0, 0, 0.3);
+  }
+  transition: background-color 0.6s ease;
+}
+
 .active,
 .dot:hover {
-  background-color: #717171;
+  background-color: #4e4e4e;
 }
 
 .prev,
