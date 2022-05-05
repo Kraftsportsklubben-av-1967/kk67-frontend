@@ -16,8 +16,8 @@ interface ILifter {
   href: string
 }
 
-async function getRecords(branch): Promise<IRecord[]> {
-  const records = await fetchDocument(branch, DOMString.TEXT_HTML)
+async function getRecords(url: string): Promise<IRecord[]> {
+  const records = await fetchDocument(url, DOMString.TEXT_HTML)
   const container = records.getElementById('resultatservice_container')!
 
   const rows = Array.from(container.children).slice(4)
@@ -46,12 +46,14 @@ async function getRecords(branch): Promise<IRecord[]> {
   })
 }
 
-export async function loadRecords(branch): Promise<IRecord[]> {
-  if (window.sessionStorage.getItem(SESSION_RECORDS_KEY)) {
-    return JSON.parse(window.sessionStorage.getItem(SESSION_RECORDS_KEY)!) as IRecord[]
+export async function loadRecords(url: string, keyExt: string): Promise<IRecord[]> {
+  if (window.sessionStorage.getItem(`${SESSION_RECORDS_KEY}_${keyExt}`)) {
+    return JSON.parse(
+      window.sessionStorage.getItem(`${SESSION_RECORDS_KEY}_${keyExt}`)!,
+    ) as IRecord[]
   }
-  const records = await getRecords(branch)
-  //window.sessionStorage.setItem(SESSION_RECORDS_KEY, JSON.stringify(records))
+  const records = await getRecords(url)
+  window.sessionStorage.setItem(`${SESSION_RECORDS_KEY}_${keyExt}`, JSON.stringify(records))
   return records
 }
 

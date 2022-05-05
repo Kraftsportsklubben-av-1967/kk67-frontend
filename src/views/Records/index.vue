@@ -10,7 +10,7 @@
         </div>
       </div>
       <div class="mt-6 text-md">
-        <br>
+        <br />
         <p>
           Her vises alle rekorder innad klubben KK-67 i de ulike vekt- og aldersklassene som ulike
           utøvre har satt opp igjennom årene!
