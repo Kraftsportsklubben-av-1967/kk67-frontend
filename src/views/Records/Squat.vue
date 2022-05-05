@@ -21,11 +21,5 @@ export default defineComponent({
   async created() {
     this.results = await loadRecords(SQUAT, 'squat')
   },
-
-  computed: {
-    loading(): boolean {
-      return this.results.length === 0
-    },
-  },
 })
 </script>

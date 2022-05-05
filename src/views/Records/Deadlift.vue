@@ -21,11 +21,5 @@ export default defineComponent({
   async created() {
     this.results = await loadRecords(DEADLIFT, 'deadlift')
   },
-
-  computed: {
-    loading(): boolean {
-      return this.results.length === 0
-    },
-  },
 })
 </script>

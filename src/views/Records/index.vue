@@ -62,17 +62,17 @@ export default defineComponent({
         },
         {
           title: 'Knebøy',
-          path: '/Squat',
+          path: '/squat',
           focus: false,
         },
         {
           title: 'Benkpress',
-          path: '/Bench',
+          path: '/bench',
           focus: false,
         },
         {
           title: 'Markløft',
-          path: '/Deadlift',
+          path: '/deadlift',
           focus: false,
         },
       ] as IMenuButton[],
