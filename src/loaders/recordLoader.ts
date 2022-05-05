@@ -1,4 +1,4 @@
-import { RECORDS, SESSION_RECORDS_KEY, STYRKELOFT_URL } from '../constants'
+import { TOTALS, SQUAT, BENCH, DEADLIFT, SESSION_RECORDS_KEY, STYRKELOFT_URL } from '../constants'
 import { fetchDocument, DOMString } from './loadData'
 import _ from 'lodash'
 
@@ -16,8 +16,8 @@ interface ILifter {
   href: string
 }
 
-async function getRecords(): Promise<IRecord[]> {
-  const records = await fetchDocument(RECORDS, DOMString.TEXT_HTML)
+async function getRecords(branch): Promise<IRecord[]> {
+  const records = await fetchDocument(branch, DOMString.TEXT_HTML)
   const container = records.getElementById('resultatservice_container')!
 
   const rows = Array.from(container.children).slice(4)
@@ -46,11 +46,11 @@ async function getRecords(): Promise<IRecord[]> {
   })
 }
 
-export async function loadRecords(): Promise<IRecord[]> {
+export async function loadRecords(branch): Promise<IRecord[]> {
   if (window.sessionStorage.getItem(SESSION_RECORDS_KEY)) {
     return JSON.parse(window.sessionStorage.getItem(SESSION_RECORDS_KEY)!) as IRecord[]
   }
-  const records = await getRecords()
+  const records = await getRecords(branch)
   //window.sessionStorage.setItem(SESSION_RECORDS_KEY, JSON.stringify(records))
   return records
 }
