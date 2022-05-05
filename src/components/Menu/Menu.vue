@@ -25,7 +25,7 @@ export default defineComponent({
   name: 'Menu',
   props: {
     buttons: {
-      type: [] as PropType<IMenuButton[]>,
+      type: Array as PropType<Array<IMenuButton>>,
       required: true,
     },
     showJoinButton: {

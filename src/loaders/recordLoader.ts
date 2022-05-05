@@ -1,4 +1,4 @@
-import { TOTALS, SQUAT, BENCH, DEADLIFT, SESSION_RECORDS_KEY, STYRKELOFT_URL } from '../constants'
+import { SESSION_RECORDS_KEY, STYRKELOFT_URL } from '../constants'
 import { fetchDocument, DOMString } from './loadData'
 import _ from 'lodash'
 
