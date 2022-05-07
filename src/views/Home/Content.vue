@@ -51,14 +51,6 @@ export default defineComponent({
     },
   },
   methods: {
-    parseDate(date: Date): string {
-      return date.toLocaleString('no-NO', {
-        day: 'numeric',
-        weekday: 'long',
-        month: 'long',
-        year: 'numeric',
-      })
-    },
     updatePage(val: number): void {
       this.currentPage = val
       window.scrollTo({ top: 0, behavior: 'smooth' })
