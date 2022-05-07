@@ -1,7 +1,17 @@
 <template>
-  <article class="border rounded-xl shadow-lg flex flex-col">
-    <div class="text-2xl font-extrabold mt-8">
-      <h2>{{ title }}</h2>
+  <article class="border rounded-xl shadow-lg flex flex-col py-2">
+    <div class="text-2xl font-extrabold flex flex-row mt-2 justify-between items-center">
+      <h2>{{ card.title }}</h2>
+
+      <a :href="card.href" target="_blank" class="hover:opacity-80 duration-500 ease-in-out"
+        ><img
+          :src="card.profileUrl"
+          alt="profile_picture"
+          width="50"
+          height="50"
+          class="border rounded-full border-black"
+        />
+      </a>
     </div>
     <div class="text-lg font-bold my-2">
       <div class="flex flex-row">
@@ -11,32 +21,32 @@
           style="width: fit-content"
           alt="clock_image"
         />
-        <p class="mb-auto">{{ date }}</p>
+        <p class="mb-auto">{{ parseDate(card.date) }}</p>
       </div>
     </div>
-    <template v-if="src">
-      <video v-if="type === 'VIDEO'" controls style="object-fit: contain">
-        <source :src="src" />
+    <template v-if="card.src">
+      <video v-if="card.type === 'VIDEO'" controls style="object-fit: contain">
+        <source :src="card.src" />
       </video>
-      <figure v-if="type === 'CAROUSEL_ALBUM'">
+      <figure v-if="card.type === 'CAROUSEL_ALBUM'">
         <div class="relative m-auto w-full">
           <div class="absolute top-0 text-white text-s p-3 font-bold pagination">
-            {{ i + 1 }} / {{ carusell.length }}
+            {{ i + 1 }} / {{ card.carusell.length }}
           </div>
           <img
-            v-if="carusell[i].media_type === 'IMAGE'"
-            :src="carusell[i].media_url"
+            v-if="card.carusell[i].media_type === 'IMAGE'"
+            :src="card.carusell[i].media_url"
             alt="carusell_image"
             class="fade w-full"
             style="object-fit: contain: display: block;"
           />
-          <video v-else controls style="object-fit: contain" :src="carusell[i].media_url" />
+          <video v-else controls style="object-fit: contain" :src="card.carusell[i].media_url" />
           <a class="prev" v-if="hasPrev" @click="i--">❮</a>
           <a class="next" v-if="hasNext" @click="i++">❯</a>
 
           <div class="text-center absolute bottom-4 w-full">
             <div class="flex flex-row mx-auto justify-center">
-              <template v-for="(_, j) in carusell.length">
+              <template v-for="(_, j) in card.carusell.length">
                 <span @click="slide(j)" :class="i === j ? 'active dot' : 'dot'" />
               </template>
             </div>
@@ -44,18 +54,18 @@
         </div>
       </figure>
       <img
-        v-else-if="type === 'IMAGE'"
-        :src="src"
+        v-else-if="card.type === 'IMAGE'"
+        :src="card.src"
         alt="card_image"
         class="w-full my-2 block"
         style="object-fit: contain"
       />
     </template>
     <div class="text-md font-normal text-left text-xl mt-2">
-      <p>{{ text }}</p>
+      <p>{{ card.text }}</p>
     </div>
     <div>
-      <a :href="url" target="_blank">
+      <a :href="card.url" target="_blank">
         <button
           class="rounded-2xl p-1 duration-500 font-bold text-white w-32 shadow-lg mt-4 text-lg bg-black hover:bg-red-600 mb-4"
         >
@@ -68,32 +78,12 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { ICarusell } from '../../loaders'
+import { ICard } from '../../loaders'
 export default defineComponent({
   name: 'ContentCard',
   props: {
-    src: {
-      type: String,
-    },
-    title: {
-      type: String,
-    },
-    type: {
-      type: String,
-    },
-    date: {
-      type: String,
-      required: true,
-    },
-    text: {
-      type: String,
-      required: true,
-    },
-    url: {
-      type: String,
-    },
-    carusell: {
-      type: Array as PropType<Array<ICarusell>>,
+    card: {
+      type: Object as PropType<ICard>,
       required: true,
     },
   },
@@ -107,12 +97,20 @@ export default defineComponent({
       return this.i > 0
     },
     hasNext(): boolean {
-      return this.i < this.carusell.length - 1
+      return this.i < this.card.carusell.length - 1
     },
   },
   methods: {
     slide(n: number) {
       this.i = n
+    },
+    parseDate(date: Date): string {
+      return date.toLocaleString('no-NO', {
+        day: 'numeric',
+        weekday: 'long',
+        month: 'long',
+        year: 'numeric',
+      })
     },
   },
 })

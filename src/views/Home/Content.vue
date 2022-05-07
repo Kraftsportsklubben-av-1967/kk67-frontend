@@ -5,14 +5,7 @@
       class="mb-14 hover:shadow-2xl ease-in-out max-w-4xl"
       style="transition-duration: 0.5s"
       v-for="contentCard in pages[currentPage]"
-      :key="contentCard.id"
-      :src="contentCard.src"
-      :title="contentCard.title"
-      :date="parseDate(contentCard.date)"
-      :text="contentCard.text"
-      :url="contentCard.url"
-      :type="contentCard.type"
-      :carusell="contentCard.carusell"
+      :card="contentCard"
     />
     <Pagination :n_buttons="n_pages" :current-page="currentPage" @update="updatePage" />
   </template>
