@@ -1,6 +1,6 @@
 import { removeUndefinedFromArrayAsync } from '../utils/removeUndefinedFromArrayAsync'
 import { FB_USER_TOKEN, INSTAGRAM_ID } from '../constants'
-import { ICard, IMediaType } from './loadData'
+import { ICard } from './loadData'
 interface IIGResponse {
   data: IIGResponseData[]
 }
@@ -54,8 +54,29 @@ function getIGPost(id: string | number): Promise<IIGPost> {
   })
 }
 
+interface IProfileData {
+  profile_picture_url: string
+  name: string
+}
+
+function loadProfileData(): Promise<IProfileData> {
+  return new Promise((resolve) => {
+    FB.api(
+      `${INSTAGRAM_ID}`,
+      'GET',
+      {
+        transport: 'cors',
+        fields: 'profile_picture_url,name',
+        access_token: FB_USER_TOKEN,
+      },
+      (res: IProfileData) => resolve(res),
+    )
+  })
+}
+
 export async function loadIGPosts(): Promise<ICard[]> {
   const media = await loadMedia()
+  const profileData = await loadProfileData()
   return removeUndefinedFromArrayAsync(
     media.data.map(async (res) => {
       const post = await getIGPost(res.id)
@@ -68,9 +89,11 @@ export async function loadIGPosts(): Promise<ICard[]> {
           url: post.permalink,
           text: post.caption,
           type: post.media_type,
-          title: 'Instagram innlegg',
+          title: profileData.name,
           comp: post.caption.substring(0, 10),
           carusell: post.children ? post.children.data : [],
+          profileUrl: profileData.profile_picture_url,
+          href: 'https://www.instagram.com/kraftsportklubben_av_1967/',
         } as ICard
     }),
   )

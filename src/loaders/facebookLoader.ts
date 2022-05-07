@@ -68,6 +68,31 @@ interface IFBPostSubAttachments {
   }>
 }
 
+interface IProfileData {
+  picture: {
+    data: {
+      height: number
+      width: number
+      url: string
+    }
+  }
+  name: string
+}
+
+function loadProfileData(): Promise<IProfileData> {
+  return new Promise((resolve) => {
+    FB.api(
+      `${FB_PAGE_ID}`,
+      'GET',
+      {
+        fields: 'picture,name',
+        access_token: FB_PAGE_TOKEN,
+      },
+      (resp: IProfileData) => resolve(resp),
+    )
+  })
+}
+
 function getFBPost(id: string | number): Promise<IFBPost> {
   return new Promise((resolve) => {
     FB.api(
@@ -104,6 +129,7 @@ function loadChildPosts(req?: IFBPostSubAttachments): ICarusell[] {
 
 export async function loadFBPosts(): Promise<ICard[]> {
   const posts = await loadPosts()
+  const profileData = await loadProfileData()
 
   return removeUndefinedFromArrayAsync(
     posts.data.map(async (res: IFBResponseData) => {
@@ -138,11 +164,13 @@ export async function loadFBPosts(): Promise<ICard[]> {
         id: post.id,
         src: post.full_picture,
         text: post.message,
-        title: 'Facebook innlegg',
+        title: profileData.name,
         url: post.permalink_url,
         type: post.type,
         comp: post.message.substring(0, 10),
+        profileUrl: profileData.picture.data.url,
         carusell,
+        href: 'https://www.facebook.com/Kraftsportklubben1967',
       } as ICard
     }),
   )
