@@ -1,6 +1,6 @@
 <template>
   <article class="border rounded-xl shadow-lg flex flex-col py-2">
-    <div class="text-2xl font-extrabold flex flex-row mt-2 justify-between items-center">
+    <div class="content-card-text font-extrabold flex flex-row my-2 justify-between items-center">
       <h2>{{ card.title }}</h2>
 
       <a :href="card.href" target="_blank" class="hover:opacity-80 duration-500 ease-in-out"
@@ -12,17 +12,6 @@
           class="border rounded-full border-black"
         />
       </a>
-    </div>
-    <div class="text-lg font-bold my-2">
-      <div class="flex flex-row">
-        <img
-          src="/public/logo/clock.png"
-          class="clockfit"
-          style="width: fit-content"
-          alt="clock_image"
-        />
-        <p class="mb-auto">{{ parseDate(card.date) }}</p>
-      </div>
     </div>
     <template v-if="card.src">
       <video v-if="card.type === 'VIDEO'" controls style="object-fit: contain">
@@ -61,17 +50,18 @@
         style="object-fit: contain"
       />
     </template>
-    <div class="text-md font-normal text-left text-xl mt-2">
+    <div class="text-md font-normal text-left mt-2 content-card-text">
       <p>{{ card.text }}</p>
     </div>
-    <div>
+    <div class="flex flex-row justify-between">
       <a :href="card.url" target="_blank">
         <button
-          class="rounded-2xl p-1 duration-500 font-bold text-white w-32 shadow-lg mt-4 text-lg bg-black hover:bg-red-600 mb-4"
+          class="rounded-2xl p-1 duration-500 text-white w-32 font-bold text-base md:text-lg shadow-lg mt-4 bg-black hover:bg-red-600 mb-4"
         >
           LES MER
         </button>
       </a>
+      <p class="my-auto text-base md:text-lg text-gray-600 py-2">{{ parseDate(card.date) }}</p>
     </div>
   </article>
 </template>
@@ -117,6 +107,10 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+.content-card-text {
+  @apply text-base sm:text-xl md:text-2xl;
+}
+
 article > div {
   @apply px-4 lg:px-8 w-full;
 }

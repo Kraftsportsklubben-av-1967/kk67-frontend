@@ -1,11 +1,9 @@
 <template>
-  <div
-    class="flex flex-col h-full lg:flex-row lg:justify-between mx-8 sm:mx-auto md:w-5/6 sm:w-5/6 flex-1"
-  >
-    <aside class="w-full lg:w-2/6">
+  <div class="flex flex-col h-full lg:flex-row lg:justify-between md:w-5/6 md:mx-auto flex-1">
+    <aside class="lg:w-2/6 mx-8 md:mx-0">
       <slot name="sidebar"></slot>
     </aside>
-    <main class="w-full lg:w-7/12 lg:mt-0 mt-6 xl:ml-40">
+    <main class="lg:w-7/12 lg:mt-0 mt-6 xl:ml-40 md:mx-0" :class="fullMain ? 'mx-0' : 'mx-8'">
       <slot name="main"></slot>
     </main>
   </div>
@@ -15,5 +13,8 @@
 import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'Layout',
+  props: {
+    fullMain: Boolean,
+  },
 })
 </script>
