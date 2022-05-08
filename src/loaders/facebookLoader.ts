@@ -1,28 +1,20 @@
-import { removeUndefinedFromArrayAsync } from '../utils/removeUndefinedFromArrayAsync'
-import { FB_PAGE_ID, FB_PAGE_TOKEN } from '../constants'
+import { BACKEND_URL } from '../constants'
+import { removeUndefinedFromArray } from '../utils/removeUndefinedFromArray'
 import { ICard, ICarusell, IMediaType } from './loadData'
 
 interface IFBResponse {
-  data: IFBResponseData[]
-}
-
-interface IFBResponseData {
-  id: number
-}
-
-function loadPosts(): Promise<IFBResponse> {
-  return new Promise((resolve) => {
-    FB.api(
-      `/${FB_PAGE_ID}/posts`,
-      'GET',
-      {
-        transport: 'cors',
-        access_token: FB_PAGE_TOKEN,
-        fields: 'id',
-      },
-      (resp: IFBResponse) => resolve(resp),
-    )
-  })
+  id: string
+  name: string
+  picture: {
+    data: {
+      height: number
+      width: number
+      url: string
+    }
+  }
+  posts: {
+    data: IFBPost[]
+  }
 }
 
 interface IFBPost {
@@ -68,43 +60,13 @@ interface IFBPostSubAttachments {
   }>
 }
 
-interface IProfileData {
-  picture: {
-    data: {
-      height: number
-      width: number
-      url: string
-    }
-  }
-  name: string
-}
-
-function loadProfileData(): Promise<IProfileData> {
-  return new Promise((resolve) => {
-    FB.api(
-      `${FB_PAGE_ID}`,
-      'GET',
-      {
-        fields: 'picture,name',
-        access_token: FB_PAGE_TOKEN,
-      },
-      (resp: IProfileData) => resolve(resp),
-    )
-  })
-}
-
-function getFBPost(id: string | number): Promise<IFBPost> {
-  return new Promise((resolve) => {
-    FB.api(
-      `${id}`,
-      'GET',
-      {
-        fields: 'place,message,permalink_url,created_time,full_picture,attachments',
-        access_token: FB_PAGE_TOKEN,
-      },
-      (resp: IFBPost) => resolve(resp),
-    )
-  })
+function loadPosts(): Promise<IFBResponse> {
+  return fetch(`${BACKEND_URL}/posts/fb`, {
+    method: 'GET',
+    headers: {
+      'content-type': 'application/json',
+    },
+  }).then((res) => res.json())
 }
 
 function loadChildPosts(req?: IFBPostSubAttachments): ICarusell[] {
@@ -128,12 +90,10 @@ function loadChildPosts(req?: IFBPostSubAttachments): ICarusell[] {
 }
 
 export async function loadFBPosts(): Promise<ICard[]> {
-  const posts = await loadPosts()
-  const profileData = await loadProfileData()
+  const response = await loadPosts()
 
-  return removeUndefinedFromArrayAsync(
-    posts.data.map(async (res: IFBResponseData) => {
-      const post = await getFBPost(res.id)
+  return removeUndefinedFromArray(
+    response.posts.data.map((post: IFBPost) => {
       let carusell: ICarusell[] = []
       if (!post.message || post.message === '') {
         return undefined
@@ -164,11 +124,11 @@ export async function loadFBPosts(): Promise<ICard[]> {
         id: post.id,
         src: post.full_picture,
         text: post.message,
-        title: profileData.name,
+        title: response.name,
         url: post.permalink_url,
         type: post.type,
         comp: post.message.substring(0, 10),
-        profileUrl: profileData.picture.data.url,
+        profileUrl: response.picture.data.url,
         carusell,
         href: 'https://www.facebook.com/Kraftsportklubben1967',
       } as ICard
