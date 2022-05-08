@@ -21,7 +21,7 @@
         </Card>
       </template>
     </Layout>
-    <div class="flex flex-col mx-8 mt-10 lg:flex-row justify-between md:w-5/6 sm:w-5/6 sm:mx-auto">
+    <div class="flex flex-col mt-10 lg:flex-row justify-between md:w-5/6 sm:w-5/6 sm:mx-auto">
       <div v-for="(_, i) in 3" class="mb-4">
         <div
           v-for="(_, j) in 6"

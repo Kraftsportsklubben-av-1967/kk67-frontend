@@ -1,26 +1,22 @@
-import { removeUndefinedFromArrayAsync } from '../utils/removeUndefinedFromArrayAsync'
-import { FB_USER_TOKEN, INSTAGRAM_ID } from '../constants'
-import { ICard, IMediaType } from './loadData'
+import { ICard } from './loadData'
+import { removeUndefinedFromArray } from '../utils/removeUndefinedFromArray'
+import { BACKEND_URL } from '../constants'
 interface IIGResponse {
-  data: IIGResponseData[]
-}
-
-interface IIGResponseData {
-  id: number
+  id: string
+  media: {
+    data: IIGPost[]
+  }
+  name: string
+  profile_picture_url: string
 }
 
 function loadMedia(): Promise<IIGResponse> {
-  return new Promise((resolve) => {
-    FB.api(
-      `/${INSTAGRAM_ID}/media`,
-      'GET',
-      {
-        transport: 'cors',
-        access_token: FB_USER_TOKEN,
-      },
-      (response: IIGResponse) => resolve(response),
-    )
-  })
+  return fetch(`${BACKEND_URL}/posts/ig`, {
+    method: 'GET',
+    headers: {
+      'content-type': 'application/json;charset=UTF-8',
+    },
+  }).then((res) => res.json())
 }
 
 interface IIGPost {
@@ -38,28 +34,15 @@ interface IIGPost {
     }>
   }
 }
-
-function getIGPost(id: string | number): Promise<IIGPost> {
-  return new Promise((resolve) => {
-    FB.api(
-      `${id}`,
-      'GET',
-      {
-        fields:
-          'media_type, media_url, timestamp, permalink, caption, children{media_type, media_url}',
-        access_token: FB_USER_TOKEN,
-      },
-      (res: IIGPost) => resolve(res),
-    )
-  })
+interface IProfileData {
+  profile_picture_url: string
+  name: string
 }
 
 export async function loadIGPosts(): Promise<ICard[]> {
-  const media = await loadMedia()
-  return removeUndefinedFromArrayAsync(
-    media.data.map(async (res) => {
-      const post = await getIGPost(res.id)
-
+  const response = await loadMedia()
+  return removeUndefinedFromArray(
+    response.media.data.map((post) => {
       if (post.media_type)
         return {
           id: post.id,
@@ -68,9 +51,11 @@ export async function loadIGPosts(): Promise<ICard[]> {
           url: post.permalink,
           text: post.caption,
           type: post.media_type,
-          title: 'Instagram innlegg',
+          title: response.name,
           comp: post.caption.substring(0, 10),
           carusell: post.children ? post.children.data : [],
+          profileUrl: response.profile_picture_url,
+          href: 'https://www.instagram.com/kraftsportklubben_av_1967/',
         } as ICard
     }),
   )

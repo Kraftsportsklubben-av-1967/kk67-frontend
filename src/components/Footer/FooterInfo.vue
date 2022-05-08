@@ -1,6 +1,6 @@
 <template>
   <div class="flex sm:flex-row flex-col text-left justify-between footer-row">
-    <KK67Logo :logo-color="LOGO_TYPES.WHITE_LGOO" v-if="showLogo" />
+    <KK67Logo :logo="LOGO_TYPES.WHITE_LGOO" class="hidden md:block" />
     <div class="my-2">
       <p class="text-lg">Sosiale medier</p>
       <Media class="mt-2 lg:justify-between filter invert" />
@@ -38,14 +38,7 @@ export default defineComponent({
         number: '922 86 110',
         email: 'kk67.styreleder@gmail.com',
       },
-      showLogo: true,
     }
-  },
-  created() {
-    this.showLogo = window.outerWidth > 1096
-    window.addEventListener('resize', () => {
-      this.showLogo = window.outerWidth > 1096
-    })
   },
   components: {
     KK67Logo,

@@ -48,6 +48,7 @@ export default defineComponent({
 <style scoped>
 img {
   transition-duration: 0.4s;
+  animation: ease-in-out;
 }
 
 img:hover {

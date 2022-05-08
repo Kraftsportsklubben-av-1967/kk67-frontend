@@ -4,15 +4,9 @@
     <ContentCard
       class="mb-14 hover:shadow-2xl ease-in-out max-w-4xl"
       style="transition-duration: 0.5s"
-      v-for="contentCard in pages[currentPage]"
-      :key="contentCard.id"
-      :src="contentCard.src"
-      :title="contentCard.title"
-      :date="parseDate(contentCard.date)"
-      :text="contentCard.text"
-      :url="contentCard.url"
-      :type="contentCard.type"
-      :carusell="contentCard.carusell"
+      v-for="card in pages[currentPage]"
+      :card="card"
+      :key="card.id"
     />
     <Pagination :n_buttons="n_pages" :current-page="currentPage" @update="updatePage" />
   </template>
@@ -58,14 +52,6 @@ export default defineComponent({
     },
   },
   methods: {
-    parseDate(date: Date): string {
-      return date.toLocaleString('no-NO', {
-        day: 'numeric',
-        weekday: 'long',
-        month: 'long',
-        year: 'numeric',
-      })
-    },
     updatePage(val: number): void {
       this.currentPage = val
       window.scrollTo({ top: 0, behavior: 'smooth' })

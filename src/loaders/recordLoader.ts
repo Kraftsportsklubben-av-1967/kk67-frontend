@@ -51,7 +51,7 @@ export async function loadRecords(): Promise<IRecord[]> {
     return JSON.parse(window.sessionStorage.getItem(SESSION_RECORDS_KEY)!) as IRecord[]
   }
   const records = await getRecords()
-  //window.sessionStorage.setItem(SESSION_RECORDS_KEY, JSON.stringify(records))
+  window.sessionStorage.setItem(SESSION_RECORDS_KEY, JSON.stringify(records))
   return records
 }
 
