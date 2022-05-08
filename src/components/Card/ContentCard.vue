@@ -17,7 +17,7 @@
       <video v-if="card.type === 'VIDEO'" controls style="object-fit: contain">
         <source :src="card.src" />
       </video>
-      <figure v-if="card.type === 'CAROUSEL_ALBUM'">
+      <figure v-if="card.type === 'CAROUSEL_ALBUM'" :id="card.id">
         <div class="relative m-auto w-full">
           <div class="absolute top-0 text-white text-s p-3 font-bold pagination">
             {{ i + 1 }} / {{ card.carusell.length }}
@@ -69,6 +69,9 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import { ICard } from '../../loaders'
+
+const SWIPE_THRESHHOLD = 50
+
 export default defineComponent({
   name: 'ContentCard',
   props: {
@@ -80,6 +83,21 @@ export default defineComponent({
   data() {
     return {
       i: 0,
+      touchStartX: 0,
+      touchEndX: 0,
+    }
+  },
+  mounted() {
+    // when component is loaded, add event listeners to gallery if it exists
+    const gallery = document.getElementById(this.card.id)
+    if (gallery) {
+      gallery.addEventListener('touchstart', (e) => {
+        this.touchStartX = e.changedTouches[0].screenX
+      })
+      gallery.addEventListener('touchend', (e) => {
+        this.touchEndX = e.changedTouches[0].screenX
+        this.handleSwipe()
+      })
     }
   },
   computed: {
@@ -101,6 +119,14 @@ export default defineComponent({
         month: 'long',
         year: 'numeric',
       })
+    },
+    handleSwipe() {
+      const difference = this.touchStartX - this.touchEndX
+      if (difference >= SWIPE_THRESHHOLD && this.hasNext) {
+        this.i++
+      } else if (difference <= -1 * SWIPE_THRESHHOLD && this.hasPrev) {
+        this.i--
+      }
     },
   },
 })

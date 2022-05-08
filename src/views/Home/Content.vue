@@ -4,8 +4,9 @@
     <ContentCard
       class="mb-14 hover:shadow-2xl ease-in-out max-w-4xl"
       style="transition-duration: 0.5s"
-      v-for="contentCard in pages[currentPage]"
-      :card="contentCard"
+      v-for="card in pages[currentPage]"
+      :card="card"
+      :key="card.id"
     />
     <Pagination :n_buttons="n_pages" :current-page="currentPage" @update="updatePage" />
   </template>
