@@ -1,14 +1,14 @@
 # Overall structure
 
 ```
-kk67
+kk67-frontend
 |
 ├── design                      # Prototypes for website
 ├── assets
 │   └── public                  # Public images to be used in website
 │
 |
-├── src
+└── src
     ├── components              # Reusable components
     ├── constants               # Constant values to be used multiple times
     ├── loaders                 # Loaders for various data to be loaded into website
