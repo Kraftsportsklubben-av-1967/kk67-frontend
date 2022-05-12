@@ -12,9 +12,9 @@ This is the source code for the KK-67 website (currently in development).
 
 ## Website Concept:
 
-A concept draft has been created and approved (thus far) by KK67 leader, **Jostein Fiveltun**.
+A concept draft has been approved by KK-67 leader, **Jostein Fiveltun**.
 
-Our aim is to develop a website that matches the concept draft provided [**here**](./assets/)
+Our aim is to develop a website that matches the concept draft provided [**here**](./design/)
 
 ![front.png](assets/front.png)
 
