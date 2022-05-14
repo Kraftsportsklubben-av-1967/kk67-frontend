@@ -1,14 +1,13 @@
 <template>
   <nav class="h-fit">
-    <Navbar-desktop v-if="showDekstop" :logo-color="selectLogo()" :navbar-buttons="buttons" />
-    <Navbar-mobile v-else :logo-color="selectLogo()" :navbar-buttons="buttons" />
+    <Navbar-desktop v-if="showDekstop" :navbar-buttons="buttons" />
+    <Navbar-mobile v-else :navbar-buttons="buttons" />
   </nav>
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
 import NavbarDesktop from './NavbarDesktop.vue'
 import NavbarMobile from './NavbarMobile.vue'
-import { LOGO_TYPES } from '@components/Media/KK67Logo.vue'
 
 export default defineComponent({
   name: 'Navbar',
@@ -53,14 +52,6 @@ export default defineComponent({
     window.addEventListener('resize', () => {
       this.showDekstop = window.outerWidth > 1130
     })
-  },
-  methods: {
-    selectLogo() {
-      if (this.$route.name === 'Home') {
-        return LOGO_TYPES.WHITE_LGOO
-      }
-      return LOGO_TYPES.DEFAULT_LOGO
-    },
   },
 })
 </script>

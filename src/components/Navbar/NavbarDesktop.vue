@@ -1,6 +1,6 @@
 <template>
   <div class="flex mx-2 lg:mx-10 justify-between">
-    <KK67Logo class="my-auto ml-2" :logo-color="logoColor" />
+    <KK67Logo />
     <div class="flex justify-end my-auto">
       <NavbarButton
         class="my-auto mx-2 text-sm"
@@ -23,20 +23,9 @@ export default defineComponent({
   name: 'NavbarDesktop',
   inheritAttrs: false,
   props: {
-    logoColor: {
-      default: LOGO_TYPES.DEFAULT_LOGO,
-    },
     navbarButtons: {
       type: Array as PropType<Array<INavbarButton>>,
       required: true,
-    },
-  },
-  methods: {
-    selectLogo() {
-      if (this.$route.name === 'Home') {
-        return LOGO_TYPES.WHITE_LGOO
-      }
-      return LOGO_TYPES.DEFAULT_LOGO
     },
   },
   components: { NavbarButton, KK67Logo },

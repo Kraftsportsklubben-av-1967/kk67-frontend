@@ -9,8 +9,7 @@ declare module '*.vue' {
 
 interface ImportMetaEnv {
   readonly VITE_GOOGLE_API_KEY: string
-  readonly VITE_FB_USER_KEY: string
-  readonly VITE_FB_PAGE_KEY: string
+  readonly VITE_PROXY_PORT: string
 }
 interface ImportMeta {
   readonly env: ImportMetaEnv

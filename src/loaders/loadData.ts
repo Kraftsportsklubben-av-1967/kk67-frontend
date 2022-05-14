@@ -31,7 +31,9 @@ export interface ICard {
   url: string
   type?: string
   comp?: string
+  profileUrl: string
   carusell: ICarusell[]
+  href: string
 }
 
 export enum IMediaType {

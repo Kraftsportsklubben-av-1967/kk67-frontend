@@ -1,14 +1,17 @@
-import { Loader } from '@googlemaps/js-api-loader'
-
 // For documentation info visit, https://developers.google.com/maps/documentation/javascript/
-export async function initMap(
-  coordinates: { lat: number; lng: number },
-  loader: Loader,
-  dom: HTMLElement,
-): Promise<void> {
-  const google = await loader.load()
+
+import { Loader } from '@googlemaps/js-api-loader'
+import GMaps = google.maps
+
+const KK67_LOCATION: GMaps.LatLngLiteral = {
+  lat: 63.437656,
+  lng: 10.429489,
+}
+
+export async function initMap(dom: HTMLElement): Promise<void> {
+  const google = await new Loader({ apiKey: import.meta.env.VITE_GOOGLE_API_KEY }).load()
   const map: google.maps.Map = new google.maps.Map(dom, {
-    center: coordinates,
+    center: KK67_LOCATION,
     zoom: 17,
   })
 
@@ -21,7 +24,7 @@ export async function initMap(
   })
 
   const marker: google.maps.Marker = new google.maps.Marker({
-    position: coordinates,
+    position: KK67_LOCATION,
     map: map,
     animation: google.maps.Animation.DROP,
     icon: '/public/kk-logo-mini.png',

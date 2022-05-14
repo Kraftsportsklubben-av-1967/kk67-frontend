@@ -19,6 +19,11 @@
             sin terminliste, du kan også sjekke ut kommende stevner som <em>ikke</em> er arrangert
             av <strong>KK-67</strong> der også!
           </p>
+          <br />
+          <p>
+            For generell info om påmelding klikk
+            <router-link class="anchor-link" to="/schedule">her</router-link>
+          </p>
         </div>
         <div v-else class="mt-8">
           <h3 class="header-red-underline" style="font-size: 1.8rem">Om tidligere stevner</h3>

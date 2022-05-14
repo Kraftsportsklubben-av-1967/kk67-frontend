@@ -2,6 +2,27 @@
 
 ## Get started
 
+## docker-compose
+
+If you want to avoid downloading or chaning your local environment, you can checkout the guide how to setup the frontend and backend for docker-compose [here](https://github.com/Kraftsportsklubben-av-1967/kk67-docker)
+
+1. Clone docker-compose repo and follow guide
+
+```sh
+$ git clone git@github.com:Kraftsportsklubben-av-1967/kk67-docker.git
+```
+
+2. set up env variables in a `.env` file (**not** to be pushed to repo). Ask **Marius** for key(s).
+
+```sh
+VITE_GOOGLE_API_KEY = "<key>"
+VITE_PROXY_PORT = 2000
+```
+
+> You can change the proxy_port number to whatever port you'd like but then you need to update the ports in the docker-compose
+
+## Local development
+
 This project is written in TypeScript with the Vue frontend framework using Prettier and ESlint for code formatting. You will need **Node** v14 and **Yarn**.
 
 1. Install node v14. I recommend installing that with nvm
@@ -10,19 +31,19 @@ MacOS/Ubuntu: https://github.com/nvm-sh/nvm
 Windows: https://nodejs.org/en/download/
 
 ```sh
-nvm install 14
+$ nvm install 14
 ```
 
 1. Make node v14 default
 
 ```sh
-nvm alias default 14
+$ nvm alias default 14
 ```
 
 3. Open a new terminal and verify node version (should return v14.X.X)
 
 ```sh
-node -v
+$ node -v
 ```
 
 4. Install yarn
@@ -34,26 +55,26 @@ node -v
 5. Open a new terminal and verify yarn version (should return 1.X.X)
 
 ```sh
-yarn -v
+$ yarn -v
 ```
 
 6. Clone project
 
 ```sh
-git clone git@github.com:Kraftsportsklubben-av-1967/kk67.git
-cd kk67
+$ git clone git@github.com:Kraftsportsklubben-av-1967/kk67.git
+$ cd kk67
 ```
 
 7. Install dependencies
 
 ```sh
-yarn
+$ yarn
 ```
 
 8. add lcp (local host proxy, [**link**](https://github.com/garmeeh/local-cors-proxy)) to $PATH
 
 ```sh
-yarn global add local-cors-proxy
+$ yarn global add local-cors-proxy
 ```
 
 9. set up env variables in a `.env` file (**not** to be pushed to repo). Ask **Marius** for key(s).
@@ -61,20 +82,18 @@ yarn global add local-cors-proxy
 ```sh
 VITE_GOOGLE_API_KEY = "<key>"
 VITE_PROXY_PORT = "<unused_port_number>"
-VITE_FB_USER_KEY = "<key>"
-VITE_FB_PAGE_KEY = "<key>"
 ```
 
 10. Start dev mode
 
 ```sh
-yarn dev
+$ yarn dev
 ```
 
 11. Optionally you can host it to your local network such as this.
 
 ```sh
-yarn dev:host
+$ yarn dev:host
 ```
 
 > All yarn scrips can be found in **package.json**
@@ -84,30 +103,9 @@ Open http://localhost:3000 on your favourite browser.
 
 Cheers, hopefully!
 
-## Naming conventions
+## Naming convention
 
-We use the following naming conventions:
-
-- FEAT - For developing new feature
-- CHANGE - Updating/modifying existing code
-- DRAFT - For work in progress code
-- DELETE - Removal off code (no additions)
-
-Commit messages need to follow one of these four tags before additional message i. e:
-Commit messages also need to be written in present time.
-
-`FEAT: add new component`
-
-## Code reviews
-
-Everytime a member of the group creates a merge request, it needs to reviewed and verified by atleast one person before merging it.
-After the PR has been verfiied and accepted, the creator of the PR needs to merge it into the master branch.
-
-Remember to squash commits when merging, since commit messages after dosen't make much sense in the master branch.
-
-## Workflow
-
-Everything that is merged or committed and pushed to `master` goes straight to production (need pipelines here) if all the tests are passing (need GitHub actions configured). Because of that, the preferred workflow is to create a new PR (Pull Request) in GitHub. There you can request a code review from one of your teammates before your contribution is merged to `master`.
+Visit this [page](https://github.com/Kraftsportsklubben-av-1967/.github/blob/main/README.md) for naming conventions
 
 ## Folders
 

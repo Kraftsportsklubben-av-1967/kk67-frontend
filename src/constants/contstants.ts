@@ -16,8 +16,4 @@ export const SQUATUF = `${PROXY_URL}/resultatservice/?id=13&page=klubb_ranking&t
 export const BENCHUF = `${PROXY_URL}/resultatservice/?id=13&page=klubb_ranking&top=5&uf=1&ovelse=bp&format=feed&type=rss`
 export const DEADLIFTUF = `${PROXY_URL}/resultatservice/?id=13&page=klubb_ranking&top=5&uf=1&ovelse=ml&format=feed&type=rss`
 
-export const FB_USER_TOKEN = import.meta.env.VITE_FB_USER_KEY
-export const FB_PAGE_TOKEN = import.meta.env.VITE_FB_PAGE_KEY
-export const INSTAGRAM_ID = '17841404742485905'
-export const FB_PAGE_ID = '284710781586877'
-export const FB_GRAPH_API = 'https://graph.facebook.com/v13.0'
+export const BACKEND_URL = DEVELOPMENT ? 'http://localhost:5000' : 'https://www.kk-67.com/api'
