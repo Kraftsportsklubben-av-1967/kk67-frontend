@@ -1,6 +1,6 @@
 <template>
   <label class="switch-container">
-    <input type="checkbox" v-model="currentState" @input="updateState(currentState)" />
+    <input type="checkbox" @input="$emit('updateState')" />
     <span class="switch-selector shadow-lg"></span>
     <span class="switch-left">{{ options[0] }}</span>
     <span class="switch-right">{{ options[1] }}</span>
@@ -89,18 +89,6 @@ export default defineComponent({
     options: {
       type: Array,
       required: true,
-    },
-  },
-  data() {
-    return {
-      currentState: false,
-    }
-  },
-  methods: {
-    updateState(state: boolean) {
-      setTimeout(() => {
-        this.$emit('updateState', this.currentState)
-      }, 10)
     },
   },
 })

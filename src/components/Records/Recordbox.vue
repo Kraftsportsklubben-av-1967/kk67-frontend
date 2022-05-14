@@ -5,10 +5,9 @@
       v-if="switchEnabled"
       :options="['Utstyr', 'Utstyrsfritt']"
       @updateState="updateSwitch"
-    ></Toggleswitch>
+    />
   </div>
-  <RecordList v-if="!switchState" :records="results" />
-  <RecordList v-if="switchState" :records="resultsUF" />
+  <RecordList :records="switchState ? results : resultsUF" />
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
@@ -65,8 +64,8 @@ export default defineComponent({
     }
   },
   methods: {
-    updateSwitch(state): void {
-      this.switchState = state
+    updateSwitch(): void {
+      this.switchState = !this.switchState
     },
   },
 })
