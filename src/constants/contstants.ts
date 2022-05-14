@@ -10,4 +10,4 @@ export const UPCOMING_MEETS = `${PROXY_URL}/stevner/?page=ical&skipHeader=1&&k=1
 export const NEWS = `${PROXY_URL}/?format=feed&type=rss`
 export const RECORDS = `${PROXY_URL}/resultatservice/?id=13&page=klubb_ranking&top=5&format=feed&type=rss`
 
-export const BACKEND_URL = DEVELOPMENT ? 'http://localhost:5000' : 'https://www.kk-67.com/api'
+export const BACKEND_URL = DEVELOPMENT ? 'http://localhost:5000' : 'https://www.api.kk-67.com'
