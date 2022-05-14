@@ -12,6 +12,9 @@ export const TOTALS = `${PROXY_URL}/resultatservice/?id=13&page=klubb_ranking&to
 export const SQUAT = `${PROXY_URL}/resultatservice/?id=13&page=klubb_ranking&top=5&ovelse=kb&format=feed&type=rss`
 export const BENCH = `${PROXY_URL}/resultatservice/?id=13&page=klubb_ranking&top=5&ovelse=bp&format=feed&type=rss`
 export const DEADLIFT = `${PROXY_URL}/resultatservice/?id=13&page=klubb_ranking&top=5&ovelse=ml&format=feed&type=rss`
+export const SQUATUF = `${PROXY_URL}/resultatservice/?id=13&page=klubb_ranking&top=5&uf=1&ovelse=kb&format=feed&type=rss`
+export const BENCHUF = `${PROXY_URL}/resultatservice/?id=13&page=klubb_ranking&top=5&uf=1&ovelse=bp&format=feed&type=rss`
+export const DEADLIFTUF = `${PROXY_URL}/resultatservice/?id=13&page=klubb_ranking&top=5&uf=1&ovelse=ml&format=feed&type=rss`
 
 export const FB_USER_TOKEN = import.meta.env.VITE_FB_USER_KEY
 export const FB_PAGE_TOKEN = import.meta.env.VITE_FB_PAGE_KEY

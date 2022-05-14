@@ -33,7 +33,7 @@
         </p>
         <br />
         <p>
-          <em>OBS: Rankingen er blandet mellom utstyr og utstyrsfritt!</em>
+          <em>OBS: Rankingen på sammenlagt er blandet mellom utstyr og utstyrsfritt!</em>
         </p>
       </div>
     </template>

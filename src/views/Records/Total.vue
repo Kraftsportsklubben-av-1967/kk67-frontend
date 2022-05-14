@@ -1,25 +1,24 @@
 <template>
-  <RecordList title="Sammenlagt" :records="results" />
+  <Recordbox :title="'Sammenlagt'" :switchEnabled="false" :primaryURL="primaryURL" :primaryID="'total'" ></Recordbox>
 </template>
+
+
 <script lang="ts">
 import { TOTALS } from '../../constants'
 import { defineComponent } from 'vue'
-import { loadRecords, IRecord } from '../../loaders'
 import Layout from '@components/Layout.vue'
 import Card from '@components/Card/Card.vue'
 import Loader from '@components/Loader.vue'
-import RecordList from '@components/RecordList.vue'
+import Recordbox from '@components/Records/Recordbox.vue'
 
 export default defineComponent({
-  name: 'Records',
-  components: { Layout, Card, Loader, RecordList },
+  name: 'Squat',
+  components: { Layout, Card, Loader, Recordbox },
   data() {
     return {
-      results: [] as IRecord[],
+      switchState: false,
+      primaryURL: TOTALS,
     }
-  },
-  async created() {
-    this.results = await loadRecords(TOTALS, 'total')
   },
 })
 </script>

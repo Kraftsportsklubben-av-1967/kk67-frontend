@@ -1,7 +1,6 @@
 <template>
   <Loader v-if="loading" class="h-60 w-60" style="margin-top: 6rem" />
   <div v-else>
-    <h1 class="text-3xl font-bold">{{ title }}</h1>
     <div class="flex flex-col">
       <template v-for="result in records">
         <Card v-if="result.title === undefined" class="my-2">
@@ -37,19 +36,15 @@
 </template>
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { IRecord } from '../loaders'
+import { IRecord } from '../../loaders'
 import Layout from '@components/Layout.vue'
 import Card from '@components/Card/Card.vue'
 import Loader from '@components/Loader.vue'
 
 export default defineComponent({
   name: 'RecordList',
-  components: { Layout, Card, Loader },
+  components: { Layout, Card, Loader},
   props: {
-    title: {
-      required: true,
-      type: String,
-    },
     records: {
       required: true,
       type: Array as PropType<Array<IRecord>>,
@@ -62,4 +57,6 @@ export default defineComponent({
     },
   },
 })
+
+
 </script>

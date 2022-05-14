@@ -1,25 +1,25 @@
 <template>
-  <RecordList title="Markløft" :records="results" />
+  <Recordbox :title="'Markløft'" :switchEnabled="true" :primaryURL="primaryURL" :primaryID="'deadlift'" :secondaryURL="secondaryURL" :secondaryID="'deadliftUF'"></Recordbox>
 </template>
+
+
 <script lang="ts">
-import { DEADLIFT } from '../../constants'
+import { DEADLIFT, DEADLIFTUF } from '../../constants'
 import { defineComponent } from 'vue'
-import { loadRecords, IRecord } from '../../loaders'
 import Layout from '@components/Layout.vue'
 import Card from '@components/Card/Card.vue'
 import Loader from '@components/Loader.vue'
-import RecordList from '@components/RecordList.vue'
+import Recordbox from '@components/Records/Recordbox.vue'
 
 export default defineComponent({
   name: 'Deadlift',
-  components: { Layout, Card, Loader, RecordList },
+  components: { Layout, Card, Loader, Recordbox },
   data() {
     return {
-      results: [] as IRecord[],
+      switchState: false,
+      primaryURL: DEADLIFT,
+      secondaryURL: DEADLIFTUF,
     }
-  },
-  async created() {
-    this.results = await loadRecords(DEADLIFT, 'deadlift')
   },
 })
 </script>
