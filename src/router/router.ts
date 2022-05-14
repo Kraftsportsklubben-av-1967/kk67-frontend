@@ -61,7 +61,33 @@ const routes = [
       },
     ],
   },
-  { path: '/records', name: 'Records', component: () => import('../views/Records/index.vue') },
+  {
+     path: '/records',
+     name: 'Records',
+     component: () => import('../views/Records/index.vue'),
+     children: [
+      {
+        path: '',
+        name: 'Total',
+        component: () => import('../views/Records/Total.vue'),
+      },
+      {
+        path: 'squat',
+        name: 'Squat',
+        component: () => import('../views/Records/Squat.vue'),
+      },
+      {
+        path: 'bench',
+        name: 'Bench',
+        component: () => import('../views/Records/Bench.vue'),
+      },
+      {
+        path: 'deadlift',
+        name: 'Deadlift',
+        component: () => import('../views/Records/Deadlift.vue'),
+      },
+     ],
+  },
   { path: '/pictures', name: 'Pictures', component: () => import('../views/Pictures/index.vue') },
   { path: '/sponsor', name: 'Sponsor', component: () => import('../views/About/Comitee.vue') },
   {
