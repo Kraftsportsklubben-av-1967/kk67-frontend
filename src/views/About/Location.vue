@@ -32,28 +32,19 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from 'vue'
-import { Loader } from '@googlemaps/js-api-loader'
-import { getEnvVar } from '../../utils/getEnvVar'
 import { initMap } from '../../utils/initMap'
 import Card from '@components/Card/Card.vue'
-import GMaps = google.maps
-
-const KK67_LOCATION: GMaps.LatLngLiteral = {
-  lat: 63.437656,
-  lng: 10.429489,
-}
 
 export default defineComponent({
   name: 'Location',
   setup() {
-    const loader = new Loader({ apiKey: getEnvVar('VITE_GOOGLE_API_KEY') })
     const mapDiv = ref(null)
 
     onMounted(async () => {
       if (!mapDiv.value) {
         return
       }
-      initMap(KK67_LOCATION, loader, mapDiv.value)
+      initMap(mapDiv.value)
     })
     return { mapDiv }
   },

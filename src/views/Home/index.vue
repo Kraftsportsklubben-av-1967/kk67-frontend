@@ -1,5 +1,5 @@
 <template>
-  <Layout>
+  <Layout :fullMain="true">
     <template v-slot:sidebar>
       <div class="flex flex-col">
         <div class="header-red-underline mb-4">

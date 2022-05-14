@@ -52,6 +52,7 @@ export async function loadRecords(url: string, keyExt: string): Promise<IRecord[
       window.sessionStorage.getItem(`${SESSION_RECORDS_KEY}_${keyExt}`)!,
     ) as IRecord[]
   }
+
   const records = await getRecords(url)
   window.sessionStorage.setItem(`${SESSION_RECORDS_KEY}_${keyExt}`, JSON.stringify(records))
   return records
