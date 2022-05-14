@@ -1,13 +1,12 @@
 <template>
-    <label class="switch-container">
-        <input type="checkbox" v-model="currentState" @input="updateState(currentState)">
-        <span class="switch-selector shadow-lg"></span>
-        <span class="switch-left">{{options[0]}}</span>
-        <span class="switch-right">{{options[1]}}</span>
-    </label>
+  <label class="switch-container">
+    <input type="checkbox" v-model="currentState" @input="updateState(currentState)" />
+    <span class="switch-selector shadow-lg"></span>
+    <span class="switch-left">{{ options[0] }}</span>
+    <span class="switch-right">{{ options[1] }}</span>
+  </label>
 </template>
 <style scoped>
-
 .switch-container {
   position: relative;
   display: inline-block;
@@ -37,12 +36,12 @@
 
 .switch-selector:before {
   position: absolute;
-  content: "";
+  content: '';
   height: calc(100% - 6px);
   width: calc(50% - 3px);
   left: 3px;
   bottom: 3px;
-  background-color: rgb(185 28 28);
+  @apply bg-red-700;
   border-radius: 7px;
 }
 
@@ -79,30 +78,30 @@ input:checked + .switch-selector:before {
   justify-content: center;
   align-items: center;
 }
-
-
 </style>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-    name: 'ToggleSwitch',
-    props: {
-        options: {
-        type: Array,
-        required: true,
-        },
+  name: 'ToggleSwitch',
+  props: {
+    options: {
+      type: Array,
+      required: true,
     },
-    data() {
-        return {
-            currentState: false
-        }
+  },
+  data() {
+    return {
+      currentState: false,
+    }
+  },
+  methods: {
+    updateState(state: boolean) {
+      setTimeout(() => {
+        this.$emit('updateState', this.currentState)
+      }, 10)
     },
-    methods: {
-        updateState(state: boolean) {
-            setTimeout(() => { this.$emit('updateState', this.currentState); }, 10);
-        },
-    },
+  },
 })
 </script>
