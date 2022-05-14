@@ -1,10 +1,9 @@
 <template>
-  <Recordbox :title="'Benkpress'" :switchEnabled="true" :primaryURL="primaryURL" :primaryID="'bench'" :secondaryURL="secondaryURL" :secondaryID="'benchUF'"></Recordbox>
+  <Recordbox :title="'Benkpress'" :switchEnabled="true" :url="primaryURL" :keyExt="'bench'" />
 </template>
 
-
 <script lang="ts">
-import { BENCH, BENCHUF } from '../../constants'
+import { BENCH } from '../../constants'
 import { defineComponent } from 'vue'
 import Layout from '@components/Layout.vue'
 import Card from '@components/Card/Card.vue'
@@ -18,7 +17,6 @@ export default defineComponent({
     return {
       switchState: false,
       primaryURL: BENCH,
-      secondaryURL: BENCHUF,
     }
   },
 })

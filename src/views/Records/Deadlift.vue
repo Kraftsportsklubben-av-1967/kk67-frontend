@@ -1,10 +1,9 @@
 <template>
-  <Recordbox :title="'Markløft'" :switchEnabled="true" :primaryURL="primaryURL" :primaryID="'deadlift'" :secondaryURL="secondaryURL" :secondaryID="'deadliftUF'"></Recordbox>
+  <Recordbox :title="'Markløft'" :switchEnabled="true" :url="primaryURL" :keyExt="'deadlift'" />
 </template>
 
-
 <script lang="ts">
-import { DEADLIFT, DEADLIFTUF } from '../../constants'
+import { DEADLIFT } from '../../constants'
 import { defineComponent } from 'vue'
 import Layout from '@components/Layout.vue'
 import Card from '@components/Card/Card.vue'
@@ -18,7 +17,6 @@ export default defineComponent({
     return {
       switchState: false,
       primaryURL: DEADLIFT,
-      secondaryURL: DEADLIFTUF,
     }
   },
 })

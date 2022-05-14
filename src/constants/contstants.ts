@@ -8,12 +8,10 @@ export const PROXY_URL = DEVELOPMENT ? `http://${HOSTNAME}:${PROXY_PORT}/proxy` 
 export const PREVIOUS_MEETS = `${PROXY_URL}/resultatservice_integrasjon/rss_protokoll.php?m=1&klubb_id=13`
 export const UPCOMING_MEETS = `${PROXY_URL}/stevner/?page=ical&skipHeader=1&&k=13`
 export const NEWS = `${PROXY_URL}/?format=feed&type=rss`
+
 export const TOTALS = `${PROXY_URL}/resultatservice/?id=13&page=klubb_ranking&top=5&format=feed&type=rss`
 export const SQUAT = `${PROXY_URL}/resultatservice/?id=13&page=klubb_ranking&top=5&ovelse=kb&format=feed&type=rss`
 export const BENCH = `${PROXY_URL}/resultatservice/?id=13&page=klubb_ranking&top=5&ovelse=bp&format=feed&type=rss`
 export const DEADLIFT = `${PROXY_URL}/resultatservice/?id=13&page=klubb_ranking&top=5&ovelse=ml&format=feed&type=rss`
-export const SQUATUF = `${PROXY_URL}/resultatservice/?id=13&page=klubb_ranking&top=5&uf=1&ovelse=kb&format=feed&type=rss`
-export const BENCHUF = `${PROXY_URL}/resultatservice/?id=13&page=klubb_ranking&top=5&uf=1&ovelse=bp&format=feed&type=rss`
-export const DEADLIFTUF = `${PROXY_URL}/resultatservice/?id=13&page=klubb_ranking&top=5&uf=1&ovelse=ml&format=feed&type=rss`
 
 export const BACKEND_URL = DEVELOPMENT ? 'http://localhost:5000' : 'https://www.kk-67.com/api'

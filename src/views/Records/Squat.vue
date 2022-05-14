@@ -1,10 +1,9 @@
 <template>
-  <Recordbox :title="'Knebøy'" :switchEnabled="true" :primaryURL="primaryURL" :primaryID="'squat'" :secondaryURL="secondaryURL" :secondaryID="'squatUF'"></Recordbox>
+  <Recordbox :title="'Knebøy'" :switchEnabled="true" :url="primaryURL" :keyExt="'squat'" />
 </template>
 
-
 <script lang="ts">
-import { SQUAT, SQUATUF } from '../../constants'
+import { SQUAT } from '../../constants'
 import { defineComponent } from 'vue'
 import Layout from '@components/Layout.vue'
 import Card from '@components/Card/Card.vue'
@@ -18,7 +17,6 @@ export default defineComponent({
     return {
       switchState: false,
       primaryURL: SQUAT,
-      secondaryURL: SQUATUF,
     }
   },
 })

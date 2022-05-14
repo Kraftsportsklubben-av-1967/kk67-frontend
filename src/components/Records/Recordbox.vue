@@ -7,7 +7,7 @@
       @updateState="updateSwitch"
     />
   </div>
-  <RecordList :records="switchState ? results : resultsUF" />
+  <RecordList :records="results" />
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
@@ -31,41 +31,41 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
-    primaryURL: {
+    url: {
       required: true,
       type: String,
     },
-    primaryID: {
+    keyExt: {
       required: true,
       type: String,
-    },
-    secondaryURL: {
-      required: false,
-      type: String,
-      default: 'null',
-    },
-    secondaryID: {
-      required: false,
-      type: String,
-      default: 'null',
     },
   },
   data() {
     return {
       results: [] as IRecord[],
-      resultsUF: [] as IRecord[],
       switchState: false,
     }
   },
   async created() {
-    this.results = await loadRecords(this.primaryURL, this.primaryID)
-    if (this.secondaryURL != 'null') {
-      this.resultsUF = await loadRecords(this.secondaryURL, this.secondaryID)
+    if (this.switchState) {
+      this.results = await loadRecords(this.url + '&uf=1', this.keyExt + '_uf')
+    } else {
+      this.results = await loadRecords(this.url, this.keyExt)
     }
   },
   methods: {
     updateSwitch(): void {
       this.switchState = !this.switchState
+    },
+  },
+  watch: {
+    async switchState(_t, _f) {
+      this.results = []
+      if (this.switchState) {
+        this.results = await loadRecords(this.url + '&uf=1', this.keyExt + '_uf')
+      } else {
+        this.results = await loadRecords(this.url, this.keyExt)
+      }
     },
   },
 })

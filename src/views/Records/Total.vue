@@ -1,7 +1,6 @@
 <template>
-  <Recordbox :title="'Sammenlagt'" :switchEnabled="false" :primaryURL="primaryURL" :primaryID="'total'" ></Recordbox>
+  <Recordbox :title="'Sammenlagt'" :switchEnabled="false" :url="primaryURL" :keyExt="'total'" />
 </template>
-
 
 <script lang="ts">
 import { TOTALS } from '../../constants'
