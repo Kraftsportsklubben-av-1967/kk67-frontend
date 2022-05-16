@@ -2,8 +2,12 @@
   <label class="switch-container">
     <input type="checkbox" @input="$emit('updateState')" />
     <span class="switch-selector shadow-lg"></span>
-    <span class="switch-left">{{ options[0] }}</span>
-    <span class="switch-right">{{ options[1] }}</span>
+    <span class="switch-left"
+      ><strong>{{ options[0] }}</strong></span
+    >
+    <span class="switch-right"
+      ><strong>{{ options[1] }}</strong></span
+    >
   </label>
 </template>
 <style scoped>
@@ -13,6 +17,7 @@
   width: 180px;
   height: 40px;
   padding: 20px;
+  color: white;
 }
 
 /* Hide default HTML checkbox */
