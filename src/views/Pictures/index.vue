@@ -22,7 +22,7 @@
       </template>
     </Layout>
     <div class="flex flex-col mt-10 lg:flex-row justify-between md:w-5/6 sm:w-5/6 sm:mx-auto">
-      <div v-for="(_, i) in columnWidth" class="mb-4">
+      <div v-for="(_, i) in columnWidth" class="mb-4 column">
         <div
           v-for="(_, j) in columnHeight"
           class="border rounded-sm hover:shadow-2xl duration-300 ease-linear hover:cursor-pointer w-full hover-container"
@@ -32,6 +32,7 @@
             :src="getPictureN(columnWidth * j + i + 1)"
             :alt="`KK-${columnWidth * j + 1 + 1}-min.jpg`"
             style="display: block"
+            rel="preload"
           />
           <div class="overlay">
             <h2
@@ -124,6 +125,11 @@ export default defineComponent({
 
 .hover-container {
   position: relative;
+  @media (min-width: 1400px) {
+    .column {
+      width: 31%;
+    }
+  }
 
   margin-top: 3rem;
   margin-bottom: 3rem;
@@ -131,38 +137,20 @@ export default defineComponent({
     margin-top: 0rem;
   }
 }
-/* lg */
+
+.column {
+  width: 100%;
+}
+
 @media (min-width: 1024px) {
-  img {
-    width: 25rem;
+  .column {
+    width: 47%;
   }
 }
 
-/* inbetween */
-@media (min-width: 1100px) {
-  img {
-    width: 27.5rem;
-  }
-}
-
-/* inbetween */
-@media (min-width: 1190px) {
-  img {
-    width: 29rem;
-  }
-}
-
-/* xl */
-@media (min-width: 1280px) {
-  img {
-    width: 32rem;
-  }
-}
-
-/* 2xl */
-@media (min-width: 1536px) {
-  img {
-    width: 31rem;
+@media (min-width: 1410px) {
+  .column {
+    width: 31%;
   }
 }
 
