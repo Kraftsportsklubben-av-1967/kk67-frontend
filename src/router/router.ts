@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home/index.vue'
 
 const routes = [
@@ -62,10 +62,10 @@ const routes = [
     ],
   },
   {
-     path: '/records',
-     name: 'Records',
-     component: () => import('../views/Records/index.vue'),
-     children: [
+    path: '/records',
+    name: 'Records',
+    component: () => import('../views/Records/index.vue'),
+    children: [
       {
         path: '',
         name: 'Total',
@@ -86,7 +86,7 @@ const routes = [
         name: 'Deadlift',
         component: () => import('../views/Records/Deadlift.vue'),
       },
-     ],
+    ],
   },
   { path: '/pictures', name: 'Pictures', component: () => import('../views/Pictures/index.vue') },
   { path: '/sponsor', name: 'Sponsor', component: () => import('../views/About/Comitee.vue') },
@@ -112,6 +112,6 @@ const routes = [
 ]
 
 export const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
 })
