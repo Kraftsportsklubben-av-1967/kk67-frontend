@@ -40,7 +40,6 @@ export default defineComponent({
   methods: {
     selectFocus() {
       const URL = window.location.href
-      console.log(URL)
       this.buttons.forEach((button) => {
         button.focus =
           URL.endsWith(button.path) ||
