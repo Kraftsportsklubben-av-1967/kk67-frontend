@@ -125,14 +125,9 @@ export default defineComponent({
 
 .hover-container {
   position: relative;
-  @media (min-width: 1400px) {
-    .column {
-      width: 31%;
-    }
-  }
-
   margin-top: 3rem;
   margin-bottom: 3rem;
+
   &:first-child {
     margin-top: 0rem;
   }
