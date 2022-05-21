@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col min-h-screen">
-    <Header class="mb-12" />
+    <Header class="mb-6 md:mb-12" />
     <router-view />
     <Footer class="mt-12" />
   </div>

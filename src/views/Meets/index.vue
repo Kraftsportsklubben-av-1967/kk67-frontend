@@ -9,7 +9,7 @@
           <Menu :buttons="menuButtons" current-path="/meets" />
         </div>
         <div v-if="$route.name === 'UpcommingMeets'" class="mt-8">
-          <h3 class="header-red-underline" style="font-size: 1.6rem">Om kommende stevner</h3>
+          <h3 class="header-red-underline">Om kommende stevner</h3>
           <br />
           <p>
             Kommende stevner er hentet fra
@@ -26,7 +26,7 @@
           </p>
         </div>
         <div v-else class="mt-8">
-          <h3 class="header-red-underline" style="font-size: 1.8rem">Om tidligere stevner</h3>
+          <h3 class="header-red-underline">Om tidligere stevner</h3>
           <br />
           <p>
             Tidligere stevner er alle stevner der et eller flere medlemmer av
@@ -78,3 +78,10 @@ export default defineComponent({
   },
 })
 </script>
+<style scoped>
+@media (max-width: 640px) {
+  h3 {
+    @apply text-2xl;
+  }
+}
+</style>

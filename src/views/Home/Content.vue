@@ -8,7 +8,12 @@
       :card="card"
       :key="card.id"
     />
-    <Pagination :n_buttons="n_pages" :current-page="currentPage" @update="updatePage" />
+    <Pagination
+      :n_buttons="n_pages"
+      :current-page="currentPage"
+      @update="updatePage"
+      class="mx-8 md:mx-0"
+    />
   </template>
 </template>
 

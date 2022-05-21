@@ -1,16 +1,21 @@
 <template>
   <Layout :fullMain="true">
     <template v-slot:sidebar>
-      <div class="flex flex-col">
-        <div class="header-red-underline mb-4">
-          <h1>Nyheter</h1>
+      <div class="flex flex-col md:flex-row lg:flex-col justify-between">
+        <div class="w-full md:w-2/5 lg:w-full">
+          <div class="header-red-underline mb-4">
+            <h1>Nyheter</h1>
+          </div>
+          <News />
         </div>
-        <News class="my-5 w-10/12" />
-        <div class="mt-6 text-xl w-fit">
-          <p>Følg oss på sosiale medier!</p>
-        </div>
-        <div class="mt-4">
-          <Media class="justify-start" />
+        <div class="w-full md:w-2/5 lg:w-full mt-6 md:mt-0 lg:mt-6">
+          <div class="text-lg md:text-xl w-fit">
+            <p>Følg oss på sosiale medier!</p>
+          </div>
+          <Media class="justify-start mt-6" />
+          <a href="https://www.antidoping.no/" target="_blank" class="w-fit mt-6 hidden md:block"
+            ><img src="/public/logo/adno.png" alt="" class="duration-500 antidoping-icon"
+          /></a>
         </div>
       </div>
     </template>
@@ -38,4 +43,13 @@ export default defineComponent({
 })
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.antidoping-icon {
+  width: 8rem;
+  &:hover {
+    margin-left: 0.25rem;
+    width: 7.75rem;
+    filter: opacity(80%);
+  }
+}
+</style>
