@@ -3,7 +3,7 @@
   <div v-else>
     <div class="flex flex-col">
       <template v-for="result in records">
-        <Card v-if="result.title === undefined" class="my-2 sm:p-2">
+        <Card v-if="result.title === undefined" class="my-2">
           <template v-slot:header>
             <h2 class="text-lg md:text-xl">{{ result.class }}kg</h2>
           </template>
