@@ -3,12 +3,12 @@
   <div v-else>
     <div class="flex flex-col">
       <template v-for="result in records">
-        <Card v-if="result.title === undefined" class="my-2">
+        <Card v-if="result.title === undefined" class="my-2 sm:p-2">
           <template v-slot:header>
-            <h2>{{ result.class }}kg</h2>
+            <h2 class="text-lg md:text-xl">{{ result.class }}kg</h2>
           </template>
           <template v-slot:body>
-            <table class="table-fixed w-full text-base lg:text-lg">
+            <table class="sm:table-fixed table-auto w-full text-base lg:text-lg">
               <thead>
                 <tr>
                   <th></th>
@@ -43,7 +43,7 @@ import Loader from '@components/Loader.vue'
 
 export default defineComponent({
   name: 'RecordList',
-  components: { Layout, Card, Loader},
+  components: { Layout, Card, Loader },
   props: {
     records: {
       required: true,
@@ -57,6 +57,4 @@ export default defineComponent({
     },
   },
 })
-
-
 </script>

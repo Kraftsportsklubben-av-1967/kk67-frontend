@@ -1,5 +1,5 @@
 <template>
-  <article class="border rounded-xl shadow-lg p-8 inline-block">
+  <article class="border rounded-xl shadow-lg p-4 inline-block sm:p-8">
     <div v-if="hasHeader" class="text-xl font-bold">
       <slot name="header"></slot>
     </div>
