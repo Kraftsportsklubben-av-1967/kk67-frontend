@@ -22,16 +22,17 @@
       </template>
     </Layout>
     <div class="flex flex-col mt-10 lg:flex-row justify-between md:w-5/6 sm:w-5/6 sm:mx-auto">
-      <div v-for="(_, i) in 3" class="mb-4">
+      <div v-for="(_, i) in columnWidth" class="mb-4 column">
         <div
-          v-for="(_, j) in 6"
+          v-for="(_, j) in columnHeight"
           class="border rounded-sm hover:shadow-2xl duration-300 ease-linear hover:cursor-pointer w-full hover-container"
-          @click="focus(3 * j + i + 1)"
+          @click="focus(columnWidth * j + i + 1)"
         >
           <img
-            :src="getPictureN(3 * j + i + 1)"
-            :alt="`KK-${3 * j + 1 + 1}-min.jpg`"
+            :src="getPictureN(columnWidth * j + i + 1)"
+            :alt="`KK-${columnWidth * j + 1 + 1}-min.jpg`"
             style="display: block"
+            rel="preload"
           />
           <div class="overlay">
             <h2
@@ -71,11 +72,37 @@ export default defineComponent({
     return {
       focused: false,
       focusSrc: '',
+      images: [] as Array<any>,
+      maxWidth: 3,
+      minWidth: 2,
+      maxHeight: 9,
+      minHeight: 6,
+      currentWidth: 0,
     }
+  },
+  created() {
+    // preload images in hope of better performance when deployed.
+    this.currentWidth = window.outerWidth
+    window.addEventListener('resize', () => {
+      this.currentWidth = window.outerWidth
+    })
+    for (let i = 1; i <= 18; i++) {
+      const img = new Image()
+      img.src = `/public/pictures/KK-${i}-min.jpg`
+      this.images.push(img)
+    }
+  },
+  computed: {
+    columnWidth(): number {
+      return this.currentWidth > 1440 ? this.maxWidth : this.minWidth
+    },
+    columnHeight(): number {
+      return this.currentWidth > 1440 ? this.minHeight : this.maxHeight
+    },
   },
   methods: {
     getPictureN(i: number): string {
-      return `/public/pictures/KK-${i}-min.jpg`
+      return this.images[i - 1].src
     },
     focus(i: number) {
       this.focused = true
@@ -98,25 +125,27 @@ export default defineComponent({
 
 .hover-container {
   position: relative;
-
   margin-top: 3rem;
   margin-bottom: 3rem;
+
   &:first-child {
     margin-top: 0rem;
   }
 }
 
-/* xl */
-@media (min-width: 1280px) {
-  img {
-    width: 25rem;
+.column {
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .column {
+    width: 47%;
   }
 }
 
-/* 2xl */
-@media (min-width: 1536px) {
-  img {
-    width: 31rem;
+@media (min-width: 1410px) {
+  .column {
+    width: 31%;
   }
 }
 
