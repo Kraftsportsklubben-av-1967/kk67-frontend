@@ -3,9 +3,6 @@
     <template v-slot:sidebar>
       <div class="flex flex-col md:flex-row lg:flex-col justify-between">
         <div class="w-full md:w-2/5 lg:w-full">
-          <div class="header-red-underline mb-4">
-            <h1>Nyheter</h1>
-          </div>
           <News />
         </div>
         <div class="w-full md:w-2/5 lg:w-full mt-6 md:mt-0 lg:mt-6">
