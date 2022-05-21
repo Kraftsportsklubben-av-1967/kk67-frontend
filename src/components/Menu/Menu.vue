@@ -25,7 +25,7 @@ export default defineComponent({
   name: 'Menu',
   props: {
     buttons: {
-      type: [] as PropType<IMenuButton[]>,
+      type: Array as PropType<Array<IMenuButton>>,
       required: true,
     },
     showJoinButton: {
@@ -40,9 +40,10 @@ export default defineComponent({
   methods: {
     selectFocus() {
       const URL = window.location.href
-
       this.buttons.forEach((button) => {
-        button.focus = URL.endsWith(button.path)
+        button.focus =
+          URL.endsWith(button.path) ||
+          (this.$route.path === this.currentPath && button.path === '/')
       })
     },
     handlePath(buttonPath: string): string {
@@ -55,7 +56,7 @@ export default defineComponent({
     },
   },
   mounted() {
-    this.buttons[0].focus = true
+    this.selectFocus()
   },
 
   components: { MenuButton, NavbarButton },

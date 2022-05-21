@@ -1,6 +1,6 @@
 <template>
   <article class="border rounded-xl shadow-lg flex flex-col py-2">
-    <div class="content-card-text font-extrabold flex flex-row my-2 justify-between items-center">
+    <div class="text-lg md:text-xl font-extrabold flex flex-row my-2 justify-between items-center">
       <h2>{{ card.title }}</h2>
 
       <a :href="card.href" target="_blank" class="hover:opacity-80 duration-500 ease-in-out"
@@ -134,7 +134,7 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .content-card-text {
-  @apply text-base sm:text-xl md:text-2xl;
+  @apply text-base sm:text-lg;
 }
 
 article > div {
