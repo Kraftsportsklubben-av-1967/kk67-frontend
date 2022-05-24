@@ -58,7 +58,7 @@
     <div class="flex flex-row justify-between">
       <a :href="card.url" target="_blank">
         <button
-          class="rounded-2xl p-1 duration-500 text-white w-32 font-bold text-base md:text-lg shadow-lg mt-4 bg-black hover:bg-red-600 mb-4"
+          class="rounded-2xl p-1 duration-500 text-white w-32 font-bold text-base md:text-lg shadow-lg mt-4 bg-black readmore mb-4"
         >
           LES MER
         </button>
@@ -203,5 +203,11 @@ article {
 .prev:hover,
 .next:hover {
   background-color: rgba(0, 0, 0, 0.8);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .readmore:hover {
+    @apply bg-red-600;
+  }
 }
 </style>

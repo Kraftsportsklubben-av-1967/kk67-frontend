@@ -53,8 +53,10 @@ img {
   }
 }
 
-img:hover {
-  cursor: pointer;
-  opacity: 0.6;
+@media (hover: hover) and (pointer: fine) {
+  img:hover {
+    cursor: pointer;
+    opacity: 0.6;
+  }
 }
 </style>
