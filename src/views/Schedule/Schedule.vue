@@ -14,7 +14,7 @@
       <br />
       <p>
         <strong>Merk:</strong>
-        Ettersom KK's lokaler ligger under Voldsminde barnehage, er det viktig å sjekke at dåren er
+        Ettersom KK's lokaler ligger under Voldsminde barnehage, er det viktig å sjekke at døren er
         skikkelig låst dersom du velger å trene i barnehagens åpningstider. Videre er det også
         viktig at du spiller veldig lav musikk når du trener under barnehagens åpningstider.
         (07:00-17:00)

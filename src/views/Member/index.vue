@@ -36,7 +36,7 @@
             </template>
             <template v-slot:body>
               <div class="py-2">
-                <ul style="display: list-item; list-style-type: disc">
+                <ul style="display: list-item; list-style-type: disc" class="ml-4 my-2">
                   <li v-for="e in pros">{{ e }}</li>
                 </ul>
               </div>
