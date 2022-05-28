@@ -1,6 +1,6 @@
 import { loadFBPosts } from './facebookLoader'
 import { loadIGPosts } from './instagramLoader'
-import _ from 'lodash'
+//import _ from 'lodash'
 import { SESSION_POSTS_KEY } from '../constants'
 
 export enum DOMString {
