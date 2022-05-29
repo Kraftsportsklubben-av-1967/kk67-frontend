@@ -14,4 +14,5 @@ export const SQUAT = `${PROXY_URL}/resultatservice/?id=13&page=klubb_ranking&top
 export const BENCH = `${PROXY_URL}/resultatservice/?id=13&page=klubb_ranking&top=5&ovelse=bp&format=feed&type=rss`
 export const DEADLIFT = `${PROXY_URL}/resultatservice/?id=13&page=klubb_ranking&top=5&ovelse=ml&format=feed&type=rss`
 
-export const BACKEND_URL = DEVELOPMENT ? 'http://localhost:5000' : 'https://www.api.kk-67.com'
+// needs to be physical ip address in case we want to use phone during dev..
+export const BACKEND_URL = DEVELOPMENT ? 'http://192.168.1.6:5000' : 'https://www.api.kk-67.com'

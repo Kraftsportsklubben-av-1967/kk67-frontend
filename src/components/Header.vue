@@ -1,8 +1,8 @@
 <template>
-  <header class="w-full pt-6" :style="`${updateHeaderBody()}`">
+  <header class="w-full pt-6" :class="`${home ? 'black-header' : 'header'}`">
     <div
       id="header-background-image"
-      class="bg-center bg-no-repeat h-full"
+      class="bg-center bg-no-repeat h-full md:bg-auto bg-cover"
       style="background-image: url(/public/logo/header.jpeg)"
       v-if="$route.name === 'Home'"
     >
@@ -18,11 +18,9 @@
 import { defineComponent } from 'vue'
 import Navbar from './Navbar/index.vue'
 export default defineComponent({
-  methods: {
-    updateHeaderBody(): string {
+  computed: {
+    home() {
       return this.$route.name === 'Home'
-        ? 'background-color: black; height: 35rem '
-        : 'height: 10rem;'
     },
   },
   components: {
@@ -34,5 +32,26 @@ export default defineComponent({
 <style scoped>
 #header-background-image {
   background-position: 50% 2.5%;
+}
+
+.black-header {
+  background-color: black;
+  height: 17.5rem;
+}
+
+@media (min-width: 768px) {
+  .black-header {
+    height: 35rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .black-header {
+    height: 30rem;
+  }
+}
+
+.header {
+  height: 10rem;
 }
 </style>

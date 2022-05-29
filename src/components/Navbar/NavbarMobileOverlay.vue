@@ -6,7 +6,7 @@
     <div class="w-full flex flex-col">
       <div class="flex flex-row-reverse">
         <p
-          class="w-fit h-fit text-white cursor-pointer hover:text-slate-700 duration-500 pr-2"
+          class="w-fit h-fit text-white cursor-pointer duration-500 pr-2 cross"
           style="font-size: 60px; margin-top: -0.5rem"
         >
           &times;
@@ -41,3 +41,10 @@ export default defineComponent({
   components: { NavbarButton },
 })
 </script>
+<style>
+@media (hover: hover) and (pointer: fine) {
+  .cross:hover {
+    @apply text-slate-700;
+  }
+}
+</style>

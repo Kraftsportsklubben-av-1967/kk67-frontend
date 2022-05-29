@@ -14,8 +14,8 @@
       </a>
     </div>
     <template v-if="card.src">
-      <video v-if="card.type === 'VIDEO'" controls style="object-fit: contain">
-        <source :src="card.src" />
+      <video v-if="card.type === 'VIDEO'" playsinline controls style="object-fit: contain">
+        <source :src="`${card.src}\#t=0.1`" />
       </video>
       <figure v-if="card.type === 'CAROUSEL_ALBUM'" :id="card.id">
         <div class="relative m-auto w-full">
@@ -29,7 +29,9 @@
             class="fade w-full"
             style="object-fit: contain: display: block;"
           />
-          <video v-else controls style="object-fit: contain" :src="card.carusell[i].media_url" />
+          <video v-else playsinline controls style="object-fit: contain">
+            <source :src="`${card.carusell[i].media_url}\#t=0.1`" />
+          </video>
           <a class="prev" v-if="hasPrev" @click="i--">❮</a>
           <a class="next" v-if="hasNext" @click="i++">❯</a>
 
@@ -56,7 +58,7 @@
     <div class="flex flex-row justify-between">
       <a :href="card.url" target="_blank">
         <button
-          class="rounded-2xl p-1 duration-500 text-white w-32 font-bold text-base md:text-lg shadow-lg mt-4 bg-black hover:bg-red-600 mb-4"
+          class="rounded-2xl p-1 duration-500 text-white w-32 font-bold text-base md:text-lg shadow-lg mt-4 bg-black readmore mb-4"
         >
           LES MER
         </button>
@@ -201,5 +203,11 @@ article {
 .prev:hover,
 .next:hover {
   background-color: rgba(0, 0, 0, 0.8);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .readmore:hover {
+    @apply bg-red-600;
+  }
 }
 </style>

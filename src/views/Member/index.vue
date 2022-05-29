@@ -2,7 +2,7 @@
   <Layout>
     <template v-slot:sidebar>
       <div class="flex flex-col">
-        <div class="header-red-underline" style="font-size: 3.75rem">
+        <div class="header-red-underline">
           <h2>Bli medlem</h2>
         </div>
         <div class="mt-8">
@@ -16,7 +16,7 @@
           </p>
         </div>
         <div class="mt-10">
-          <h3 class="header-red-underline" style="font-size: 2.5rem">Om styrkeløft</h3>
+          <h3 class="header-red-underline lg:text-4xl">Om styrkeløft</h3>
           <br />
           <p>
             For mer informasjon om styrkeløft, besøk hovedsiden til styrkeloft her:
@@ -36,10 +36,9 @@
             </template>
             <template v-slot:body>
               <div class="py-2">
-                <div v-for="e in pros">
-                  <span class="text-red-600 pr-2">&#11044;</span>
-                  {{ e }}
-                </div>
+                <ul style="display: list-item; list-style-type: disc" class="ml-4 my-2">
+                  <li v-for="e in pros">{{ e }}</li>
+                </ul>
               </div>
               <p>Dette er bare noen av fordelene ved å bli medlem hos KK-67!</p>
             </template>

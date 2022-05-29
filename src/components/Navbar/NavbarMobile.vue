@@ -4,7 +4,10 @@
   </Transition>
   <div class="flex justify-between mx-8 h-fit">
     <KK67Logo />
-    <div class="block my-auto cursor-pointer hover:opacity-70 duration-500" @click="toggleOverlay">
+    <div
+      class="block my-auto cursor-pointer duration-500 hamburger-container"
+      @click="toggleOverlay"
+    >
       <div v-if="!toggled">
         <div class="hamburger-line" :class="invert ? 'bg-black' : 'bg-white'"></div>
         <div class="hamburger-line" :class="invert ? 'bg-black' : 'bg-white'"></div>
@@ -65,5 +68,11 @@ export default defineComponent({
 .v-enter-from,
 .v-leave-to {
   opacity: 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .hamburger-container:hover {
+    @apply opacity-70;
+  }
 }
 </style>

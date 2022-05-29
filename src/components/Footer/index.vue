@@ -1,7 +1,7 @@
 <template>
   <footer class="border-red-600 border-t-4 h-fit text-white flex flex-col pt-10 bg-black">
-    <FooterInfo class="mx-10" />
-    <FooterContact class="mb-12" />
+    <FooterInfo class="mx-8" />
+    <FooterContact class="mx-8 mb-12" />
   </footer>
 </template>
 
