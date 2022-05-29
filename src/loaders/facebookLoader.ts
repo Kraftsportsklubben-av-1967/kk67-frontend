@@ -61,7 +61,7 @@ interface IFBPostSubAttachments {
 }
 
 function loadPosts(): Promise<IFBResponse> {
-  return fetch(`${BACKEND_URL}/posts/fb`, {
+  return fetch(`${BACKEND_URL}/posts/fb/`, {
     method: 'GET',
     headers: {
       'content-type': 'application/json',

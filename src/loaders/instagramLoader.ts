@@ -11,7 +11,7 @@ interface IIGResponse {
 }
 
 function loadMedia(): Promise<IIGResponse> {
-  return fetch(`${BACKEND_URL}/posts/ig`, {
+  return fetch(`${BACKEND_URL}/posts/ig/`, {
     method: 'GET',
     headers: {
       'content-type': 'application/json;charset=UTF-8',
