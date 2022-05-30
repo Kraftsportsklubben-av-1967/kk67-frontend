@@ -114,7 +114,7 @@ const routes = [
     component: () => import('../views/Faq/index.vue'),
     children: [
       {
-        path: 'questions1',
+        path: '',
         name: 'Questions1',
         component: () => import('../views/Faq/Questions1.vue'),
       },

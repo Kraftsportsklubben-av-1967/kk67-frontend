@@ -1,7 +1,7 @@
 <template>
   <div class="w-fit">
     <router-view />
-    <Card v-for="question in questions" class="mt-5 w-full">
+    <Card v-bind:key="question.title" v-for="question in questions" class="mt-5 w-full">
       <template v-slot:header>
         <h1>{{ question.title }}</h1>
       </template>
@@ -30,18 +30,6 @@ export default defineComponent({
 
   data() {
     return {
-      menuButtons: [
-        {
-          title: 'Spørsmål om KK-67',
-          path: '/kk67questions',
-          focus: false,
-        },
-        {
-          title: 'Spørsmål om styrkeløft',
-          path: '/styrkeloftquestions',
-          focus: false,
-        },
-      ] as IMenuButton[],
       questions: [
         {
           title: 'Hva er styrkeløft?',
