@@ -6,11 +6,12 @@
           <h1>F.A.Q</h1>
         </div>
         <div class="mt-8">
-          <Menu :buttons="menuButtons" current-path="/Faq" />
+          <Menu :buttons="menuButtons" current-path="/faq" />
         </div>
         <div class="mt-10">
-          <p></p>
-          <p>Her finner du spørsmål og svar på ofte stilte spørsmål om styrkeløft og KK-67.</p>
+          <p>
+            Her finner du spørsmål og svar på <em>ofte stilte spørsmål</em> om styrkeløft og KK-67.
+          </p>
           <p>Finner du ikke svar på det du lurer på? Ta kontakt med oss da vel!</p>
           <p>
             <a class="anchor-link" href="mailto:kk67.styreleder@gmail.com"
@@ -49,7 +50,7 @@ export default defineComponent({
       menuButtons: [
         {
           title: 'Spørsmål om KK-67',
-          path: '',
+          path: '/',
           focus: false,
         },
         {

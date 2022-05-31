@@ -6,7 +6,7 @@
         <h1>{{ question.title }}</h1>
       </template>
       <template v-slot:body>
-        <p v-html="question.ans"></p>
+        <p v-html="question.ans" />
       </template>
     </Card>
   </div>
@@ -15,17 +15,12 @@
 import Layout from '@components/Layout.vue'
 import { defineComponent } from 'vue'
 import Card from '@components/Card/Card.vue'
-import Menu from '@components/Menu/Menu.vue'
-import News from '@components/Media/News.vue'
-import { IMenuButton } from '@components/Menu/MenuButton.vue'
 
 export default defineComponent({
   name: 'Faq',
   components: {
     Layout,
     Card,
-    Menu,
-    News,
   },
 
   data() {
