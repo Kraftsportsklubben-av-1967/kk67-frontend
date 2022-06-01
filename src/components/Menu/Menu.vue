@@ -2,6 +2,7 @@
   <div>
     <MenuButton
       v-for="button in buttons"
+      :key="button.title"
       :title="button.title"
       :path="handlePath(button.path)"
       :focus="button.focus"

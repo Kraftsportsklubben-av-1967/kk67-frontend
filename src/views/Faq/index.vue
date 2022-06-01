@@ -54,8 +54,13 @@ export default defineComponent({
           focus: false,
         },
         {
+          title: 'For Medlemmer',
+          path: '/members',
+          focus: false,
+        },
+        {
           title: 'Spørsmål om styrkeløft',
-          path: '/questions2',
+          path: '/powerlifting',
           focus: false,
         },
       ] as IMenuButton[],

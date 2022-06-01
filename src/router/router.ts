@@ -115,13 +115,18 @@ const routes = [
     children: [
       {
         path: '',
-        name: 'Questions1',
+        name: 'KK-67',
         component: () => import('../views/Faq/Questions1.vue'),
       },
       {
-        path: 'questions2',
-        name: 'Questions2',
+        path: 'powerlifting',
+        name: 'About Powerlifting',
         component: () => import('../views/Faq/Questions2.vue'),
+      },
+      {
+        path: 'members',
+        name: 'For members',
+        component: () => import('../views/Faq/Questions3.vue'),
       },
     ],
   },
