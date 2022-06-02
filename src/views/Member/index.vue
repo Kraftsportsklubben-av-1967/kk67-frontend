@@ -50,33 +50,26 @@
             <template v-slot:body>
               <p>
                 Årsavgiften for medlemsskap hos Kraftsportsklubben av 1967 er
-                <strong>kr 2500,-</strong>.
+                <strong>100,-</strong>.
               </p>
               <br />
-              <p>Fra august koster det <strong>kr 1250,-</strong> ut året.</p>
+              <p>Treningsavgiften for å trene på klubbens lokaler er <strong>2400,-</strong> pr år. Eller <strong>200,-</strong> for hver resterende måned det kalenderåret.</p>
             </template>
           </Card>
         </div>
         <Card class="mt-4">
           <template v-slot:header>
-            <h1>Informasjon on betaling og innmelding</h1>
+            <h1>Informasjon om innmelding og betaling</h1>
           </template>
           <template v-slot:body>
             <p>
-              Alle betalinger skal gå til kontonr <strong>4202.53.58206</strong>. Husk å merk
-              betalingen med navn!
+              For innmelding og/eller 2 ukers prøvetid ta kontakt med styreleder <strong>Jostein Fiveltun</strong> på <a class="anchor-link" href="mailto:kk67.styreleder@gmail.com">kk67.styrleder@gmail.com</a>.
+              Nye medlemmer må signere klubbkontrakt samt gjennomføre <strong>Antidoping Norges</strong> kurs <a class="anchor-link" href="https://renutover.no/">Ren Utøver</a>.
             </p>
             <br />
             <p>
-              I tillegg til å betale må du ta kontakt med leder
-              <strong>Jostein Fiveltun</strong>, samt signere kontrakt med klubben. Dette gjøres ved
-              å kontakte et av styres medlemmer på trening.
-            </p>
-            <br />
-            <p>
-              For medlemmer som ønsker å konkurrere må det også signeres en antidopingkontrakt fra
-              Antidoping Norge. Uten denne vil det ikke bli bestilt lisens, frist 1 uke før
-              deltagelse på stevne.
+              Når kursbevis fra <a class="anchor-link" href="https://renutover.no/">Ren Utøver</a> er mottat på <a class="anchor-link" href="mailto:kk67.kasserer@gmail.com">kk67.kasserer@gmail.com</a>
+              blir man meldt inn i klubben på <a class="anchor-link" href="https://minidrett.nif.no/">Min Idrett</a>, alle betalinger til klubben gjøres her.
             </p>
           </template>
         </Card>
