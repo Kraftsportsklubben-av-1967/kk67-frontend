@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-col min-h-screen">
-    <Header class="mb-6 md:mb-12" />
-    <main><router-view /></main>
-    <Footer class="mt-12" />
+    <Header />
+    <main class="pt-6 md:pt-12 pb-12"><router-view /></main>
+    <Footer />
   </div>
 </template>
 
