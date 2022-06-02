@@ -108,6 +108,25 @@ const routes = [
     ],
   },
   { path: '/join', name: 'Join', component: () => import('../views/Member/index.vue') },
+  {
+    // This is for path params
+    path: '/faq/:qid',
+    name: 'Faq',
+    component: () => import('../views/Faq/index.vue'),
+  },
+  {
+    path: '/faq',
+    name: 'FaqView',
+    component: () => import('../views/Faq/index.vue'),
+    children: [
+      {
+        path: 'guidelines',
+        name: 'Guidelines',
+        component: () => import('../views/Faq/Guidelines.vue'),
+      },
+    ],
+  },
+
   { path: '/:pathMatch(.*)*', redirect: '/' }, // catch all use case
 ]
 

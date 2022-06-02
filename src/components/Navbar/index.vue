@@ -40,6 +40,10 @@ export default defineComponent({
           path: '/meets',
         },
         {
+          title: 'OFTE STILTE SPØRSMÅL',
+          path: '/faq/1',
+        },
+        {
           title: 'BLI MEDLEM',
           path: '/join',
           focus: true,
