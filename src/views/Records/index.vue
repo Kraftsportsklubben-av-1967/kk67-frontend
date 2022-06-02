@@ -12,8 +12,8 @@
       <div class="mt-6 text-md">
         <br />
         <p>
-          Her vises alle rekorder innad klubben KK-67 i de ulike vekt- og aldersklassene som ulike
-          utøvre har satt opp igjennom årene!
+          Her vises alle interne klubb rekorder som er satt av KK-67 utøvere på et offisielt stevne.
+          Her finnes rekoder i alle ulike vekt- og aldersklasser!
         </p>
         <br />
         <p>

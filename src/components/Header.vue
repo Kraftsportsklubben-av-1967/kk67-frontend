@@ -1,5 +1,9 @@
 <template>
-  <header :class="{ 'background-image': home }" class="pt-6 w-full">
+  <header
+    :class="{ 'background-image': home }"
+    class="pt-6 w-full"
+    :style="home ? 'background-color: black' : 'background-color:white'"
+  >
     <Navbar :class="{ 'h-40': !home }" />
   </header>
 </template>
@@ -23,7 +27,6 @@ export default defineComponent({
 /*  Due to background images not being able to give % height to component we need to do this hackery.. */
 
 .background-image {
-  background-color: black;
   background-image: url(/public/logo/header.jpeg);
   background-repeat: no-repeat;
   background-size: 100% auto;
