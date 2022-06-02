@@ -1,16 +1,6 @@
 <template>
-  <header class="w-full pt-6" :class="`${home ? 'black-header' : 'header'}`">
-    <div
-      id="header-background-image"
-      class="bg-center bg-no-repeat h-full md:bg-auto bg-cover"
-      style="background-image: url(/public/logo/header.jpeg)"
-      v-if="$route.name === 'Home'"
-    >
-      <Navbar />
-    </div>
-    <div v-else class="mx-auto">
-      <Navbar />
-    </div>
+  <header :class="{ 'background-image': home }" class="pt-6 w-full">
+    <Navbar :class="{ 'h-40': !home }" />
   </header>
 </template>
 
@@ -24,34 +14,55 @@ export default defineComponent({
     },
   },
   components: {
-    Navbar: Navbar,
+    Navbar,
   },
 })
 </script>
 
-<style scoped>
-#header-background-image {
-  background-position: 50% 2.5%;
-}
+<style>
+/*  Due to background images not being able to give % height to component we need to do this hackery.. */
 
-.black-header {
+.background-image {
   background-color: black;
-  height: 17.5rem;
+  background-image: url(/public/logo/header.jpeg);
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: center top;
+  padding-bottom: 32.5%;
 }
 
 @media (min-width: 768px) {
-  .black-header {
-    height: 35rem;
+  .background-image {
+    background-size: 90% auto;
+    padding-bottom: 30%;
   }
 }
 
-@media (min-width: 640px) {
-  .black-header {
-    height: 30rem;
+@media (min-width: 832px) {
+  .background-image {
+    background-size: 82.5% auto;
+    padding-bottom: 28%;
   }
 }
 
-.header {
-  height: 10rem;
+@media (min-width: 896px) {
+  .background-image {
+    background-size: 75% auto;
+    padding-bottom: 27.5%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .background-image {
+    background-size: 70% auto;
+    padding-bottom: 25%;
+  }
+}
+
+@media (min-width: 1280px) {
+  .background-image {
+    background-size: 60% auto;
+    padding-bottom: 25%;
+  }
 }
 </style>

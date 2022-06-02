@@ -1,5 +1,5 @@
 <template>
-  <div class="flex mx-2 lg:mx-10 justify-between">
+  <div class="flex justify-between">
     <KK67Logo />
     <div class="flex justify-end my-auto">
       <NavbarButton
@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import KK67Logo, { LOGO_TYPES } from '../Media/KK67Logo.vue'
+import KK67Logo from '../Media/KK67Logo.vue'
 import NavbarButton, { INavbarButton } from './NavbarButton.vue'
 
 export default defineComponent({

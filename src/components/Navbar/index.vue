@@ -1,7 +1,7 @@
 <template>
-  <nav class="h-fit">
-    <Navbar-desktop v-if="showDekstop" :navbar-buttons="buttons" />
-    <Navbar-mobile v-else :navbar-buttons="buttons" />
+  <nav class="h-fit mx-8">
+    <NavbarDesktop v-if="showDekstop" :navbar-buttons="buttons" />
+    <NavbarMobile v-else :navbar-buttons="buttons" />
   </nav>
 </template>
 <script lang="ts">
@@ -12,8 +12,8 @@ import NavbarMobile from './NavbarMobile.vue'
 export default defineComponent({
   name: 'Navbar',
   components: {
-    'Navbar-desktop': NavbarDesktop,
-    'Navbar-mobile': NavbarMobile,
+    NavbarDesktop,
+    NavbarMobile,
   },
   data() {
     return {

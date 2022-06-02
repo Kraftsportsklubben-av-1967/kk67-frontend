@@ -15,7 +15,7 @@
     </div>
     <template v-if="card.src">
       <video v-if="card.type === 'VIDEO'" playsinline controls style="object-fit: contain">
-        <source :src="`${card.src}\#t=0.1`" />
+        <source :src="`${card.src}\#t=0.1`" type="video/mp4" />
       </video>
       <figure v-if="card.type === 'CAROUSEL_ALBUM'" :id="card.id">
         <div class="relative m-auto w-full">
@@ -30,7 +30,7 @@
             style="object-fit: contain: display: block;"
           />
           <video v-else playsinline controls style="object-fit: contain">
-            <source :src="`${card.carusell[i].media_url}\#t=0.1`" />
+            <source :src="`${card.carusell[i].media_url}\#t=0.1`" type="video/mp4" />
           </video>
           <a class="prev" v-if="hasPrev" @click="i--">❮</a>
           <a class="next" v-if="hasNext" @click="i++">❯</a>
