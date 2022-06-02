@@ -109,27 +109,24 @@ const routes = [
   },
   { path: '/join', name: 'Join', component: () => import('../views/Member/index.vue') },
   {
-    path: '/faq',
+    // This is for path params
+    path: '/faq/:qid',
     name: 'Faq',
+    component: () => import('../views/Faq/index.vue'),
+  },
+  {
+    path: '/faq',
+    name: 'FaqView',
     component: () => import('../views/Faq/index.vue'),
     children: [
       {
-        path: '',
-        name: 'KK-67',
-        component: () => import('../views/Faq/Questions1.vue'),
-      },
-      {
-        path: 'powerlifting',
-        name: 'About Powerlifting',
-        component: () => import('../views/Faq/Questions2.vue'),
-      },
-      {
-        path: 'members',
-        name: 'For members',
-        component: () => import('../views/Faq/Questions3.vue'),
+        path: 'guidelines',
+        name: 'Guidelines',
+        component: () => import('../views/Faq/Guidelines.vue'),
       },
     ],
   },
+
   { path: '/:pathMatch(.*)*', redirect: '/' }, // catch all use case
 ]
 

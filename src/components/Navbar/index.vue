@@ -41,7 +41,7 @@ export default defineComponent({
         },
         {
           title: 'OFTE STILTE SPØRSMÅL',
-          path: '/faq',
+          path: '/faq/1',
         },
         {
           title: 'BLI MEDLEM',
