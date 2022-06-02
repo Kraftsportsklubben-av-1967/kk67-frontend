@@ -6,16 +6,23 @@
   font-family: 'Roboto', sans-serif;
 }
 
-body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  overflow-y: hidden;
-  overflow-x: hidden;
-}
-
 html {
   overflow: scroll;
   overflow-x: hidden;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+main {
+  flex-grow: 1;
 }
 
 .header-red-underline {

@@ -3,9 +3,9 @@
     <aside class="lg:w-2/6 mx-8 md:mx-0">
       <slot name="sidebar"></slot>
     </aside>
-    <main class="lg:w-7/12 lg:mt-0 mt-6 xl:ml-40 md:mx-0" :class="fullMain ? 'mx-0' : 'mx-8'">
+    <div class="lg:w-7/12 lg:mt-0 mt-6 xl:ml-40 md:mx-0" :class="fullMain ? 'mx-0' : 'mx-8'">
       <slot name="main"></slot>
-    </main>
+    </div>
   </div>
 </template>
 
