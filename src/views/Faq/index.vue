@@ -69,7 +69,6 @@ export default defineComponent({
         this.$router.replace('/')
         return -1
       }
-      console.log(number)
       return number - 1
     },
   },
