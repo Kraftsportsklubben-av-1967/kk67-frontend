@@ -15,7 +15,7 @@
       <template v-slot:header>{{ guideline.title }}</template>
       <template v-slot:body>
         <ul style="display: list-item; list-style-type: disc" class="ml-4 my-2">
-          <li v-for="bullet in guideline.points" v-html="bullet" />
+          <li v-for="bullet in guideline.points" v-html="bullet" class="my-2" />
         </ul>
       </template>
     </Card>
@@ -43,8 +43,8 @@ export default defineComponent({
           points: [
             'Konkurranserackene er i første omgang forbehold de som skal ha <strong>tung</strong> trening/utstyrstrening',
             'Powerracks er forbeholdt løfting med strikk eller pins',
-            'Eleiko og Leoko stengene er forbeholdt kneybøy, benkpress og markløft',
-            'Ikke bruk Eleiko eller Leoko stenger til benkroing',
+            'Eleiko og Leoko stengene er forbeholdt knebøy, benkpress og markløft!',
+            'IKKE bruk Eleiko eller Leoko stenger til benkroing',
             'Sharing is caring, del utstyret!',
           ],
         },

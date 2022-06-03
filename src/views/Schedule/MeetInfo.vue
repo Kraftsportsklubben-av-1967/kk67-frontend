@@ -43,7 +43,7 @@
       <p>
         <strong>Merk</strong>: Dersom du er medlem av KK67 så gjøres lisensoppkjøp gjennom klubben.
         For å ordne dette tar du kontakt med styreleder
-        <a href="" class="anchor-link">kk67.styreleder@gmail.com</a>
+        <a href="" class="anchor-link">kk67.kasserer@gmail.com</a>
       </p>
     </template>
   </Card>

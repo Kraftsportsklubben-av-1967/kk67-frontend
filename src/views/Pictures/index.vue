@@ -14,8 +14,8 @@
           <template v-slot:body>
             <p>
               Lokalet bærer preg av, som dere ser på bildene under, at det ble startet opp i 1967 og
-              nostalgien henger fortsatt igjen i veggene. Å trene på KK-67 er unikt eller hardcore
-              som de fleste ville kalt det
+              nostalgien henger fortsatt igjen i veggene. Å trene på KK-67 er unikt som de fleste
+              ville kalt det
             </p>
           </template>
         </Card>

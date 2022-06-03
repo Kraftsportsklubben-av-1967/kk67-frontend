@@ -2,7 +2,7 @@
   <Transition>
     <NavbarMobileOverlay v-if="toggled" @click="toggleOverlay" :navbar-buttons="navbarButtons" />
   </Transition>
-  <div class="flex justify-between h-fit">
+  <div class="flex justify-between h-24">
     <KK67Logo />
     <div
       class="block my-auto cursor-pointer duration-500 hamburger-container"
