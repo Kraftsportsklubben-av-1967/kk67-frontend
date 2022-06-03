@@ -2,7 +2,7 @@
   <Loader v-if="loading" class="h-60 w-60 mt-8 md:mt-20" />
   <template v-else>
     <ContentCard
-      class="mb-14 hover:shadow-2xl ease-in-out max-w-4xl"
+      class="mb-14 hover:shadow-2xl ease-in-out"
       style="transition-duration: 0.5s"
       v-for="card in pages[currentPage]"
       :card="card"

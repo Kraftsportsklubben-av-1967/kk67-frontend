@@ -11,7 +11,7 @@
           <p>Ta kontakt med oss vel!</p>
           <p>
             <a class="anchor-link" href="mailto:kk67.styreleder@gmail.com"
-              >@kk67.styrleder@gmail.com</a
+              >@kk67.styreleder@gmail.com</a
             >
           </p>
         </div>
@@ -53,7 +53,10 @@
                 <strong>100,-</strong>.
               </p>
               <br />
-              <p>Treningsavgiften for å trene på klubbens lokaler er <strong>2400,-</strong> pr år. Eller <strong>200,-</strong> for hver resterende måned det kalenderåret.</p>
+              <p>
+                Treningsavgiften for å trene på klubbens lokaler er <strong>2400,-</strong> pr år.
+                Eller <strong>200,-</strong> for hver resterende måned det kalenderåret.
+              </p>
             </template>
           </Card>
         </div>
@@ -63,13 +66,24 @@
           </template>
           <template v-slot:body>
             <p>
-              For innmelding og/eller 2 ukers prøvetid ta kontakt med styreleder <strong>Jostein Fiveltun</strong> på <a class="anchor-link" href="mailto:kk67.styreleder@gmail.com">kk67.styrleder@gmail.com</a>.
-              Nye medlemmer må signere klubbkontrakt samt gjennomføre <strong>Antidoping Norges</strong> kurs <a class="anchor-link" href="https://renutover.no/">Ren Utøver</a>.
+              For innmelding og/eller 2 ukers prøvetid ta kontakt med styreleder
+              <strong>Jostein Fiveltun</strong> på
+              <a class="anchor-link" href="mailto:kk67.styreleder@gmail.com"
+                >kk67.styreleder@gmail.com</a
+              >. Nye medlemmer må signere klubbkontrakt samt gjennomføre
+              <strong>Antidoping Norges</strong> kurs
+              <a class="anchor-link" href="https://renutover.no/">Ren Utøver</a>.
             </p>
             <br />
             <p>
-              Når kursbevis fra <a class="anchor-link" href="https://renutover.no/">Ren Utøver</a> er mottat på <a class="anchor-link" href="mailto:kk67.kasserer@gmail.com">kk67.kasserer@gmail.com</a>
-              blir man meldt inn i klubben på <a class="anchor-link" href="https://minidrett.nif.no/">Min Idrett</a>, alle betalinger til klubben gjøres her.
+              Når kursbevis fra
+              <a class="anchor-link" href="https://renutover.no/">Ren Utøver</a> er mottat på
+              <a class="anchor-link" href="mailto:kk67.kasserer@gmail.com"
+                >kk67.kasserer@gmail.com</a
+              >
+              blir man meldt inn i klubben på
+              <a class="anchor-link" href="https://minidrett.nif.no/">Min Idrett</a>, alle
+              betalinger til klubben gjøres her.
             </p>
           </template>
         </Card>

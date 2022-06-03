@@ -15,7 +15,7 @@
           <p>Finner du ikke svar på det du lurer på? Ta kontakt med oss da vel!</p>
           <p>
             <a class="anchor-link" href="mailto:kk67.styreleder@gmail.com"
-              >@kk67.styrleder@gmail.com</a
+              >@kk67.styreleder@gmail.com</a
             >
           </p>
         </div>
@@ -82,7 +82,7 @@ export default defineComponent({
           focus: false,
         },
         {
-          title: 'For Medlemmer',
+          title: 'For medlemmer',
           path: '/2',
           focus: false,
         },
@@ -105,21 +105,21 @@ export default defineComponent({
           },
           {
             title: 'Hvordan er trening/åpningstidene på KK-67?',
-            ans: 'KK-67 opererer som et nøkkelkortgym. Etter en prøveperiode på 6 måneder får du tilgang til lokalet når du enn skulle trenge det. Under prøverperioden kan du selv låse deg inn mellom 17:00 og 21:00. Kjernetiden er mandag, onsdag og fredag mellom 17:00 til 21:00',
+            ans: 'KK-67 opererer som et nøkkelkortgym. Etter en prøveperiode på 6 måneder får du tilgang til lokalet når du enn skulle trenge det. Under prøverperioden kan du selv låse deg inn fra 17:00 til 23:00 i hverdagene, og i helgene mellom 09:00 til 23:00. Kjernetiden er mandag, onsdag og fredag mellom 17:00 til 21:00',
           },
           {
             title: 'Hvordan kan man bli medlem av KK-67?',
-            ans: 'Kontakt oss på <a class="anchor-link" href="mailto:kk67.styreleder@gmail.com">@kk67.styrleder@gmail.com</a> eller se <strong>BLI MEDLEM</strong> for mer informasjon.',
+            ans: 'Kontakt oss på <a class="anchor-link" href="mailto:kk67.styreleder@gmail.com">@kk67.styreleder@gmail.com</a> eller se <strong>BLI MEDLEM</strong> for mer informasjon.',
           },
         ],
         [
           {
             title: 'Bestilling av lisens',
-            ans: 'For bestilling av Lisens, henvend deg til kasserer på <a class="anchor-link" href="mailto:kk67.kasserer@gmail.com">kk67.kasserer@gmail.com</a>. Dersom dette er første gang du bestiller lisens, legg ved kursbevis fra <a class="anchor-link" href="https://renutover.no/" target="_blank">Ren Utøver</a>. <br> Når egenandelen på 500kr er betalt gjennom <a class="anchor-link" href="https://minidrett.nif.no/" target="_blank">Min Idrett</a> vil lisensen bli bestilt. <br> Bestilling av lisens kan ta opptil 1 uke, husk derfor å ta kontakt i god tid før stevne.',
+            ans: 'For bestilling av Lisens, henvend deg til kasserer på <a class="anchor-link" href="mailto:kk67.kasserer@gmail.com">kk67.kasserer@gmail.com</a>. Dersom dette er første gang du bestiller lisens, legg ved kursbevis fra <a class="anchor-link" href="https://renutover.no/" target="_blank">Ren Utøver</a>. <br> Videre må du betale en egenandel for lisens, denne egenandelen er 50% av lisens per dags dato. Når egenandelen er betalt gjennom <a class="anchor-link" href="https://minidrett.nif.no/" target="_blank">Min Idrett</a> vil lisensen bli bestilt. <br> Bestilling av lisens kan ta opptil 1 uke, husk derfor å ta kontakt i god tid før stevne.',
           },
           {
             title: 'Stevnepåmelding',
-            ans: 'Når du har lisens, kontakt <a class="anchor-link" href="mailto:kk67.styreleder@gmail.com">kk67.styrleder@gmail.com</a> for stevnepåmelding.',
+            ans: 'Når du har lisens, kontakt <a class="anchor-link" href="mailto:kk67.styreleder@gmail.com">kk67.styreleder@gmail.com</a> for stevnepåmelding.',
           },
         ],
         [

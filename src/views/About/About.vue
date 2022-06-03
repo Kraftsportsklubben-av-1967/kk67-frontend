@@ -33,7 +33,7 @@
           ><p>
             KK-67 kan motta tilskudd fra grasrotandelen! Det betyr at 5% av det du betaler når du
             tipper hos <em>norsk tipping</em> går til klubben! For å få til dette må du oppgi
-            klubbens organisasjonsnummer neste gang du tipper <br /><strong>+47 996 808 378</strong>
+            klubbens organisasjonsnummer neste gang du tipper: <strong>996 808 378</strong>
           </p></template
         >
       </Card>

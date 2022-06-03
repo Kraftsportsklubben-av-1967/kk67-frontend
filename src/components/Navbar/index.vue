@@ -1,5 +1,5 @@
 <template>
-  <nav class="h-fit mx-8">
+  <nav class="mx-8">
     <NavbarDesktop v-if="showDekstop" :navbar-buttons="buttons" />
     <NavbarMobile v-else :navbar-buttons="buttons" />
   </nav>
