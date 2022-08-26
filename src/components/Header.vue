@@ -1,10 +1,8 @@
 <template>
-  <header
-    :class="{ 'background-image': home }"
-    class="pt-6 w-full"
-    :style="home ? 'background-color: black' : 'background-color:white'"
-  >
-    <Navbar :class="{ 'h-40': !home }" />
+  <header class="pt-6 w-full" :style="home ? 'background-color: black' : 'background-color:white'">
+    <div :class="{ 'background-image': home }" class="main-container">
+      <Navbar />
+    </div>
   </header>
 </template>
 
