@@ -16,3 +16,6 @@ export const DEADLIFT = `${PROXY_URL}/resultatservice/?id=13&page=klubb_ranking&
 
 // needs to be physical ip address in case we want to use phone during dev..
 export const BACKEND_URL = DEVELOPMENT ? 'http://192.168.1.6:5000' : 'https://www.api.kk-67.com'
+export const BACKEND_URL_V2 = DEVELOPMENT
+  ? 'http://0.0.0.0:4000/index.php'
+  : 'https://www.api.v2.kk-67.com/index.php'
