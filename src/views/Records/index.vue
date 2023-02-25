@@ -32,9 +32,6 @@
           >
         </p>
         <br />
-        <p v-if="$route.name === 'Total'">
-          <em>OBS: Rankingen på sammenlagt er blandet mellom utstyr og utstyrsfritt!</em>
-        </p>
       </div>
     </template>
     <template v-slot:main>

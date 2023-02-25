@@ -1,5 +1,5 @@
 <template>
-  <Recordbox :title="'Sammenlagt'" :switchEnabled="false" :url="primaryURL" :keyExt="'total'" />
+  <Recordbox :title="'Sammenlagt'" :switchEnabled="true" :url="primaryURL" :keyExt="'total'" />
 </template>
 
 <script lang="ts">
