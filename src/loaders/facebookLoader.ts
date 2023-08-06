@@ -1,4 +1,4 @@
-import { BACKEND_URL } from '../constants'
+import { BACKEND_URL_V2 } from '../constants'
 import { removeUndefinedFromArray } from '../utils/removeUndefinedFromArray'
 import { ICard, ICarusell, IMediaType } from './loadData'
 
@@ -61,7 +61,7 @@ interface IFBPostSubAttachments {
 }
 
 function loadPosts(): Promise<IFBResponse> {
-  return fetch(`${BACKEND_URL}/posts/fb/`, {
+  return fetch(`${BACKEND_URL_V2}/posts/fb/`, {
     method: 'GET',
     headers: {
       'content-type': 'application/json',

@@ -1,7 +1,7 @@
 import { ICard } from './loadData'
 import { removeUndefinedFromArray } from '../utils/removeUndefinedFromArray'
-import { BACKEND_URL } from '../constants'
-interface IIGResponse {
+import { BACKEND_URL_V2 } from '../constants'
+interface IIGResponse extends IProfileData {
   id: string
   media: {
     data: IIGPost[]
@@ -11,10 +11,10 @@ interface IIGResponse {
 }
 
 function loadMedia(): Promise<IIGResponse> {
-  return fetch(`${BACKEND_URL}/posts/ig/`, {
+  return fetch(`${BACKEND_URL_V2}/posts/ig/`, {
     method: 'GET',
     headers: {
-      'content-type': 'application/json;charset=UTF-8',
+      'content-type': 'application/json',
     },
   }).then((res) => res.json())
 }
