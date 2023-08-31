@@ -126,7 +126,11 @@ const routes = [
       },
     ],
   },
-
+  {
+    path: '/calc',
+    name: 'CalculatePoints',
+    component: () => import('../views/Calc/index.vue'),
+  },
   { path: '/:pathMatch(.*)*', redirect: '/' }, // catch all use case
 ]
 

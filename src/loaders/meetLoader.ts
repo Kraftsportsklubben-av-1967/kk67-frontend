@@ -92,7 +92,11 @@ export interface IUpcommingMeet {
   url: string
 }
 
+// TODO move to backend..
+
 export async function getUpcommingMeets() {
+  console.log(UPCOMING_MEETS)
+
   return (await fetchiCAL(UPCOMING_MEETS))
     .split('BEGIN:VEVENT')
     .slice(1)
@@ -101,6 +105,10 @@ export async function getUpcommingMeets() {
         .split(/\n/g)
         .slice(1, -2)
         .map((line) => line.split(/[A-Z][A-Z]*:/g)[1])
+
+      console.log(
+        `https://styrkeloft.no/terminliste/?page=terminliste&aar=${new Date().getFullYear()}&mnd=&k%5B%5D=13`,
+      )
 
       return {
         startDate: icalToDate(start),

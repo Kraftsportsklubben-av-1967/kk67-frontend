@@ -6,7 +6,7 @@ export const STYRKELOFT_URL = 'https://styrkeloft.no'
 export const PROXY_URL = DEVELOPMENT ? `http://${HOSTNAME}:${PROXY_PORT}/proxy` : STYRKELOFT_URL
 
 export const PREVIOUS_MEETS = `${PROXY_URL}/resultatservice_integrasjon/rss_protokoll.php?m=1&klubb_id=13`
-export const UPCOMING_MEETS = `${PROXY_URL}/stevner/?page=ical&skipHeader=1&&k=13`
+export const UPCOMING_MEETS = `${STYRKELOFT_URL}/stevner/?page=ical&skipHeader=1&&k=13`
 export const NEWS = `${PROXY_URL}/?format=feed&type=rss`
 
 export const TOTALS     = `${PROXY_URL}/resultatservice/?nsf_page=klubb_ranking&id=13&top5&format=feed&type=rss`
