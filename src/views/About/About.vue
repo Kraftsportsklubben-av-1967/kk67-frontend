@@ -10,7 +10,7 @@
             Kraftsportsklubben av 1967 (KK-67) er en av de eldste styrkeløftklubbene i Norge.
             Klubben har fostret flere landslagsutøvere, norgesrekordholdere, europarekordholdere og
             verdensrekordholdere. Vi som trener på KK-67 er stolte av å være en del av et
-            kjempeflott treningsmiljø for folk i alle aldre og nivå.
+            kjempeflott treningsmiljø for folk på alle nivå.
           </p>
         </template>
       </Card>
