@@ -1,7 +1,11 @@
 <template>
   <div class="flex flex-col min-h-screen">
     <Header />
-    <main class="pt-6 md:pt-12 pb-12"><router-view /></main>
+    <main class="pt-6 md:pt-12 pb-12">
+      <div class="main-container">
+        <router-view />
+      </div>
+    </main>
     <Footer />
   </div>
 </template>
@@ -19,3 +23,8 @@ export default defineComponent({
   },
 })
 </script>
+<style>
+.main-container {
+  @apply 2xl:w-10/12 2xl:m-auto;
+}
+</style>
