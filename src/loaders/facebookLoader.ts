@@ -79,7 +79,7 @@ function loadChildPosts(req?: IFBPostSubAttachments): ICarusell[] {
       src = subattach.media.image.src
     } else {
       type = IMediaType.VIDEO
-      src = subattach.media.video!.src
+      src = subattach.media.video ? subattach.media.video.src : subattach.media.image!.src
     }
 
     return {
@@ -102,7 +102,7 @@ export async function loadFBPosts(): Promise<ICard[]> {
       if (post.attachments && post.attachments.data[0].type === 'share') {
         return undefined
       }
-
+      
       if (post.attachments && post.attachments.data[0].type === 'album') {
         carusell = loadChildPosts(post.attachments.data[0].subattachments)
       }

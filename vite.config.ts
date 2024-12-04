@@ -22,4 +22,10 @@ export default defineConfig({
       '@public': pathResolve('./public/'),
     },
   },
+  server: {
+    host: '0.0.0.0',
+    watch: {
+        usePolling: true
+    }
+  }
 })
