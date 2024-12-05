@@ -1,10 +1,8 @@
 <template>
-  <header
-    :class="{ 'background-image': home }"
-    class="pt-6 w-full"
-    :style="home ? 'background-color: black' : 'background-color:white'"
-  >
-    <Navbar :class="{ 'h-40': !home }" />
+  <header class="pt-6 w-full" :style="home ? 'background-color: black' : 'background-color:white'">
+    <div :class="{ 'background-image': home }" class="main-container">
+      <Navbar />
+    </div>
   </header>
 </template>
 
@@ -47,4 +45,13 @@ export default defineComponent({
     padding-bottom: 26%;
   }
 }
+
+@media (min-width: 1536px) {
+  .background-image {
+    background-size: 83% auto;
+    background-position: center 37.5%;
+    padding-bottom: 21.5%;
+  }
+}
+
 </style>

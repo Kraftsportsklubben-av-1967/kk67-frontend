@@ -3,24 +3,20 @@
     <PictureOverlay v-if="focused" @click="focused = !focused" :src="focusSrc" />
   </Transition>
   <div class="flex flex-col">
-    <Layout>
-      <template v-slot:sidebar>
-        <div class="header-red-underline">
-          <h1>Lokalet til KK-67</h1>
-        </div>
-      </template>
-      <template v-slot:main>
-        <Card>
-          <template v-slot:body>
-            <p>
-              Lokalet bærer preg av, som dere ser på bildene under, at det ble startet opp i 1967 og
-              nostalgien henger fortsatt igjen i veggene. Å trene på KK-67 er unikt som de fleste
-              ville kalt det
-            </p>
-          </template>
-        </Card>
-      </template>
-    </Layout>
+    <div class="flex flex-col lg:flex-row md:w-5/6 sm:w-5/6 sm:mx-auto justify-between">
+      <div class="header-red-underline mx-8 md:mx-0">
+        <h1>Lokalet til KK-67</h1>
+      </div>
+      <Card class="mx-8 md:mx-0 mt-6 md:mt-0">
+        <template v-slot:body>
+          <p>
+            Lokalet bærer preg av, som dere ser på bildene under, at det ble startet opp i 1967 og
+            nostalgien henger fortsatt igjen i veggene. Å trene på KK-67 er unikt som de fleste
+            ville kalt det
+          </p>
+        </template>
+      </Card>
+    </div>
     <div class="flex flex-col mt-10 lg:flex-row justify-between md:w-5/6 sm:w-5/6 sm:mx-auto">
       <div v-for="(_, i) in columnWidth" class="mb-4 column">
         <div
