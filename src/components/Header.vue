@@ -45,4 +45,13 @@ export default defineComponent({
     padding-bottom: 26%;
   }
 }
+
+@media (min-width: 1536px) {
+  .background-image {
+    background-size: 83% auto;
+    background-position: center 37.5%;
+    padding-bottom: 21.5%;
+  }
+}
+
 </style>
