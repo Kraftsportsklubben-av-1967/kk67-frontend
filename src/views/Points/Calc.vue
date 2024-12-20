@@ -70,7 +70,7 @@
 </template>
 
 <script lang="ts">
-
+// @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-v3-or-Later
 let CALC_COUNTER = 0;
 
 import { defineComponent } from 'vue'
@@ -152,7 +152,7 @@ export default defineComponent({
       }
     }
   })
-
+ // @license-end
 </script>
   
 <style scoped>
