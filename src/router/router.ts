@@ -126,7 +126,11 @@ const routes = [
       },
     ],
   },
-
+  {
+    path: '/points',
+    name: 'Points',
+    component: () => import('../views/Points/index.vue'),
+  },
   { path: '/:pathMatch(.*)*', redirect: '/' }, // catch all use case
 ]
 
