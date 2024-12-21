@@ -1,69 +1,49 @@
 <template>
     <div>
         <div id="background">
-            <div :id="`points-${calcId}`">
-                <h2 :id="`display-glp-${calcId}`"></h2>
-                <h3 :id="`display-dots-${calcId}`"></h3>
+            <div>
+                <h2> {{ glp.toFixed(2) }}</h2>
+                <h3> {{ dots.toFixed(2) }} Dots</h3>
             </div>
         </div>
 
-        <div id="form-card">
-            <div id="inner-form">
+        <div class="form-card">
+            <div class="inner-form">
                 <div class="field">
-                <label for="total" class="label-number">Total</label>
-                <input type="number" :id="`total-${calcId}`" :name="`total-${calcId}`" min="0" step="2.5" @input="calc()">
+                    <label for="total" class="label-number">Total</label>
+                    <input 
+                        type="number" 
+                        :id="`total-${calcId}`" 
+                        :name="`total-${calcId}`" 
+                        min="0" step="2.5" 
+                        @input="calc()">
                 </div>
 
                 <div class="field">
-                <label for="bodyweight" class="label-number">Bodyweight</label>
-                <input type="number" :id="`bodyweight-${calcId}`" :name="`bodyweight-${calcId}`" min="0" step="0.1" @input="calc()">
+                    <label for="bodyweight" class="label-number">Bodyweight</label>
+                    <input 
+                        type="number"
+                        :id="`bodyweight-${calcId}`" 
+                        :name="`bodyweight-${calcId}`" 
+                        min="0" 
+                        step="0.1" 
+                        @input="calc()">
                 </div>
 
-                <div class="radio-group">
-                <div class="radio-field">
-                    <input type="radio" :id="`kilograms-${calcId}`" :name="`units-${calcId}`" value="kg" @change="calc()" checked>
-                    <label for="kilograms" class="label-radio">Kilos</label>
-                </div>
-                <div class="radio-field">
-                    <input type="radio" :id="`pounds-${calcId}`" :name="`units-${calcId}`" value="lbs" @change="calc()">
-                    <label for="pounds" class="label-radio">Pounds</label>
-                </div>
-                </div>
-
-                <div class="radio-group">
-                <div class="radio-field">
-                    <input type="radio" :id="`men-${calcId}`" :name="`sex-${calcId}`" value="M" @change="calc()" checked>
-                    <label for="men" class="label-radio">Men</label>
-                </div>
-                <div class="radio-field">
-                    <input type="radio" :id="`women-${calcId}`" :name="`sex-${calcId}`" value="F" @change="calc()">
-                    <label for="women" class="label-radio">Women</label>
-                </div>
+                <div class="radio-group" v-for="(optionPair, i) in options" :key="i">
+                    <div class="radio-field" v-for="(option, j) in optionPair" :key="j">
+                        <input 
+                            type="radio" 
+                            :id="`${option.id}-${calcId}`" 
+                            :name="`${option.name}-${calcId}`" 
+                            :value="option.value" 
+                            :checked="j === 0"
+                            @change="calc()">
+                        <label :for="option.id" class="label-radio">{{ option.label }}</label>
+                    </div>
                 </div>
 
-                <div class="radio-group">
-                <div class="radio-field">
-                    <input type="radio" :id="`raw-${calcId}`" :name="`equipment-${calcId}`" value="Raw" @change="calc()" checked>
-                    <label for="raw" class="label-radio">Raw</label>
-                </div>
-                <div class="radio-field">
-                    <input type="radio" :id="`single--${calcId}`" :name="`equipment-${calcId}`" value="Single-ply" @change="calc()">
-                    <label for="single" class="label-radio">Single-ply</label>
-                </div>
-                </div>
-
-                <div class="radio-group last">
-                <div class="radio-field">
-                    <input type="radio" :id="`sbd-${calcId}`" :name="`event-${calcId}`" value="SBD" @change="calc()" checked>
-                    <label for="sbd" class="label-radio">3-Lift</label>
-                </div>
-                <div class="radio-field">
-                    <input type="radio" :id="`b-${calcId}`" :name="`event-${calcId}`" value="B" @change="calc()">
-                    <label for="b" class="label-radio">Bench</label>
-                </div>
-                </div>
-
-                <input type="button" value="Calculate" :id="`calculate-${calcId}`" class="calculate" @click="calc()">
+                <input type="button" value="Calculate" :id="`calculate-${calcId}`" class="calculate hover:p-2" @click="calc()">
             </div>
         </div>
     </div>
@@ -80,6 +60,24 @@ export default defineComponent({
     data() {
         return {
             calcId: ++CALC_COUNTER, // Increment counter and assign ID
+            options: [
+                [
+                    { id: 'kilograms',  name: 'units', label: 'Kilos',  value: 'kg' },
+                    { id: 'pounds',     name: 'units', label: 'Pounds', value: 'lbs' }
+                ],
+                [
+                    { id: 'men',    name: 'sex', label: 'Men',   value: 'M' },
+                    { id: 'women',  name: 'sex', label: 'Women', value: 'F' }
+                ],
+                [
+                    { id: 'raw',    name: 'equipment', label: 'Raw',        value: 'Raw' },
+                    { id: 'single', name: 'equipment', label: 'Single-ply', value: 'Single-ply' }
+                ],
+                [
+                    { id: 'sbd',    name: 'event', label: '3-Lift', value: 'SBD' },
+                    { id: 'b',      name: 'event', label: 'Bench',  value: 'B' }
+                ]
+            ],
             PARAMETERS: {
                 "M": {
                     "Raw": {
@@ -101,7 +99,9 @@ export default defineComponent({
                         "B": [221.82209, 357.00377, 0.02937]
                     }
                 }
-            }
+            },
+            glp: 0.00,
+            dots: 0.00,
         }
     },
     methods: {
@@ -127,13 +127,15 @@ export default defineComponent({
                 glp = 0;
             }
 
-            document.getElementById(`display-glp-${this.calcId}`)!.innerHTML = glp.toFixed(2);
-            document.getElementById(`display-dots-${this.calcId}`)!.innerHTML = dots.toFixed(2) + " Dots";
+            this.glp = glp;
+            this.dots = dots;
         }, 
         getRadioValue(name) {
             const radios = document.getElementsByName(name) as NodeListOf<HTMLInputElement>;
             for (let i = 0; i < radios.length; ++i) {
-                if (radios[i].checked) { return radios[i].value; }
+                if (radios[i].checked) { 
+                    return radios[i].value; 
+                }
             }
         },
         dots_poly(a,b,c,d,e,x) {
@@ -182,7 +184,7 @@ h1 {
 }
 h2 {
     padding-top: 2rem;
-    font-size: 82px;
+    font-size: 72px;
     font-weight: 700;
     line-height: 82px;
     text-align: center;
@@ -190,14 +192,14 @@ h2 {
 }
 
 h3 {
-    font-size: 32px;
+    font-size: 27px;
     font-weight: 400;
     line-height: 32px;
     text-align: center;
     margin-top: 12px;
     margin-bottom: 10px;
 }
-#form-card {
+.form-card {
     display: block;
     max-width: 326px;
     margin-top: -70px;
@@ -209,7 +211,7 @@ h3 {
     box-shadow: 0 0 43px 0 hsla(0, 0%, 64%, .45);
 }
 
-#inner-form {
+.inner-form {
     margin: 0 0 15px;
 }
 
@@ -228,10 +230,7 @@ label {
     padding-bottom: 11px;
     border-bottom: 1px solid #cdcdcd;
 }
-.radio-group.last {
-    margin-bottom: -13px;
-    border-bottom-width: 0px;
-}
+
 
 .radio-field {
     display: block;
@@ -272,7 +271,6 @@ input[type="number"] {
     font-size: 14px;
     line-height: 1.42857143;
     color: #333333;
-    vertical-align: middle;
     background-color: #fff;
     border: 1px solid #cdcdcd;
     border-radius: 5px;
@@ -300,17 +298,6 @@ input[type="number"]:focus {
     font-family: Montserrat, sans-serif;
     text-decoration: none;
     cursor: pointer;
-    }
-#calculate:hover {
-    box-shadow: 0 7px 10px 0 rgba(0, 0, 0, .2);
 }
 
-footer {
-    display: block;
-    margin: 40px auto 0px;
-    padding-bottom: 30px;
-    font-size: 12px;
-    line-height: 27px;
-    text-align: center;
-}    
 </style>
