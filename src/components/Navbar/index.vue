@@ -40,6 +40,10 @@ export default defineComponent({
           path: '/meets',
         },
         {
+          title: 'POENG',
+          path: '/points',
+        },
+        {
           title: 'OFTE STILTE SPØRSMÅL',
           path: '/faq/1',
         },
@@ -52,9 +56,9 @@ export default defineComponent({
     }
   },
   created() {
-    this.showDekstop = window.outerWidth > 1130
+    this.showDekstop = window.innerWidth > 1230
     window.addEventListener('resize', () => {
-      this.showDekstop = window.outerWidth > 1130
+      this.showDekstop = window.innerWidth > 1230
     })
   },
 })

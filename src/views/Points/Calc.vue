@@ -1,7 +1,15 @@
 <template>
     <div>
         <div id="background">
-            <div>
+            <div class="text-center pt-4 font-bold">
+                <input 
+                    type="text" 
+                    :placeholder="placeholder" 
+                    @focus="clearPlaceholder"
+                    @blur="resetPlaceholder"
+                    class="text-center font-bold bg-inherit text-white placeholder:text-white text-xl placeholder:text-xl" />
+            </div>
+            <div class="-mt-4">
                 <h2> {{ glp.toFixed(2) }}</h2>
                 <h3> {{ dots.toFixed(2) }} Dots</h3>
             </div>
@@ -13,37 +21,38 @@
                     <label for="total" class="label-number">Total</label>
                     <input 
                         type="number" 
-                        :id="`total-${calcId}`" 
-                        :name="`total-${calcId}`" 
-                        min="0" step="2.5" 
-                        @input="calc()">
+                        name="total"
+                        min="0" 
+                        step="2.5" 
+                        @input="updateSelectedValue(inputOptions[0].id, ($event.target as HTMLInputElement).value)">
                 </div>
 
                 <div class="field">
                     <label for="bodyweight" class="label-number">Bodyweight</label>
                     <input 
                         type="number"
-                        :id="`bodyweight-${calcId}`" 
-                        :name="`bodyweight-${calcId}`" 
+                        name="bodyweight" 
                         min="0" 
-                        step="0.1" 
-                        @input="calc()">
+                        step="0.1"
+                        @input="updateSelectedValue(inputOptions[1].id, ($event.target as HTMLInputElement).value)">
+
                 </div>
 
                 <div class="radio-group" v-for="(optionPair, i) in options" :key="i">
                     <div class="radio-field" v-for="(option, j) in optionPair" :key="j">
                         <input 
                             type="radio" 
-                            :id="`${option.id}-${calcId}`" 
-                            :name="`${option.name}-${calcId}`" 
-                            :value="option.value" 
-                            :checked="j === 0"
-                            @change="calc()">
+                            :name="`${option.name}-${index}`" 
+                            :value="option.value"
+                            :checked="j === 0" 
+                            :v-model="selectedValues[option.name]"
+                            @change="updateSelectedValue(option.name, option.value)"
+                            >
                         <label :for="option.id" class="label-radio">{{ option.label }}</label>
                     </div>
                 </div>
 
-                <input type="button" value="Calculate" :id="`calculate-${calcId}`" class="calculate hover:p-2" @click="calc()">
+                <input type="button" value="Calculate" class="calculate hover:p-2" @click="calc()">
             </div>
         </div>
     </div>
@@ -51,15 +60,26 @@
 
 <script lang="ts">
 // @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt AGPL-v3-or-Later
-let CALC_COUNTER = 0;
 
+import { placeholder } from '@babel/types';
+import { clear } from 'console';
 import { defineComponent } from 'vue'
 
 export default defineComponent({
     name: 'Calc',
+    props: {
+        index: {
+            type: Number,
+            required: true
+        }
+    },
     data() {
         return {
-            calcId: ++CALC_COUNTER, // Increment counter and assign ID
+            placeholder: `Lifter ${this.index}`,
+            inputOptions: [
+                { id: 'total',      value: '' },
+                { id: 'bodyweight', value: '' },
+            ],
             options: [
                 [
                     { id: 'kilograms',  name: 'units', label: 'Kilos',  value: 'kg' },
@@ -78,6 +98,7 @@ export default defineComponent({
                     { id: 'b',      name: 'event', label: 'Bench',  value: 'B' }
                 ]
             ],
+            selectedValues: {} as { [key: string]: string },
             PARAMETERS: {
                 "M": {
                     "Raw": {
@@ -104,14 +125,31 @@ export default defineComponent({
             dots: 0.00,
         }
     },
+    mounted() {
+        this.selectedValues = Object.fromEntries(
+            this.inputOptions.map((p) => [p.id, p.value]))
+        
+        Object.assign(this.selectedValues, Object.fromEntries(
+            this.options.map((p) => [p[0].name, p[0].value])));
+    },
     methods: {
+        clearPlaceholder() {
+            this.placeholder = '';
+        },
+        resetPlaceholder() {
+            this.placeholder = `Lifter ${this.index}`;
+        },
+        updateSelectedValue(index, value) {
+            this.selectedValues[index] = value;
+            this.calc()
+        },
         calc() {
-            const units = this.getRadioValue(`units-${this.calcId}`)!;
-            const sex = this.getRadioValue(`sex-${this.calcId}`)!;
-            const equipment = this.getRadioValue(`equipment-${this.calcId}`);
-            const event = this.getRadioValue(`event-${this.calcId}`);
-            let bw = Number((document.getElementById(`bodyweight-${this.calcId}`) as HTMLInputElement).value);
-            let total = Number((document.getElementById(`total-${this.calcId}`) as HTMLInputElement).value);
+            const units = this.selectedValues.units;
+            const sex = this.selectedValues.sex;
+            const equipment = this.selectedValues.equipment;
+            const event = this.selectedValues.event;
+            let bw = Number(this.selectedValues.bodyweight);
+            let total = Number(this.selectedValues.total);
 
             if (units === "lbs") {
                 bw = bw / 2.20462262;
@@ -130,14 +168,6 @@ export default defineComponent({
             this.glp = glp;
             this.dots = dots;
         }, 
-        getRadioValue(name) {
-            const radios = document.getElementsByName(name) as NodeListOf<HTMLInputElement>;
-            for (let i = 0; i < radios.length; ++i) {
-                if (radios[i].checked) { 
-                    return radios[i].value; 
-                }
-            }
-        },
         dots_poly(a,b,c,d,e,x) {
             const x2=x*x
             const x3=x2*x
@@ -163,7 +193,7 @@ export default defineComponent({
 }
       
 #background {
-    height: 280px;
+    height: 300px;
     color: #fff;
     background-image: linear-gradient(to right, #f8db70, #f83707);
 }
@@ -201,10 +231,7 @@ h3 {
 }
 .form-card {
     display: block;
-    max-width: 326px;
     margin-top: -70px;
-    margin-right: auto;
-    margin-left: auto;
     padding: 27px 40px 15px 40px;
     border-radius: 5px;
     background-color: #fff;

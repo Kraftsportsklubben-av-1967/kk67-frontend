@@ -4,10 +4,10 @@
       v-if="invert"
       class="router-link"
       :class="
-        focus
-          ? 'bg-white text-black hover:bg-red-600 hover:text-slate-50'
-          : 'bg-transparent text-white hover:bg-white hover:text-black'
-      "
+      {
+        'bg-white text-black hover:bg-red-600 hover:text-slate-50': focus,
+        'bg-transparent text-white hover:bg-white hover:text-black': !focus,
+      }"
       :to="path"
     >
       <strong>{{ title }}</strong>
@@ -15,11 +15,11 @@
     <router-link
       v-else
       class="router-link"
-      :class="
-        focus
-          ? 'bg-black text-white hover:bg-red-600 hover:text-white'
-          : 'text-black bg-transparent hover:bg-black hover:text-white'
-      "
+      :class="{
+         'text-white bg-red-700': isActive,
+        'bg-black text-white hover:bg-red-600 hover:text-white': focus,
+        'bg-transparent hover:bg-black hover:text-white': !focus,
+      }"
       :to="path"
       ><strong>{{ title }}</strong>
     </router-link>
@@ -63,6 +63,9 @@ export default defineComponent({
       }
       return false
     },
+    isActive() {
+      return this.$route.path === this.path
+    }
   },
 })
 </script>
