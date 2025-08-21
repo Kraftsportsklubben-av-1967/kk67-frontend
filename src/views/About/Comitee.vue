@@ -31,13 +31,13 @@ export default defineComponent({
         },
         {
           title: 'Nestleder',
-          name: 'Damian Steinke',
+          name: 'Joar Finsaas',
           email: '',
           phoneNumber: '',
         },
         {
           title: 'Styremedlem',
-          name: 'Frøya Gathen',
+          name: 'Aurora Gutuen Aaser',
           email: '',
           phoneNumber: '',
         },
@@ -61,7 +61,7 @@ export default defineComponent({
         },
         {
           title: 'Varamedlem',
-          name: 'Joar Finsaas',
+          name: 'Damian Steinke',
           email: '',
           phoneNumber: '',
         },
