@@ -87,6 +87,14 @@
             </p>
           </template>
         </Card>
+        <Card class="mt-4">
+          <template v-slot:header>
+            <h1 class="text-4xl">Bli medlem</h1>
+          </template>
+          <template v-slot:body>
+            <Form />
+          </template>
+        </Card>
       </div>
     </template>
   </Layout>
@@ -95,12 +103,14 @@
 import { defineComponent } from 'vue'
 import Card from '@components/Card/Card.vue'
 import Layout from '@components/Layout.vue'
+import Form from '@components/Form.vue'
 
 export default defineComponent({
   name: 'MemberForum',
   components: {
     Card,
     Layout,
+    Form,
   },
   data() {
     return {
