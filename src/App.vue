@@ -25,6 +25,6 @@ export default defineComponent({
 </script>
 <style>
 .main-container {
-  @apply 2xl:w-10/12 2xl:m-auto;
+  @apply xl:w-10/12 xl:m-auto 2xl:w-3/4 2xl:m-auto;
 }
 </style>

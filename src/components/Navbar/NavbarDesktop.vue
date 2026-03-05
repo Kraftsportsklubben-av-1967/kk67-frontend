@@ -1,9 +1,9 @@
 <template>
-  <div class="flex justify-between">
+  <div class="flex justify-between items-center">
     <KK67Logo />
     <div class="flex justify-end my-auto">
       <NavbarButton
-        class="my-auto mx-2 text-sm"
+        class="my-auto mx-2 text-base"
         v-for="button in navbarButtons"
         :key="button.title"
         :title="button.title"
