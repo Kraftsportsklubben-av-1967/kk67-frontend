@@ -27,7 +27,7 @@ export default defineComponent({
           title: 'Styreleder',
           name: 'Jostein Fiveltun',
           email: 'kk67.styreleder@gmail.com',
-          phoneNumber: '+47 922 86 110',
+          phoneNumber: '',
         },
         {
           title: 'Nestleder',

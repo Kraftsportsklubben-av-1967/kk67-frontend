@@ -9,7 +9,6 @@
       <p>Kontakt</p>
       <p>Styreleder</p>
       <p>{{ leaderContact.name }}</p>
-      <p>+47 {{ leaderContact.number }}</p>
       <p>
         <a class="anchor-hover" :href="`mailto:${leaderContact.email}?subject=Melding til KK67`">{{
           leaderContact.email
@@ -35,7 +34,6 @@ export default defineComponent({
       LOGO_TYPES: LOGO_TYPES,
       leaderContact: {
         name: 'Jostein Fiveltun',
-        number: '922 86 110',
         email: 'kk67.styreleder@gmail.com',
       },
     }

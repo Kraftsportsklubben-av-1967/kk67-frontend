@@ -54,8 +54,8 @@
               </p>
               <br />
               <p>
-                Treningsavgiften for å trene på klubbens lokaler er <strong>2400,-</strong> pr år.
-                Eller <strong>200,-</strong> for hver resterende måned det kalenderåret.
+                Treningsavgiften for å trene på klubbens lokaler er <strong>{{ price.yearly }},-</strong> pr år.
+                Eller <strong>{{ price.monthly }},-</strong> for hver resterende måned det kalenderåret.
               </p>
             </template>
           </Card>
@@ -112,6 +112,10 @@ export default defineComponent({
         'En sterkere kropp!',
         'Skikkelig styrkeløftutstyr!',
       ],
+	  price: {
+		monthly: 250,
+		yearly: 250 * 12
+	  }
     }
   },
 })
