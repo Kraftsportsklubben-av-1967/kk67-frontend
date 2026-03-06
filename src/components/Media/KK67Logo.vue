@@ -43,13 +43,18 @@ img {
   display: block;
   transition-duration: 0.4s;
   width: 4rem;
-  image-rendering: pixelated;
 }
 
 /* sm */
 @media (min-width: 640px) {
   img {
-    width: 100%;
+    width: 5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  img {
+    width: 6rem;
   }
 }
 
