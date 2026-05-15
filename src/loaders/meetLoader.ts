@@ -46,7 +46,7 @@ function loadPreviousMeets(sessionKey: string) {
 
 function loadUpcommingMeets(sessionKey: string) {
   return JSON.parse(window.sessionStorage.getItem(sessionKey)!, (key, value) => {
-    return key === ('startDate' || 'endDate') ? new Date(value) : value
+    return key === 'startDate' || key === 'endDate' ? new Date(value) : value
   })
 }
 
