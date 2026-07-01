@@ -36,7 +36,7 @@
     "cross-env": "^7.0.3",
     "sass": "^1.49.0",
     "typescript": "^4.6.3",
-    "vite": "^2.7.2",
+    "vite": "^6.4.3",
     "vue-tsc": "^0.34.17"
   },
   "contributors": [
