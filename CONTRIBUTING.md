@@ -129,15 +129,26 @@ A quick introduction to the various tools we use can be found here
 
 - [**TailwindCSS**](https://www.youtube.com/watch?v=mr15Xzb1Ook&ab_channel=Fireship)
 
+## Home feed
+
+The home feed shows Instagram-only previews without an embed library. Image
+posts show their photo; albums show their first available photo. Videos and
+albums without a photo remain visible as date/caption/link cards. The full post
+opens on Instagram. Missing captions are omitted, not reconstructed.
+
+Pagination and session caching remain in place. Facebook profile links elsewhere
+on the site are unchanged; the home feed no longer fetches Facebook posts.
+
 ## Test
 
 Run `yarn test` for the feed regression tests, then `yarn build` for type checking
 and the production build. The tests use Node's built-in test runner and the
-existing Vite TypeScript loader; no separate test framework is required.
+existing Vite/Vue loaders and Vue server renderer; no separate test framework is required.
 
 Feed tests mock the social API responses, so they need no network access or
-credentials. They cover optional Instagram captions, deduplication, sorting,
-session caching, and propagation of request failures.
+credentials. They cover optional captions, image/link previews, Instagram-only
+requests, sorting, session caching (including the old mixed-feed cache), request
+failures, and native card markup without video players or embeds.
 
 ## Editor
 
