@@ -1,4 +1,4 @@
-import { ICard } from './loadData'
+import { ICard, ICarusell } from './loadData'
 import { removeUndefinedFromArray } from '../utils/removeUndefinedFromArray'
 import { BACKEND_URL_V2 } from '../constants'
 interface IIGResponse extends IProfileData {
@@ -24,14 +24,11 @@ interface IIGPost {
   media_url: string
   timestamp: string
   permalink: string
-  caption: string
+  caption?: string | null
   id: string
   type: string
-  children: {
-    data: Array<{
-      media_type: string
-      media_url: string
-    }>
+  children?: {
+    data: ICarusell[]
   }
 }
 interface IProfileData {
@@ -42,21 +39,21 @@ interface IProfileData {
 export async function loadIGPosts(): Promise<ICard[]> {
   const response = await loadMedia()
   return removeUndefinedFromArray(
-    response.media.data.map((post) => {
+    response.media.data.map((post): ICard | undefined => {
       if (post.media_type)
         return {
           id: post.id,
           date: new Date(post.timestamp),
           src: post.media_url,
           url: post.permalink,
-          text: post.caption,
+          text: post.caption ?? '',
           type: post.media_type,
           title: response.name,
-          comp: post.caption.substring(0, 10),
+          comp: post.caption?.substring(0, 10) || `instagram:${post.id}`,
           carusell: post.children ? post.children.data : [],
           profileUrl: response.profile_picture_url,
           href: 'https://www.instagram.com/kraftsportklubben_av_1967/',
-        } as ICard
+        }
     }),
   )
 }
