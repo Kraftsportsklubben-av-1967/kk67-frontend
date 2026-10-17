@@ -78,14 +78,20 @@ Previews the built package as if it were to be deployed.
 
 ## NM 2027
 
-The `/nm` route is available from both navigation menus. Event dates, venue and the
-optional YouTube video ID live in `src/constants/nm.ts`. The four-card countdown
+The `/nm` route is available from both navigation menus. Event dates, venue and
+video IDs live in `src/constants/nm.ts`. The four-card countdown
 shows calendar days remaining and changes at midnight in `Europe/Oslo`, including
 daylight-saving transitions. It stops at `0000` on the first event day.
 
-Set `youtubeVideoId` to an 11-character YouTube video ID when a video is ready.
-Until then the page shows “Video kommer”. Videos use the privacy-enhanced player
-and are only loaded after the visitor activates “Last inn video”.
+The default video is **KK Final Draft.mp4**, hosted on Google Drive. `driveFileId`
+must identify a video file, not its folder; the file must allow anyone with the link
+to view it. If the embedded player cannot play, visitors can open the video directly
+using the link below it.
 
-Run `yarn test` for the countdown regressions and `yarn build` for type-checking and
+Set `youtubeVideoId` to an 11-character YouTube video ID once it is published there.
+YouTube takes precedence over Drive and uses the privacy-enhanced player. Both
+providers load only after the visitor activates “Last inn video”. If both IDs are
+`null`, the page shows “Video kommer”.
+
+Run `yarn test` for the countdown and video regressions and `yarn build` for type-checking and
 the production build.

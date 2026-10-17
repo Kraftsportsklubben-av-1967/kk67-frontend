@@ -72,7 +72,11 @@
         <h2 id="video-title">Følg reisen<br />mot NM.</h2>
         <p>Forberedelser, folk og øyeblikk fra klubben. Følg med – vi har mer å dele.</p>
       </div>
-      <YoutubeVideo :video-id="event.youtubeVideoId" :title="event.name" />
+      <EventVideo
+        :youtube-video-id="event.youtubeVideoId"
+        :drive-file-id="event.driveFileId"
+        :title="event.name"
+      />
     </section>
 
     <div class="nm-signoff">
@@ -85,11 +89,11 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import FlipCountdown from '@components/Countdown/FlipCountdown.vue'
-import YoutubeVideo from '@components/Media/YoutubeVideo.vue'
+import EventVideo from '@components/Media/EventVideo.vue'
 import { NM_EVENT } from '../../constants/nm'
 
 export default defineComponent({
-  components: { FlipCountdown, YoutubeVideo },
+  components: { FlipCountdown, EventVideo },
   data() {
     return { event: NM_EVENT }
   },

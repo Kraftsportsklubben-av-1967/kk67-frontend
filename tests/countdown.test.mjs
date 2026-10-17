@@ -3,7 +3,7 @@ import { after, test } from 'node:test'
 import { createServer } from 'vite'
 
 const server = await createServer({
-  server: { middlewareMode: true, hmr: false, watch: null },
+  server: { middlewareMode: true, hmr: false, ws: false, watch: null },
   appType: 'custom',
   optimizeDeps: { noDiscovery: true },
 })
