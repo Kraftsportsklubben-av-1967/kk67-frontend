@@ -18,7 +18,7 @@
       :class="{
          'text-white bg-red-700': isActive,
         'bg-black text-white hover:bg-red-600 hover:text-white': focus,
-        'bg-transparent hover:bg-black hover:text-white': !focus,
+        'bg-transparent hover:bg-black hover:text-white': !focus && !isActive,
       }"
       :to="path"
       ><strong>{{ title }}</strong>

@@ -20,6 +20,10 @@ export default defineComponent({
       showDekstop: true,
       buttons: [
         {
+          title: 'NM 2027',
+          path: '/nm',
+        },
+        {
           title: 'OM OSS',
           path: '/about',
         },

@@ -2,6 +2,9 @@
 
 ## Get started
 
+For Google Maps key restrictions and the NM routing service, see
+[Google Maps troubleshooting](README.md#google-maps).
+
 ## docker-compose
 
 If you want to avoid downloading or chaning your local environment, you can checkout the guide how to setup the frontend and backend for docker-compose [here](https://github.com/Kraftsportsklubben-av-1967/kk67-docker)
