@@ -8,8 +8,7 @@
   "parserOptions": {
     "ecmaVersion": 2018,
     "sourceType": "module",
-    "project": "./tsconfig.json",
-    "include": ["src/**/*.ts", "types/**/*.ts"]
+    "project": "./tsconfig.json"
   },
   "globals": {
     "Atomics": "readonly",
