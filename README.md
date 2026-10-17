@@ -75,3 +75,17 @@ yarn preview
 ```
 
 Previews the built package as if it were to be deployed.
+
+## NM 2027
+
+The `/nm` route is available from both navigation menus. Event dates, venue and the
+optional YouTube video ID live in `src/constants/nm.ts`. The four-card countdown
+shows calendar days remaining and changes at midnight in `Europe/Oslo`, including
+daylight-saving transitions. It stops at `0000` on the first event day.
+
+Set `youtubeVideoId` to an 11-character YouTube video ID when a video is ready.
+Until then the page shows “Video kommer”. Videos use the privacy-enhanced player
+and are only loaded after the visitor activates “Last inn video”.
+
+Run `yarn test` for the countdown regressions and `yarn build` for type-checking and
+the production build.

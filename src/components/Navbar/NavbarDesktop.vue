@@ -1,9 +1,9 @@
 <template>
-  <div class="flex justify-between items-center">
+  <div class="flex justify-between items-center gap-4">
     <KK67Logo />
-    <div class="flex justify-end my-auto">
+    <div class="flex flex-wrap justify-end my-auto">
       <NavbarButton
-        class="my-auto mx-2 text-base"
+        class="my-auto mx-1 text-base whitespace-nowrap"
         v-for="button in navbarButtons"
         :key="button.title"
         :title="button.title"
