@@ -1,6 +1,4 @@
-import { loadFBPosts } from './facebookLoader'
 import { loadIGPosts } from './instagramLoader'
-import _ from 'lodash'
 import { SESSION_POSTS_KEY } from '../constants'
 
 export enum DOMString {
@@ -29,22 +27,8 @@ export interface ICard {
   date: Date
   text: string
   url: string
-  type?: string
-  comp?: string
   profileUrl: string
-  carusell: ICarusell[]
   href: string
-}
-
-export enum IMediaType {
-  CAROUSEL_ALBUM = 'CAROUSEL_ALBUM',
-  IMAGE = 'IMAGE',
-  VIDEO = 'VIDEO',
-}
-
-export interface ICarusell {
-  media_type: IMediaType
-  media_url: string
 }
 
 export async function loadPosts(): Promise<ICard[]> {
@@ -54,13 +38,8 @@ export async function loadPosts(): Promise<ICard[]> {
     }) as ICard[]
   }
 
-  const igposts = await loadIGPosts()
-  const fbposts = await loadFBPosts()
-
-  const output = _.uniqBy([...igposts, ...fbposts], 'comp')
-  // TODO this is O(n²) complexity... would be better if we could ONLY query Facebook posts from the api to remove this duplicate removal funciton
-
-  const result = [...output].sort((a: ICard, b: ICard) => b.date.getTime() - a.date.getTime())
-  window.sessionStorage.setItem(SESSION_POSTS_KEY, JSON.stringify(result))
-  return result
+  const posts = await loadIGPosts()
+  posts.sort((a, b) => b.date.getTime() - a.date.getTime())
+  window.sessionStorage.setItem(SESSION_POSTS_KEY, JSON.stringify(posts))
+  return posts
 }

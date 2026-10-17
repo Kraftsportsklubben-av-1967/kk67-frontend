@@ -23,24 +23,24 @@ VITE_PROXY_PORT = 2000
 
 ## Local development
 
-This project is written in TypeScript with the Vue frontend framework using Prettier and ESlint for code formatting. You will need **Node** v14 and **Yarn**.
+This project is written in TypeScript with the Vue frontend framework using Prettier and ESlint for code formatting. You will need **Node** v20 and **Yarn** v1, matching the Docker Compose environment.
 
-1. Install node v14. I recommend installing that with nvm
+1. Install node v20. I recommend installing that with nvm
 
 MacOS/Ubuntu: https://github.com/nvm-sh/nvm
 Windows: https://nodejs.org/en/download/
 
 ```sh
-$ nvm install 14
+$ nvm install 20
 ```
 
-1. Make node v14 default
+1. Make node v20 default
 
 ```sh
-$ nvm alias default 14
+$ nvm alias default 20
 ```
 
-3. Open a new terminal and verify node version (should return v14.X.X)
+3. Open a new terminal and verify node version (should return v20.X.X)
 
 ```sh
 $ node -v
@@ -129,22 +129,26 @@ A quick introduction to the various tools we use can be found here
 
 - [**TailwindCSS**](https://www.youtube.com/watch?v=mr15Xzb1Ook&ab_channel=Fireship)
 
-<!--
-# //TODO add testing library for vue
+## Home feed
+
+The home feed shows Instagram-only previews without an embed library. Image
+posts show their photo; albums show their first available photo. Videos and
+albums without a photo remain visible as date/caption/link cards. The full post
+opens on Instagram. Missing captions are omitted, not reconstructed.
+
+Pagination and session caching remain in place. Facebook profile links elsewhere
+on the site are unchanged; the home feed no longer fetches Facebook posts.
+
 ## Test
 
-Jest (https://jestjs.io) is used for testing. All files within the `src` folder with the `<FILENAME>.test.ts` format will automatically be picked up by Jest.
+Run `yarn test` for the feed regression tests, then `yarn build` for type checking
+and the production build. The tests use Node's built-in test runner and the
+existing Vite/Vue loaders and Vue server renderer; no separate test framework is required.
 
-You can run the tests including generating a coverage report with:
-
-- `yarn test`
-
-You can start jest with watch mode with:
-
-- `yarn jest:watch`
-
-You can run one single test file by running `yarn jest:watch <FILENAME>`, for example `yarn jest:watch src/..<FILENAME>.test.ts`.
--->
+Feed tests mock the social API responses, so they need no network access or
+credentials. They cover optional captions, image/link previews, Instagram-only
+requests, sorting, session caching (including the old mixed-feed cache), request
+failures, and native card markup without video players or embeds.
 
 ## Editor
 

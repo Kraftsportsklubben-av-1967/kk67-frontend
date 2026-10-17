@@ -19,19 +19,18 @@ function loadMedia(): Promise<IIGResponse> {
   }).then((res) => res.json())
 }
 
-interface IIGPost {
+interface IIGMedia {
   media_type: string
-  media_url: string
+  media_url?: string
+}
+
+interface IIGPost extends IIGMedia {
   timestamp: string
   permalink: string
-  caption: string
+  caption?: string | null
   id: string
-  type: string
-  children: {
-    data: Array<{
-      media_type: string
-      media_url: string
-    }>
+  children?: {
+    data: IIGMedia[]
   }
 }
 interface IProfileData {
@@ -42,21 +41,24 @@ interface IProfileData {
 export async function loadIGPosts(): Promise<ICard[]> {
   const response = await loadMedia()
   return removeUndefinedFromArray(
-    response.media.data.map((post) => {
-      if (post.media_type)
-        return {
-          id: post.id,
-          date: new Date(post.timestamp),
-          src: post.media_url,
-          url: post.permalink,
-          text: post.caption,
-          type: post.media_type,
-          title: response.name,
-          comp: post.caption.substring(0, 10),
-          carusell: post.children ? post.children.data : [],
-          profileUrl: response.profile_picture_url,
-          href: 'https://www.instagram.com/kraftsportklubben_av_1967/',
-        } as ICard
+    response.media.data.map((post): ICard | undefined => {
+      if (!post.media_type) return undefined
+
+      let src = post.media_type === 'IMAGE' ? post.media_url : undefined
+      if (post.media_type === 'CAROUSEL_ALBUM') {
+        src = post.children?.data.find((child) => child.media_type === 'IMAGE' && child.media_url)?.media_url
+      }
+
+      return {
+        id: post.id,
+        date: new Date(post.timestamp),
+        ...(src ? { src } : {}),
+        url: post.permalink,
+        text: post.caption ?? '',
+        title: response.name,
+        profileUrl: response.profile_picture_url,
+        href: 'https://www.instagram.com/kraftsportklubben_av_1967/',
+      }
     }),
   )
 }
