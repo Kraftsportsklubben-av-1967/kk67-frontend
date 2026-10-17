@@ -84,6 +84,9 @@ shows calendar days remaining and changes at midnight in `Europe/Oslo`, includin
 daylight-saving transitions: `0245` means 245 days remaining. It stops at `0000`
 on the first event day.
 
+The official NM logo is bundled at `assets/public/logo/nm-2027-logo.png` and shown
+in the hero. It is included in normal builds and needs no separate manual upload.
+
 The temporary video is a local copy of **KK Final Draft.mp4**, played with native
 browser controls. Put it at `assets/public/videos/nm-2027-promo.mp4`; this exact
 file is Git-ignored and must not be committed. Its URL, configured by `mp4Url`, is

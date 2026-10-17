@@ -16,7 +16,14 @@
           <a class="hero-link" href="#nm-info">Mer om mesterskapet <span aria-hidden="true">↗</span></a>
         </div>
         <div class="hero-details">
-          <img class="club-mark" src="/public/logo/kk-logo-white.png" alt="KK-67" />
+          <img
+            class="event-logo"
+            src="/public/logo/nm-2027-logo.png"
+            :alt="event.name"
+            width="2236"
+            height="2752"
+            decoding="async"
+          />
           <dl>
             <dt>Sett av helgen</dt>
             <dd class="event-dates">{{ eventDates }}</dd>
@@ -197,7 +204,7 @@ h1 span { color: #f15d55; }
 .hero-link:hover { color: #f15d55; }
 .hero-link:focus-visible { outline: 2px solid var(--nm-paper); outline-offset: 5px; }
 .hero-details { padding-left: 1.75rem; border-left: 1px solid #ffffff26; }
-.club-mark { width: 5rem; margin-bottom: 2rem; }
+.event-logo { display: block; width: min(100%, 12rem); height: auto; margin-bottom: 2rem; }
 dt {
   margin-top: 1.5rem;
   color: #c6c4bd;
@@ -305,14 +312,11 @@ h3 { margin-top: 1.25rem; font-size: 1.1rem; font-weight: 700; }
   .anniversary { flex-direction: column; gap: .4rem; }
   .hero-grid, .section-intro, .video-section { grid-template-columns: 1fr; gap: 2rem; }
   .hero-details {
-    display: flex;
-    gap: 1.5rem;
-    align-items: center;
     padding: 1.5rem 0 0;
     border-left: 0;
     border-top: 1px solid #ffffff26;
   }
-  .club-mark { width: 4rem; margin-bottom: 0; }
+  .event-logo { width: min(100%, 11rem); margin-inline: auto; margin-bottom: 1.5rem; }
   dt:first-child { margin-top: 0; }
   .information-cards { grid-template-columns: 1fr; }
   .information-card, .information-card + .information-card {
