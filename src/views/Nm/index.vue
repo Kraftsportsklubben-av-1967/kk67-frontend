@@ -36,8 +36,8 @@
 
     <section class="countdown-section" aria-labelledby="countdown-title">
       <h2 id="countdown-title" class="eyebrow">Hver dag bringer oss nærmere.</h2>
-      <FlipCountdown :target-date="event.startsOn" :event-name="event.name" />
-      <p class="countdown-note">Til første mesterskapsdag · norsk tid</p>
+      <FlipCountdown :target-at="event.countdownAt" :event-name="event.name" />
+      <p class="countdown-note">Til {{ countdownTarget }} · norsk tid. Løftetider kommer.</p>
     </section>
 
     <section id="nm-info" class="information-section" aria-labelledby="information-title">
@@ -73,6 +73,25 @@
       </div>
     </section>
 
+    <section class="travel-section" aria-labelledby="travel-title">
+      <p class="eyebrow red">Midt i Trondheim</p>
+      <h2 id="travel-title">Finn veien til NM.</h2>
+      <div class="travel-addresses">
+        <div>
+          <h3>A · {{ event.hotel.name }}</h3>
+          <p>{{ event.hotel.address }}</p>
+        </div>
+        <div>
+          <h3>B · {{ event.venue }}</h3>
+          <p>{{ event.venueAddress }}</p>
+        </div>
+      </div>
+      <RouteMap
+        :origin="`${event.hotel.name}, ${event.hotel.address}`"
+        :destination="`${event.venue}, ${event.venueAddress}`"
+      />
+    </section>
+
     <section class="video-section" aria-labelledby="video-title">
       <div>
         <p class="eyebrow red">Bak løftene</p>
@@ -97,14 +116,21 @@
 import { defineComponent } from 'vue'
 import FlipCountdown from '@components/Countdown/FlipCountdown.vue'
 import EventVideo from '@components/Media/EventVideo.vue'
+import RouteMap from '@components/Maps/RouteMap.vue'
 import { NM_EVENT } from '../../constants/nm'
 
 export default defineComponent({
-  components: { FlipCountdown, EventVideo },
+  components: { FlipCountdown, EventVideo, RouteMap },
   data() {
     return { event: NM_EVENT }
   },
   computed: {
+    countdownTarget(): string {
+      return new Intl.DateTimeFormat('nb-NO', {
+        day: 'numeric', month: 'long', year: 'numeric',
+        hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Oslo',
+      }).format(new Date(this.event.countdownAt))
+    },
     eventDates(): string {
       return new Intl.DateTimeFormat('nb-NO', {
         day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Europe/Oslo',
@@ -204,7 +230,7 @@ h1 span { color: #f15d55; }
 .hero-link:hover { color: #f15d55; }
 .hero-link:focus-visible { outline: 2px solid var(--nm-paper); outline-offset: 5px; }
 .hero-details { padding-left: 1.75rem; border-left: 1px solid #ffffff26; }
-.event-logo { display: block; width: min(100%, 12rem); height: auto; margin-bottom: 2rem; }
+.event-logo { display: block; width: min(100%, 12rem); height: auto; margin-inline: auto; margin-bottom: 2rem; }
 dt {
   margin-top: 1.5rem;
   color: #c6c4bd;
@@ -288,6 +314,9 @@ h3 { margin-top: 1.25rem; font-size: 1.1rem; font-weight: 700; }
   letter-spacing: .12em;
   text-transform: uppercase;
 }
+.travel-section { margin-bottom: clamp(2.5rem, 6vw, 5rem); }
+.travel-addresses { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 1.5rem; }
+.travel-addresses p { margin-top: .5rem; color: #62605c; font-size: .9rem; line-height: 1.7; }
 .video-section {
   display: grid;
   grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
@@ -310,13 +339,13 @@ h3 { margin-top: 1.25rem; font-size: 1.1rem; font-weight: 700; }
 @media (max-width: 700px) {
   .hero-topline { align-items: start; gap: 1rem; }
   .anniversary { flex-direction: column; gap: .4rem; }
-  .hero-grid, .section-intro, .video-section { grid-template-columns: 1fr; gap: 2rem; }
+  .hero-grid, .section-intro, .video-section, .travel-addresses { grid-template-columns: 1fr; gap: 2rem; }
   .hero-details {
     padding: 1.5rem 0 0;
     border-left: 0;
     border-top: 1px solid #ffffff26;
   }
-  .event-logo { width: min(100%, 11rem); margin-inline: auto; margin-bottom: 1.5rem; }
+  .event-logo { width: min(100%, 11rem); margin-bottom: 1.5rem; }
   dt:first-child { margin-top: 0; }
   .information-cards { grid-template-columns: 1fr; }
   .information-card, .information-card + .information-card {

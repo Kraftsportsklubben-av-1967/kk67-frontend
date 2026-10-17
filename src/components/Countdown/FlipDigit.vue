@@ -1,5 +1,5 @@
 <template>
-  <div class="flip-digit" :data-digit="value" aria-hidden="true">
+  <div class="flip-digit" :class="{ compact }" :data-digit="value" aria-hidden="true">
     <div class="face top"><span class="number">{{ value }}</span></div>
     <div class="face bottom"><span class="number">{{ value }}</span></div>
     <div v-if="flipping" :key="value" class="flip-overlay">
@@ -23,6 +23,7 @@ interface FlipState {
 export default defineComponent({
   props: {
     value: { type: String, required: true },
+    compact: { type: Boolean, default: false },
   },
   data(): FlipState {
     return { previous: this.value, flipping: false, resetTimer: undefined }
@@ -107,6 +108,19 @@ export default defineComponent({
 }
 .seam::before { left: 5px; }
 .seam::after { right: 5px; }
+.compact {
+  --digit-height: clamp(2.25rem, 7vw, 4.75rem);
+  width: clamp(1.5rem, 5vw, 3.5rem);
+  color: #ef4444;
+  font-size: clamp(1.75rem, 5.5vw, 3.75rem);
+  box-shadow: 0 3px 0 #000, 0 7px 12px #0008;
+}
+.compact .top { background: #151515; }
+.compact .bottom { background: #080808; }
+.compact .seam { height: 1px; background: #000b; }
+.compact .seam::before, .compact .seam::after { top: -2px; width: 2px; height: 5px; }
+.compact .seam::before { left: 3px; }
+.compact .seam::after { right: 3px; }
 @keyframes flip-top { to { transform: rotateX(-90deg); } }
 @keyframes flip-bottom { to { transform: rotateX(0); } }
 @media (prefers-reduced-motion: reduce) {

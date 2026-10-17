@@ -79,13 +79,22 @@ Previews the built package as if it were to be deployed.
 ## NM 2027
 
 The `/nm` route is available from both navigation menus. Event dates, venue and
-media settings live in `src/constants/nm.ts`. The four-card countdown
-shows calendar days remaining and changes at midnight in `Europe/Oslo`, including
-daylight-saving transitions: `0245` means 245 days remaining. It stops at `0000`
-on the first event day.
+media settings live in `src/constants/nm.ts`. The four large cards show full
+24-hour days remaining; the smaller red-on-black cards show the remaining hours,
+minutes and seconds. All digits stop at zero when the target is reached.
+
+Until the event start time is confirmed, `countdownAt` is midnight on 19 June
+2027 in Oslo (`2027-06-19T00:00:00+02:00`), not an announced lifting time.
+Use an ISO timestamp with an explicit UTC offset when updating it. This combined
+countdown replaces the earlier calendar-day count, so its day number can be one
+lower while the smaller clock shows the rest of the day.
 
 The official NM logo is bundled at `assets/public/logo/nm-2027-logo.png` and shown
 in the hero. It is included in normal builds and needs no separate manual upload.
+
+The location section offers walking and driving routes from Quality Hotel Prinsen
+to Studentersamfundet. Addresses are in the event settings. Routes come from
+Google Maps; the external directions link works independently of the embedded map.
 
 The temporary video is a local copy of **KK Final Draft.mp4**, played with native
 browser controls. Put it at `assets/public/videos/nm-2027-promo.mp4`; this exact
@@ -104,5 +113,29 @@ Its privacy-enhanced player loads only after the visitor activates “Last inn v
 The local player preloads metadata without autoplay. If both `youtubeVideoId` and
 `mp4Url` are `null`, the page shows “Video kommer”.
 
-Run `yarn test` for the countdown and video regressions and `yarn build` for type-checking and
+Run `yarn test` for the focused regressions and `yarn build` for type-checking and
 the production build.
+
+## Google Maps
+
+Both the club location map and the NM route use the existing `VITE_GOOGLE_API_KEY`
+from the frontend `.env`. Never commit this file or the key. Restart Vite or rebuild
+after changing environment settings.
+
+Both maps use `AdvancedMarkerElement` with the shared JavaScript map ID in
+`src/utils/googleMaps.ts`. The map ID is public styling/configuration, not an API
+key. The club-logo marker remains clickable; the NM markers identify the hotel
+and arena. Google requires a valid JavaScript map ID for advanced markers.
+
+If the console reports `RefererNotAllowedMapError`, open the existing key in
+[Google Cloud credentials](https://console.cloud.google.com/apis/credentials) and
+add the site's origin to its allowed websites. For this Docker preview, use
+`http://localhost:3000/*`. Keep existing production restrictions; do not replace
+them with an unrestricted wildcard. Reload the page after the change has propagated.
+
+The NM route also requires **Routes API** to be enabled in the same project and
+allowed in the key's API restrictions, alongside **Maps JavaScript API**. It uses
+the current Routes library, not Directions API (Legacy). Google usage pricing applies.
+If the map loads but directions fail, check those service restrictions and the
+browser console. Authentication, network and route errors are shown on the page
+instead of leaving an unexplained blank map.
