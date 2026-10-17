@@ -79,19 +79,27 @@ Previews the built package as if it were to be deployed.
 ## NM 2027
 
 The `/nm` route is available from both navigation menus. Event dates, venue and
-video IDs live in `src/constants/nm.ts`. The four-card countdown
+media settings live in `src/constants/nm.ts`. The four-card countdown
 shows calendar days remaining and changes at midnight in `Europe/Oslo`, including
-daylight-saving transitions. It stops at `0000` on the first event day.
+daylight-saving transitions: `0245` means 245 days remaining. It stops at `0000`
+on the first event day.
 
-The default video is **KK Final Draft.mp4**, hosted on Google Drive. `driveFileId`
-must identify a video file, not its folder; the file must allow anyone with the link
-to view it. If the embedded player cannot play, visitors can open the video directly
-using the link below it.
+The temporary video is a local copy of **KK Final Draft.mp4**, played with native
+browser controls. Put it at `assets/public/videos/nm-2027-promo.mp4`; this exact
+file is Git-ignored and must not be committed. Its URL, configured by `mp4Url`, is
+`/public/videos/nm-2027-promo.mp4`.
+
+For deployment, upload the MP4 separately to `public/videos/nm-2027-promo.mp4`
+under the website's document root. A build from a clean clone does not contain it.
+A local build with the file present copies it to `dist/public/videos/`.
+If the player reports that the video could not load, check that the URL serves
+the MP4, not the SPA's HTML fallback.
 
 Set `youtubeVideoId` to an 11-character YouTube video ID once it is published there.
-YouTube takes precedence over Drive and uses the privacy-enhanced player. Both
-providers load only after the visitor activates “Last inn video”. If both IDs are
-`null`, the page shows “Video kommer”.
+YouTube automatically replaces the local player and stops requesting the MP4.
+Its privacy-enhanced player loads only after the visitor activates “Last inn video”.
+The local player preloads metadata without autoplay. If both `youtubeVideoId` and
+`mp4Url` are `null`, the page shows “Video kommer”.
 
 Run `yarn test` for the countdown and video regressions and `yarn build` for type-checking and
 the production build.

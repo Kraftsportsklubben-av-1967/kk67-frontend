@@ -1,8 +1,21 @@
 <template>
   <div class="event-video">
-    <div class="video-player" :class="{ 'video-pending': !source || !loaded }">
+    <div class="video-player" :class="{ 'video-pending': !source || (source.provider === 'YouTube' && !loaded) }">
+      <video
+        v-if="source?.provider === 'MP4'"
+        :key="source.url"
+        :src="source.url"
+        :aria-label="title"
+        controls
+        playsinline
+        preload="metadata"
+        @error="failed = true"
+        @loadeddata="failed = false"
+      >
+        Nettleseren din støtter ikke videoavspilling.
+      </video>
       <iframe
-        v-if="source && loaded"
+        v-else-if="source?.provider === 'YouTube' && loaded"
         :src="source.embedUrl"
         :title="title"
         loading="lazy"
@@ -10,10 +23,10 @@
         allowfullscreen
         referrerpolicy="strict-origin-when-cross-origin"
       ></iframe>
-      <button v-else-if="source" class="video-content video-load" type="button" @click="loaded = true">
+      <button v-else-if="source?.provider === 'YouTube'" class="video-content video-load" type="button" @click="loaded = true">
         <span class="play-icon" aria-hidden="true"></span>
         <span class="video-heading">Last inn video</span>
-        <span class="video-description">Innhold fra {{ source.provider }} hentes først når du trykker.</span>
+        <span class="video-description">Innhold fra YouTube hentes først når du trykker.</span>
       </button>
       <div v-else class="video-content">
         <span class="play-icon" aria-hidden="true"></span>
@@ -21,9 +34,12 @@
         <p class="video-description">Her blir det film fra reisen mot NM 2027.</p>
       </div>
     </div>
-    <p v-if="source && loaded" class="video-fallback">
+    <p v-if="source?.provider === 'MP4' && failed" class="video-fallback" role="alert">
+      Videoen kunne ikke lastes. Prøv igjen senere.
+    </p>
+    <p v-if="source?.provider === 'YouTube' && loaded" class="video-fallback">
       Spilles ikke videoen av?
-      <a :href="source.watchUrl" target="_blank" rel="noopener noreferrer">Åpne i {{ source.provider }}</a>.
+      <a :href="source.watchUrl" target="_blank" rel="noopener noreferrer">Åpne i YouTube</a>.
     </p>
   </div>
 </template>
@@ -31,20 +47,18 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 
-interface VideoSource {
-  provider: 'YouTube' | 'Google Drive'
-  embedUrl: string
-  watchUrl: string
-}
+type VideoSource =
+  | { provider: 'YouTube'; embedUrl: string; watchUrl: string }
+  | { provider: 'MP4'; url: string }
 
 export default defineComponent({
   props: {
     youtubeVideoId: { type: String as PropType<string | null>, default: null },
-    driveFileId: { type: String as PropType<string | null>, default: null },
+    mp4Url: { type: String as PropType<string | null>, default: null },
     title: { type: String, required: true },
   },
   data() {
-    return { loaded: false }
+    return { loaded: false, failed: false }
   },
   computed: {
     source(): VideoSource | null {
@@ -56,19 +70,17 @@ export default defineComponent({
           watchUrl: `https://www.youtube.com/watch?v=${id}`,
         }
       }
-      if (this.driveFileId) {
-        const id = encodeURIComponent(this.driveFileId)
-        return {
-          provider: 'Google Drive',
-          embedUrl: `https://drive.google.com/file/d/${id}/preview`,
-          watchUrl: `https://drive.google.com/file/d/${id}/view`,
-        }
+      if (this.mp4Url) {
+        return { provider: 'MP4', url: this.mp4Url }
       }
       return null
     },
   },
   watch: {
-    source() { this.loaded = false },
+    source() {
+      this.loaded = false
+      this.failed = false
+    },
   },
 })
 </script>
@@ -85,7 +97,8 @@ export default defineComponent({
   color: #f4f0e7;
 }
 .video-pending { min-height: 13rem; }
-iframe { width: 100%; height: 100%; border: 0; }
+iframe, video { display: block; width: 100%; height: 100%; border: 0; }
+video { object-fit: contain; }
 .video-content {
   display: flex;
   flex-direction: column;

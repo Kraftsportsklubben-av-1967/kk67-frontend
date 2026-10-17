@@ -74,7 +74,7 @@
       </div>
       <EventVideo
         :youtube-video-id="event.youtubeVideoId"
-        :drive-file-id="event.driveFileId"
+        :mp4-url="event.mp4Url"
         :title="event.name"
       />
     </section>

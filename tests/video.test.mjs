@@ -11,45 +11,49 @@ const server = await createServer({
 })
 after(() => server.close())
 const { default: EventVideo } = await server.ssrLoadModule('/src/components/Media/EventVideo.vue')
-const driveFileId = '1Cl_886a7x9OLlyh49ZaFq_A1qHR-R8mB'
+const mp4Url = '/public/videos/nm-2027-promo.mp4'
 const youtubeVideoId = 'M7lc1UVf-VE'
 
-function renderVideo(props, loaded = false) {
-  const component = loaded ? { ...EventVideo, data: () => ({ loaded: true }) } : EventVideo
+function renderVideo(props, state) {
+  const component = state ? { ...EventVideo, data: () => ({ loaded: false, failed: false, ...state }) } : EventVideo
   return renderToString(createSSRApp(component, { title: 'NM i styrkeløft 2027', ...props }))
 }
 
 test('shows the coming-soon state when neither provider is configured', async () => {
   const html = await renderVideo({})
   assert.match(html, /Video kommer/)
-  assert.doesNotMatch(html, /<iframe|<button|<a /)
+  assert.doesNotMatch(html, /<video|<iframe|<button|<a /)
 })
 
-test('offers Drive without embedding external content before activation', async () => {
-  const html = await renderVideo({ driveFileId })
-  assert.match(html, /<button[^>]*type="button"/)
-  assert.match(html, /Innhold fra Google Drive hentes først/)
-  assert.doesNotMatch(html, /<iframe|<img|drive\.google\.com/)
+test('uses the local MP4 with native controls and metadata-only preloading', async () => {
+  const html = await renderVideo({ mp4Url })
+  assert.ok(html.includes(`src="${mp4Url}"`))
+  assert.match(html, /<video[^>]*controls[^>]*playsinline[^>]*preload="metadata"/)
+  assert.match(html, /aria-label="NM i styrkeløft 2027"/)
+  assert.doesNotMatch(html, /<iframe|autoplay|youtube|drive\.google\.com|role="alert"/)
 })
 
 test('prefers YouTube when both providers are configured', async () => {
-  const html = await renderVideo({ driveFileId, youtubeVideoId })
+  const html = await renderVideo({ mp4Url, youtubeVideoId })
   assert.match(html, /Innhold fra YouTube hentes først/)
-  assert.doesNotMatch(html, /Google Drive|<iframe|<img|youtube-nocookie\.com/)
+  assert.doesNotMatch(html, /<video|<iframe|<img|youtube-nocookie\.com/)
+  assert.ok(!html.includes(mp4Url))
 })
 
-test('the activated Drive player uses a file preview and a direct-view fallback', async () => {
-  const html = await renderVideo({ driveFileId }, true)
-  assert.ok(html.includes(`src="https://drive.google.com/file/d/${driveFileId}/preview"`))
-  assert.ok(html.includes(`href="https://drive.google.com/file/d/${driveFileId}/view"`))
-  assert.match(html, /title="NM i styrkeløft 2027"/)
-  assert.match(html, /allowfullscreen/)
-  assert.match(html, /rel="noopener noreferrer"/)
+test('reports a failed local video instead of leaving a silent empty player', async () => {
+  const html = await renderVideo({ mp4Url }, { failed: true })
+  assert.match(html, /role="alert"/)
+  assert.match(html, /Videoen kunne ikke lastes/)
   assert.doesNotMatch(html, /youtube/)
 })
 
 test('the activated YouTube player still uses the privacy-enhanced domain', async () => {
-  const html = await renderVideo({ driveFileId, youtubeVideoId }, true)
+  const html = await renderVideo({ mp4Url, youtubeVideoId }, { loaded: true })
   assert.ok(html.includes(`src="https://www.youtube-nocookie.com/embed/${youtubeVideoId}"`))
-  assert.doesNotMatch(html, /drive\.google\.com/)
+  assert.ok(html.includes(`href="https://www.youtube.com/watch?v=${youtubeVideoId}"`))
+  assert.match(html, /title="NM i styrkeløft 2027"/)
+  assert.match(html, /allowfullscreen/)
+  assert.match(html, /rel="noopener noreferrer"/)
+  assert.doesNotMatch(html, /<video|drive\.google\.com/)
+  assert.ok(!html.includes(mp4Url))
 })
