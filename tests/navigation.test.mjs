@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict'
 import { after, test } from 'node:test'
-import { createSSRApp } from 'vue'
+import { createSSRApp, h } from 'vue'
 import { renderToString } from 'vue/server-renderer'
 import { createMemoryHistory, createRouter } from 'vue-router'
 import { createServer } from 'vite'
@@ -15,6 +15,7 @@ const { default: Navbar } = await server.ssrLoadModule('/src/components/Navbar/i
 const { default: Desktop } = await server.ssrLoadModule('/src/components/Navbar/NavbarDesktop.vue')
 const { default: MobileOverlay } = await server.ssrLoadModule('/src/components/Navbar/NavbarMobileOverlay.vue')
 const { default: Menu } = await server.ssrLoadModule('/src/components/Menu/Menu.vue')
+const { default: Header } = await server.ssrLoadModule('/src/components/Header.vue')
 const buttons = Navbar.data().buttons
 
 async function render(component, props, path = '/nm') {
@@ -44,15 +45,17 @@ test('desktop keeps every link in order in a single row with a nonshrinking logo
   assert.deepEqual(links(html).map(({ title, href }) => ({ title, path: href })),
     buttons.map(({ title, path }) => ({ title, path })))
   assert.match(html, /class="[^"]*\bflex-nowrap\b/)
+  assert.ok(html.includes('gap-3'), 'Desktop links need 12px gaps between buttons')
+  assert.ok(html.includes('min-w-max'), 'The row must expose its full width before it is shown')
   assert.doesNotMatch(html, /\bflex-wrap\b/)
-  assert.match(html, /class="shrink-0"[^>]*><img/)
+  assert.match(html, /class="[^"]*\bshrink-0\b[^"]*"[^>]*><img/)
 })
 
-test('only desktop buttons opt into compact text and link borders', async () => {
+test('desktop buttons use 16px text and compact link borders', async () => {
   const html = await render(Desktop, { navbarButtons: buttons })
-  assert.equal((html.match(/\btext-sm\b/g) ?? []).length, buttons.length)
+  assert.equal((html.match(/\btext-base\b/g) ?? []).length, buttons.length)
   assert.ok(links(html).every(link => link.classes.includes('router-link-compact')))
-  assert.doesNotMatch(html, /\btext-lg\b|\blg:p-3\b|\bmx-1\b/)
+  assert.doesNotMatch(html, /\btext-sm\b|\btext-lg\b|\blg:p-3\b|\bmx-1\b/)
 })
 
 test('mobile overlay and sidebar keep the original larger button style', async () => {
@@ -60,7 +63,7 @@ test('mobile overlay and sidebar keep the original larger button style', async (
   const sidebar = await render(Menu, { buttons: [], showJoinButton: true, currentPath: '/about' })
   for (const [html, count] of [[mobile, buttons.length], [sidebar, 1]]) {
     assert.equal((html.match(/\bp-2 lg:p-3 text-lg\b/g) ?? []).length, count)
-    assert.doesNotMatch(html, /\btext-sm\b|\brouter-link-compact\b/)
+    assert.doesNotMatch(html, /\btext-sm\b|\btext-base\b|\brouter-link-compact\b/)
   }
   assert.deepEqual(links(mobile).map(link => link.href), buttons.map(button => button.path))
   assert.ok(links(mobile).find(link => link.href === '/join').classes.includes('bg-white'))
@@ -79,4 +82,25 @@ test('compact links retain active, membership and home-page colours', async () =
     .every(link => link.classes.includes('text-white')))
   assert.match(normal, /src="\/public\/logo\/kk-logo\.png"/)
   assert.match(home, /src="\/public\/logo\/kk-logo-white\.png"/)
+})
+
+test('homepage navigation aligns with the content on a black strip, with light headers elsewhere', async () => {
+  // Isolate the header's layout and route-specific margins.
+  const header = { ...Header, components: { ...Header.components, Navbar: { render: () => h('nav') } } }
+  const home = await render(header, {}, '/')
+  const normal = await render(header, {})
+  assert.ok(home.indexOf('</nav>') < home.indexOf('background-image'),
+    'The homepage photo must sit below the navigation, not behind it')
+  assert.ok(home.includes('md:w-5/6 md:mx-auto'), 'Homepage navigation must share the main layout margins')
+  assert.ok(normal.includes('class="main-container"'), 'Other headers must remain within the page container')
+  assert.doesNotMatch(home + normal, /max-w-screen-2xl/)
+  assert.match(home, /background-color:\s*black/)
+  assert.match(normal, /background-color:\s*white/)
+  assert.doesNotMatch(normal, /background-image/)
+})
+
+test('keeps the measuring row hidden and inert until the available width is known', async () => {
+  const html = await render(Navbar, {})
+  assert.match(html, /class="[^"]*\binvisible\b[^"]*\boverflow-hidden\b[^"]*"[^>]*aria-hidden="true"[^>]*inert/)
+  assert.match(html, /class="[^"]*\bhamburger-container\b/)
 })

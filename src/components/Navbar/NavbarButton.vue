@@ -1,5 +1,5 @@
 <template>
-  <div class="font-bold" :class="compact ? 'text-sm' : 'p-2 lg:p-3 text-lg'">
+  <div class="font-bold" :class="compact ? 'text-base' : 'p-2 lg:p-3 text-lg'">
     <router-link
       v-if="invert"
       class="router-link"
@@ -77,6 +77,7 @@ export default defineComponent({
 </script>
 <style scoped>
 .router-link {
+  transition-property: color, background-color;
   transition-duration: 0.4s;
   @apply border-8 rounded-md border-transparent;
 }

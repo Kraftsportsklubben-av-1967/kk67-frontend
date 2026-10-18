@@ -78,8 +78,11 @@ Previews the built package as if it were to be deployed.
 
 ## NM 2027
 
-The `/nm` route is available from both navigation menus. Desktop navigation uses a
-single compact row, switching to the hamburger menu at 1230px and below.
+The `/nm` route is available from both navigation menus. Desktop navigation stays
+on one row, switching to the hamburger menu at 1230px and below, or whenever the
+row cannot fit within the content margins. On the homepage, the navigation shares
+the main content's side margins and sits on a solid black strip above the photo.
+Other pages keep their light headers.
 
 Event dates, venue and media settings live in `src/constants/nm.ts`. The four large
 cards show full 24-hour days remaining; the smaller red-on-black cards show the
