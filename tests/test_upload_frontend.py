@@ -390,7 +390,7 @@ $global:KK67TestCredential = $credential
     def test_failed_asset_upload_stops_before_index(self):
         result = self.invoke_script(KK67_TEST_UPLOAD_EXIT="25")
         self.assertNotEqual(result.returncode, 0)
-        self.assertIn("Deployment stopped", result.stderr)
+        self.assertRegex(result.stderr, r"Deployment\s+stopped")
         calls = self.curl_calls()
         self.assertEqual(len(calls), 2)
         self.assertNotEqual(calls[-1]["arguments"][-1], DESTINATION + "index.html")
