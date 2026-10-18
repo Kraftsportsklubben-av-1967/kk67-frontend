@@ -80,8 +80,10 @@ Previews the built package as if it were to be deployed.
 
 GitHub Actions runs `yarn test` and `yarn build` on pull requests to `master`.
 After a merge or push to `master`, it also uploads the build to the website using
-the shared FTPS uploader from `kk67-docker`. Pull requests never upload files or
-receive the production FTP credentials or Google Maps key.
+this repository's `scripts\upload-frontend.ps1` and `scripts\ftps.psm1`. CI checks
+out only this repository; there is no Docker-repository checkout or deployment
+controller pin. Pull requests never upload files or receive the production FTP
+credentials or Google Maps key.
 
 Configure these repository secrets under **Settings > Secrets and variables >
 Actions**: `FTP_USERNAME`, `FTP_PASSWORD`, and `VITE_GOOGLE_API_KEY`. Missing
@@ -93,8 +95,32 @@ The uploader never deletes remote files, so the separately uploaded NM promo
 video and server routing configuration are preserved. A clean CI checkout does
 not contain the ignored MP4. Uploads are not atomic and have no automatic rollback.
 
-The workflow pins the deployment-script repository to an exact commit. Review
-and update that pin deliberately when changing the shared uploader.
+Uploader regressions run with Python 3 and PowerShell 7:
+
+```powershell
+python -m unittest discover -s tests -p "test_*.py"
+```
+
+### Local FTPS deployment
+
+Use PowerShell 7, Node.js 20.12 or newer, Yarn and `curl.exe` with FTPS support.
+From this repository, preview without connecting or reading credentials:
+
+```powershell
+pwsh -File .\scripts\upload-frontend.ps1 -WhatIf
+```
+
+Remove `-WhatIf` to build and upload, or add `-SkipBuild` to reuse `dist`.
+An explicit `-Credential` takes precedence. Otherwise, the uploader reads
+`FTP_USERNAME` and `FTP_PASSWORD` from this repository's ignored `.env`, then
+prompts securely if both are absent. A partial pair fails before connecting.
+Never prefix FTP secrets with `VITE_`.
+
+To keep credentials in a separate private file, including an existing
+Docker-root `.env`, pass `-EnvFilePath` to that file. No password copy is needed.
+An explicitly selected missing file fails unless `-Credential` is supplied.
+`-WhatIf` never reads that file or connects. Local saved passwords remain
+plaintext; keep the file private and outside build output.
 
 ## NM 2027
 
