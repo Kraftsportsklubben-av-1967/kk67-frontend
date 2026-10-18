@@ -76,6 +76,12 @@ yarn preview
 
 Previews the built package as if it were to be deployed.
 
+## Font loading
+
+If text changes after opening a map, check the global Roboto stylesheet in
+[index.html](index.html). It must include the full 100-900 weight range; otherwise
+Google Maps can add missing weights and change typography on other pages.
+
 ## NM 2027
 
 The `/nm` route is available from both navigation menus. Desktop navigation stays
