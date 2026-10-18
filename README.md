@@ -56,6 +56,17 @@ Deployments run one at a time; a newer merge does not cancel an active upload.
 The uploader never deletes remote files, preserving server routing configuration
 and separately uploaded media. Uploads are not atomic and have no automatic rollback.
 
+CI skips unchanged images by comparing SHA-256 hashes with
+`.kk67-image-state.json` in the FTP destination. The first run uploads all images
+to establish this state; later runs upload only new or changed images, including
+same-size replacements. HTML, JavaScript, CSS and other files still upload normally,
+with `index.html` last. No images are deleted.
+
+Missing, interrupted or invalid image state triggers a reported full image upload.
+FTP authentication, TLS and network errors still stop deployment. The state file
+contains image paths and hashes, never credentials. Do not overlap manual uploads
+with CI: state tracking assumes one writer.
+
 Uploader regressions run with Python 3 and PowerShell 7:
 
 ```powershell
@@ -85,6 +96,11 @@ Docker-root `.env`, pass `-EnvFilePath` to that file. No password copy is needed
 An explicitly selected missing file fails unless `-Credential` is supplied.
 `-WhatIf` never reads that file or connects. Local saved passwords remain
 plaintext; keep the file private and outside build output.
+
+Add `-SkipUnchangedImages` for the same incremental image behavior as CI. Omit it
+to force a full image upload and refresh the baseline, for example after manually
+changing or deleting remote images. `-WhatIf` never reads remote state, so its
+file count is an upper bound rather than an exact incremental-upload count.
 
 ## Available Scripts
 

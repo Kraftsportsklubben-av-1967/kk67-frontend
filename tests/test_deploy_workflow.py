@@ -33,6 +33,12 @@ class DeploymentWorkflowTests(unittest.TestCase):
         self.assertIn("contents: read", WORKFLOW)
         self.assertNotIn("pull_request_target", WORKFLOW)
 
+    def test_ci_skips_unchanged_images_using_deployment_state(self):
+        self.assertRegex(
+            WORKFLOW,
+            r"upload-frontend\.ps1[^\r\n]*-SkipUnchangedImages",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

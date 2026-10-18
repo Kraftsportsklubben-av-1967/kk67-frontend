@@ -25,6 +25,41 @@ function Get-FtpsDestination {
     return "ftp://$FtpHost/$encodedRemotePath/"
 }
 
+function Get-CompletedImageHashes {
+    param([AllowEmptyString()][string] $Json)
+
+    if ([string]::IsNullOrWhiteSpace($Json)) {
+        Write-Warning 'Image state is empty; uploading all images to rebuild it.'
+        return
+    }
+    try {
+        $state = ConvertFrom-Json -InputObject $Json -AsHashtable -ErrorAction Stop
+    }
+    catch [System.ArgumentException] {
+        Write-Warning 'Image state is invalid JSON; uploading all images to rebuild it.'
+        return
+    }
+    if ($state -isnot [Collections.IDictionary] -or
+        $state['version'] -isnot [long] -or $state['version'] -ne 1 -or
+        $state['complete'] -isnot [bool] -or
+        $state['images'] -isnot [Collections.IDictionary]) {
+        Write-Warning 'Image state has an unsupported format; uploading all images to rebuild it.'
+        return
+    }
+    foreach ($entry in $state['images'].GetEnumerator()) {
+        if ($entry.Key -isnot [string] -or [string]::IsNullOrEmpty($entry.Key) -or
+            $entry.Value -isnot [string] -or $entry.Value -notmatch '^[0-9a-fA-F]{64}$') {
+            Write-Warning 'Image state contains invalid hashes; uploading all images to rebuild it.'
+            return
+        }
+    }
+    if (-not $state['complete']) {
+        Write-Warning 'Previous image upload was incomplete; uploading all images to rebuild state.'
+        return
+    }
+    return ,$state['images']
+}
+
 function Send-FtpsDirectory {
     [CmdletBinding(SupportsShouldProcess)]
     param(
@@ -44,6 +79,8 @@ function Send-FtpsDirectory {
 
         [string] $PublishLast,
 
+        [switch] $SkipUnchangedImages,
+
         [ValidateNotNullOrEmpty()]
         [string] $EnvFilePath = (Join-Path (Split-Path -Parent $PSScriptRoot) '.env')
     )
@@ -60,6 +97,10 @@ function Send-FtpsDirectory {
     $buildItems = @($source) + @(Get-ChildItem -LiteralPath $SourcePath -Recurse -Force)
     if (@($buildItems | Where-Object { $_.Attributes -band [IO.FileAttributes]::ReparsePoint }).Count) {
         throw 'The build contains symbolic links or junctions. Refusing to upload files outside the build.'
+    }
+    $imageStateName = '.kk67-image-state.json'
+    if (Test-Path -LiteralPath (Join-Path $source.FullName $imageStateName)) {
+        throw "$imageStateName is reserved for deployment state and must not appear in the build."
     }
 
     $lastPath = $null
@@ -82,7 +123,7 @@ function Send-FtpsDirectory {
 
     Write-Host "Source: $($source.FullName)"
     if (-not $PSCmdlet.ShouldProcess($destination,
-        "Upload $($files.Count) files using explicit FTPS (overwrite matching files; never delete)")) {
+        "Upload up to $($files.Count) files using explicit FTPS (overwrite matching files; never delete)")) {
         return
     }
 
@@ -159,18 +200,100 @@ process.stdout.write(JSON.stringify({
         '--list-only', '--url', $destination
     )
 
-    foreach ($file in $files) {
-        $relativePath = [IO.Path]::GetRelativePath($source.FullName, $file.FullName)
-        $encodedPath = ($relativePath.Split([IO.Path]::DirectorySeparatorChar) |
-            ForEach-Object { [Uri]::EscapeDataString($_) }) -join '/'
-        Write-Host "Uploading $relativePath"
-        Invoke-Ftp -Operation "Upload of $relativePath" -CurlArguments @(
-            '--ftp-create-dirs', '--upload-file', $file.FullName,
-            '--url', "$destination$encodedPath"
+    $imageExtensions = @(
+        '.apng', '.avif', '.bmp', '.gif', '.ico', '.jpeg', '.jpg',
+        '.svg', '.tif', '.tiff', '.webp', '.png'
+    )
+    $imagePaths = [Collections.Generic.Dictionary[string, string]]::new([StringComparer]::Ordinal)
+    $imageHashes = [Collections.Generic.Dictionary[string, string]]::new([StringComparer]::Ordinal)
+    $unchangedImages = [Collections.Generic.HashSet[string]]::new([StringComparer]::Ordinal)
+    $imageStateUrl = "$destination$imageStateName"
+    $imageStatePath = $null
+
+    function Write-ImageState {
+        param([bool] $Complete)
+
+        $state = [ordered]@{
+            version = 1
+            complete = $Complete
+            images = $imageHashes
+        } | ConvertTo-Json -Depth 3 -Compress
+        [IO.File]::WriteAllText($imageStatePath, $state, [Text.UTF8Encoding]::new($false))
+        $operation = if ($Complete) { 'Image-state commit' } else { 'Image-state invalidation' }
+        Invoke-Ftp -Operation $operation -CurlArguments @(
+            '--upload-file', $imageStatePath, '--url', $imageStateUrl
         )
     }
 
-    Write-Host "Upload complete: $($files.Count) files. No remote files were deleted."
+    try {
+        foreach ($file in $files) {
+            if ($file.Extension.ToLowerInvariant() -in $imageExtensions) {
+                $relativePath = [IO.Path]::GetRelativePath($source.FullName, $file.FullName).
+                    Replace([IO.Path]::DirectorySeparatorChar, [char] '/')
+                $imagePaths[$file.FullName] = $relativePath
+                $imageHashes[$relativePath] = (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).
+                    Hash.ToLowerInvariant()
+            }
+        }
+        if ($imageHashes.Count -gt 0) {
+            $imageStatePath = [IO.Path]::GetTempFileName()
+            if ($SkipUnchangedImages) {
+                $downloadOutput = @(
+                    $curlConfig | & $curl @curlOptions --output $imageStatePath --url $imageStateUrl 2>&1
+                )
+                if ($LASTEXITCODE -eq 0) {
+                    $savedImages = Get-CompletedImageHashes -Json (
+                        [IO.File]::ReadAllText($imageStatePath, [Text.Encoding]::UTF8)
+                    )
+                    if ($null -ne $savedImages) {
+                        foreach ($entry in $imagePaths.GetEnumerator()) {
+                            if ($savedImages.Contains($entry.Value) -and
+                                $savedImages[$entry.Value] -eq $imageHashes[$entry.Value]) {
+                                $unchangedImages.Add($entry.Key) | Out-Null
+                                Write-Host "Skipping unchanged image $($entry.Value)"
+                            }
+                        }
+                    }
+                }
+                elseif ($LASTEXITCODE -eq 78) {
+                    Write-Host 'Image state not found; uploading all images to initialize it.'
+                }
+                else {
+                    throw "Image-state download failed (curl exit code $LASTEXITCODE): $($downloadOutput -join ' '). Nothing was uploaded."
+                }
+            }
+        }
+        $filesToUpload = @($files | Where-Object { -not $unchangedImages.Contains($_.FullName) })
+        $needsImageState = $imagePaths.Count -gt $unchangedImages.Count
+        if ($needsImageState) {
+            # A partial image write must never leave a trusted baseline for the next run.
+            Write-ImageState -Complete $false
+        }
+        foreach ($file in $filesToUpload) {
+            if ($needsImageState -and $file.FullName -eq $lastPath -and
+                -not $imagePaths.ContainsKey($file.FullName)) {
+                Write-ImageState -Complete $true
+                $needsImageState = $false
+            }
+            $relativePath = [IO.Path]::GetRelativePath($source.FullName, $file.FullName)
+            $encodedPath = ($relativePath.Split([IO.Path]::DirectorySeparatorChar) |
+                ForEach-Object { [Uri]::EscapeDataString($_) }) -join '/'
+            Write-Host "Uploading $relativePath"
+            Invoke-Ftp -Operation "Upload of $relativePath" -CurlArguments @(
+                '--ftp-create-dirs', '--upload-file', $file.FullName,
+                '--url', "$destination$encodedPath"
+            )
+        }
+        if ($needsImageState) {
+            Write-ImageState -Complete $true
+        }
+        Write-Host "Upload complete: $($filesToUpload.Count) files; $($unchangedImages.Count) unchanged images skipped. No remote files were deleted."
+    }
+    finally {
+        if ($null -ne $imageStatePath) {
+            [IO.File]::Delete($imageStatePath)
+        }
+    }
 }
 
 Export-ModuleMember -Function Get-FtpsDestination, Send-FtpsDirectory
