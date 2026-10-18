@@ -38,9 +38,9 @@ To contribute to this project, follow the guidelines described in the [CONTRIBUT
 
 ## Production CI
 
-GitHub Actions runs uploader regressions, `yarn test` and `yarn build` on pull
-requests to `master`. The Node.js test runner discovers application tests when
-present; this deployment change does not add application features or their tests.
+GitHub Actions on Ubuntu runs uploader regressions, `yarn test` and `yarn build`
+on pull requests to `master`. The Node.js test runner discovers application tests
+when present; this deployment change does not add application features or their tests.
 After a merge or push to `master`, CI also uploads the build using this repository's
 `scripts\upload-frontend.ps1` and `scripts\ftps.psm1`. It checks out only this
 repository, with no Docker-repository checkout or deployment controller pin.
@@ -64,8 +64,9 @@ python -m unittest discover -s tests -p "test_*.py"
 
 ### Local FTPS deployment
 
-Use PowerShell 7, Node.js 20.12 or newer, Yarn and `curl.exe` with FTPS support.
-From this repository, preview without connecting or reading credentials:
+Use PowerShell 7 on Windows or Linux, Node.js 20.12 or newer, Yarn, and native
+`curl` with FTPS support. From this repository, preview without connecting or
+reading credentials:
 
 ```powershell
 pwsh -File .\scripts\upload-frontend.ps1 -WhatIf

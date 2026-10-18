@@ -10,7 +10,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 PWSH = shutil.which("pwsh")
 NODE = shutil.which("node")
-CURL = shutil.which("curl.exe") or shutil.which("curl")
+CURL = shutil.which("curl")
 DESTINATION = "ftp://ftp.c9ry3m6by.service.one/webroots/r1058728/"
 
 
@@ -68,6 +68,7 @@ class FrontendUploadTests(unittest.TestCase):
         self.frontend.joinpath(".env").write_text("NOT_FOR_UPLOAD=1", encoding="utf-8")
         self.frontend.joinpath(".htaccess").write_text("routing", encoding="utf-8")
         self.curl_log = self.root.joinpath("curl.jsonl")
+        self.command_log = self.root.joinpath("commands.jsonl")
         self.build_log = self.root.joinpath("build.json")
         self.prompt_log = self.root.joinpath("prompt.txt")
         self.env_file = self.root.joinpath(".env")
@@ -78,6 +79,7 @@ class FrontendUploadTests(unittest.TestCase):
         env.update(
             {
                 "KK67_TEST_CURL_LOG": str(self.curl_log),
+                "KK67_TEST_COMMAND_LOG": str(self.command_log),
                 "KK67_TEST_BUILD_LOG": str(self.build_log),
                 "KK67_TEST_PROMPT_LOG": str(self.prompt_log),
                 "KK67_TEST_ALLOW_PROMPT": "0",
@@ -99,7 +101,7 @@ function yarn {
         Set-Content -LiteralPath $env:KK67_TEST_BUILD_LOG -WhatIf:$false
     $global:LASTEXITCODE = [int] $env:KK67_TEST_BUILD_EXIT
 }
-function curl.exe {
+function Invoke-TestCurl {
     @{
         arguments = @($args)
         config = (@($input) -join "`n")
@@ -111,6 +113,23 @@ function curl.exe {
     else {
         $global:LASTEXITCODE = [int] $env:KK67_TEST_UPLOAD_EXIT
     }
+}
+function Get-Command {
+    [CmdletBinding()]
+    param(
+        [string] $Name,
+        [System.Management.Automation.CommandTypes] $CommandType
+    )
+    if ($Name -in @('curl', 'curl.exe')) {
+        @{ name = $Name; commandType = [string] $CommandType } |
+            ConvertTo-Json -Compress |
+            Add-Content -LiteralPath $env:KK67_TEST_COMMAND_LOG -WhatIf:$false
+        if ($Name -ne 'curl' -or $CommandType -ne 'Application') {
+            throw 'The uploader must resolve the native curl application without an OS suffix.'
+        }
+        return Microsoft.PowerShell.Core\Get-Command Invoke-TestCurl -CommandType Function
+    }
+    return Microsoft.PowerShell.Core\Get-Command @PSBoundParameters
 }
 function Get-Credential {
     if ($env:KK67_TEST_ALLOW_PROMPT -ne '1') {
@@ -152,6 +171,15 @@ $global:KK67TestCredential = $credential
 
     def assert_success(self, result):
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_resolves_native_curl_application(self):
+        result = self.invoke_script()
+        self.assert_success(result)
+        lookups = [
+            json.loads(line)
+            for line in self.command_log.read_text(encoding="utf-8").splitlines()
+        ]
+        self.assertEqual(lookups, [{"name": "curl", "commandType": "Application"}])
 
     def test_whatif_never_connects_or_prompts_for_credentials(self):
         self.env_file.write_text("FTP_USERNAME=incomplete\n", encoding="utf-8")
@@ -322,6 +350,8 @@ $global:KK67TestCredential = $credential
                 )
                 self.assertEqual(native.returncode, 0, native.stderr)
                 self.assertTrue(native.stdout.startswith("curl "))
+                self.assertRegex(native.stdout, r"(?m)^Protocols: .*\bftp\b")
+                self.assertRegex(native.stdout, r"(?m)^Protocols: .*\bftps\b")
                 self.assertNotIn(self.password, native.stdout + native.stderr)
 
     def test_failed_build_does_not_upload_an_existing_stale_build(self):

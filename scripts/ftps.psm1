@@ -90,7 +90,7 @@ function Send-FtpsDirectory {
         -not (Test-Path -LiteralPath $EnvFilePath -PathType Leaf)) {
         throw "Credentials file not found: $EnvFilePath. Nothing was uploaded."
     }
-    $curl = Get-Command curl.exe -ErrorAction Stop
+    $curl = Get-Command curl -CommandType Application -ErrorAction Stop
     if ($null -eq $Credential -and (Test-Path -LiteralPath $EnvFilePath -PathType Leaf)) {
         $node = Get-Command node -ErrorAction Stop
         $readEnv = @'

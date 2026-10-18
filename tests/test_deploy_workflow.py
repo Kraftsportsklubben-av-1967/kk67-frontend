@@ -10,6 +10,10 @@ WORKFLOW = ROOT.joinpath(".github", "workflows", "deploy-frontend.yml").read_tex
 
 
 class DeploymentWorkflowTests(unittest.TestCase):
+    def test_uses_ubuntu_with_powershell(self):
+        self.assertRegex(WORKFLOW, r"(?m)^\s+runs-on: ubuntu-latest$")
+        self.assertIn("shell: pwsh", WORKFLOW)
+
     def test_checks_out_only_its_own_repository(self):
         self.assertEqual(
             len(re.findall(r"^\s+uses:\s+actions/checkout@", WORKFLOW, re.MULTILINE)),
