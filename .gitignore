@@ -9,3 +9,5 @@ dist-ssr
 __pycache__/
 .ssh/*
 
+# Temporary NM film, uploaded separately to the deployed site.
+/assets/public/videos/nm-2027-promo.mp4

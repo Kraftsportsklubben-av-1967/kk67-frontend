@@ -1,14 +1,15 @@
 <template>
-  <div class="flex justify-between items-center">
-    <KK67Logo />
-    <div class="flex justify-end my-auto">
+  <div class="flex min-w-max justify-between items-center gap-4">
+    <KK67Logo class="shrink-0 desktop-logo" />
+    <div class="flex flex-nowrap items-center justify-end gap-3">
       <NavbarButton
-        class="my-auto mx-2 text-base"
+        class="shrink-0 whitespace-nowrap"
         v-for="button in navbarButtons"
         :key="button.title"
         :title="button.title"
         :focus="button.focus"
         :path="button.path"
+        compact
       />
     </div>
   </div>
@@ -31,3 +32,10 @@ export default defineComponent({
   components: { NavbarButton, KK67Logo },
 })
 </script>
+
+<style scoped>
+.desktop-logo :deep(img) {
+  width: 6rem;
+  transition-property: opacity;
+}
+</style>
