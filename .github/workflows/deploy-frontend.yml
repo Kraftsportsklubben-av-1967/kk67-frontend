@@ -1,0 +1,67 @@
+name: Frontend CI and deployment
+
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: frontend-${{ github.ref }}
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: pwsh
+
+jobs:
+  frontend:
+    name: Test, build and deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Check out frontend
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          cache: yarn
+          cache-dependency-path: yarn.lock
+
+      - name: Run FTPS uploader regressions
+        run: python -m unittest discover -s tests -p "test_*.py"
+
+      - name: Install dependencies
+        run: corepack enable && yarn install --frozen-lockfile
+
+      - name: Run tests
+        run: yarn test
+
+      - name: Build frontend
+        env:
+          VITE_GOOGLE_API_KEY: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && secrets.VITE_GOOGLE_API_KEY || '' }}
+        run: |
+          if ($env:GITHUB_EVENT_NAME -eq 'push' -and [string]::IsNullOrEmpty($env:VITE_GOOGLE_API_KEY)) {
+            throw 'Configure the VITE_GOOGLE_API_KEY repository secret before deploying.'
+          }
+          yarn build
+
+      - name: Upload frontend using FTPS
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        env:
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:FTP_USERNAME) -or [string]::IsNullOrEmpty($env:FTP_PASSWORD)) {
+            throw 'Configure both FTP_USERNAME and FTP_PASSWORD repository secrets before deploying.'
+          }
+          $password = ConvertTo-SecureString $env:FTP_PASSWORD -AsPlainText -Force
+          $credential = [PSCredential]::new($env:FTP_USERNAME, $password)
+          & .\scripts\upload-frontend.ps1 -SkipBuild -Credential $credential
