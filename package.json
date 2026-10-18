@@ -11,6 +11,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development yarn proxy & vite",
     "dev:host": "yarn dev --host",
+    "test": "node --test",
     "build": "vue-tsc --noEmit && cross-env NODE_ENV=production vite build",
     "preview": "vite preview",
     "preview:build": "yarn build && vite preview",
