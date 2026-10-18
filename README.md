@@ -76,6 +76,26 @@ yarn preview
 
 Previews the built package as if it were to be deployed.
 
+## Production CI
+
+GitHub Actions runs `yarn test` and `yarn build` on pull requests to `master`.
+After a merge or push to `master`, it also uploads the build to the website using
+the shared FTPS uploader from `kk67-docker`. Pull requests never upload files or
+receive the production FTP credentials or Google Maps key.
+
+Configure these repository secrets under **Settings > Secrets and variables >
+Actions**: `FTP_USERNAME`, `FTP_PASSWORD`, and `VITE_GOOGLE_API_KEY`. Missing
+production secrets stop deployment. Do not commit a `.env` file.
+
+The destination is `ftp.c9ry3m6by.service.one`, directory `webroots/r1058728`.
+Deployments run one at a time; a newer merge does not cancel an active upload.
+The uploader never deletes remote files, so the separately uploaded NM promo
+video and server routing configuration are preserved. A clean CI checkout does
+not contain the ignored MP4. Uploads are not atomic and have no automatic rollback.
+
+The workflow pins the deployment-script repository to an exact commit. Review
+and update that pin deliberately when changing the shared uploader.
+
 ## NM 2027
 
 The `/nm` route is available from both navigation menus. Desktop navigation stays
