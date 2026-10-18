@@ -65,8 +65,10 @@ python -m unittest discover -s tests -p "test_*.py"
 ### Local FTPS deployment
 
 Use PowerShell 7 on Windows or Linux, Node.js 20.12 or newer, Yarn, and native
-`curl` with FTPS support. From this repository, preview without connecting or
-reading credentials:
+`curl` with FTPS support. To choose between installations, put the intended
+executable's directory first on `PATH`.
+
+From this repository, preview without connecting or reading credentials:
 
 ```powershell
 pwsh -File .\scripts\upload-frontend.ps1 -WhatIf

@@ -1,8 +1,10 @@
 import json
 import os
 from pathlib import Path
+import shlex
 import shutil
 import subprocess
+import sys
 import tempfile
 import unittest
 
@@ -180,6 +182,74 @@ $global:KK67TestCredential = $credential
             for line in self.command_log.read_text(encoding="utf-8").splitlines()
         ]
         self.assertEqual(lookups, [{"name": "curl", "commandType": "Application"}])
+
+    def test_multiple_native_curl_candidates_use_first_executable(self):
+        stub = self.root.joinpath("curl_stub.py")
+        stub.write_text(
+            "import json, os, sys\n"
+            "with open(os.environ['KK67_TEST_CURL_LOG'], 'a', encoding='utf-8') as log:\n"
+            "    log.write(json.dumps({'client': sys.argv[1], "
+            "'arguments': sys.argv[2:], 'config': sys.stdin.read()}) + '\\n')\n",
+            encoding="utf-8",
+        )
+        executables = []
+        for name in ("first", "second"):
+            directory = self.root.resolve().joinpath(f"curl {name}")
+            directory.mkdir()
+            if os.name == "nt":
+                executable = directory.joinpath("curl.cmd")
+                command = f'@echo off\n"{sys.executable}" "{stub}" {name} %*\n'
+            else:
+                executable = directory.joinpath("curl")
+                command = (
+                    f"#!/bin/sh\nexec {shlex.quote(sys.executable)} "
+                    f'{shlex.quote(str(stub))} {name} "$@"\n'
+                )
+            executable.write_text(command, encoding="utf-8")
+            executable.chmod(0o755)
+            executables.append(executable)
+        env = os.environ.copy()
+        env.update(
+            {
+                "PATH": os.pathsep.join(str(path.parent) for path in executables),
+                "KK67_TEST_CURL_LOG": str(self.curl_log),
+                "KK67_TEST_PASSWORD": self.password,
+                "NO_COLOR": "1",
+                "TERM": "dumb",
+            }
+        )
+        command = f"""
+$ErrorActionPreference = 'Stop'
+$candidates = @(Get-Command curl -CommandType Application -ErrorAction Stop)
+if ($candidates.Count -ne 2 -or
+    $candidates[0].Source -ne {ps_quote(executables[0])} -or
+    $candidates[1].Source -ne {ps_quote(executables[1])}) {{
+    throw 'Expected two isolated native curl executables.'
+}}
+$password = ConvertTo-SecureString $env:KK67_TEST_PASSWORD -AsPlainText -Force
+$credential = [PSCredential]::new('ftp-user', $password)
+& {ps_quote(self.script)} -SkipBuild -Credential $credential
+"""
+        result = subprocess.run(
+            [PWSH, "-NoLogo", "-NoProfile", "-NonInteractive", "-Command", command],
+            cwd=self.root,
+            env=env,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            timeout=30,
+        )
+        self.assert_success(result)
+        calls = self.curl_calls()
+        self.assertEqual(len(calls), 5)
+        self.assertEqual({call["client"] for call in calls}, {"first"})
+        self.assertIn("--list-only", calls[0]["arguments"])
+        self.assertEqual(calls[-1]["arguments"][-1], DESTINATION + "index.html")
+        for call in calls:
+            self.assertEqual(call["arguments"][:3], ["--disable", "--config", "-"])
+            self.assertTrue(call["config"].startswith('user = "ftp-user:'))
+            self.assertNotIn(self.password, " ".join(call["arguments"]))
+        self.assertNotIn(self.password, result.stdout + result.stderr)
 
     def test_whatif_never_connects_or_prompts_for_credentials(self):
         self.env_file.write_text("FTP_USERNAME=incomplete\n", encoding="utf-8")
