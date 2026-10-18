@@ -4,9 +4,6 @@ dist
 dist-ssr
 *.local
 .env
-/.env*~
-/..env*~
-__pycache__/
 .ssh/*
 
 # Temporary NM film, uploaded separately to the deployed site.
