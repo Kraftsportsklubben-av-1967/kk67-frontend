@@ -1,14 +1,15 @@
 <template>
   <div class="flex justify-between items-center gap-4">
-    <KK67Logo />
-    <div class="flex flex-wrap justify-end my-auto">
+    <KK67Logo class="shrink-0" />
+    <div class="flex flex-nowrap items-center justify-end gap-1">
       <NavbarButton
-        class="my-auto mx-1 text-base whitespace-nowrap"
+        class="shrink-0 whitespace-nowrap"
         v-for="button in navbarButtons"
         :key="button.title"
         :title="button.title"
         :focus="button.focus"
         :path="button.path"
+        compact
       />
     </div>
   </div>

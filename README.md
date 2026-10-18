@@ -78,10 +78,12 @@ Previews the built package as if it were to be deployed.
 
 ## NM 2027
 
-The `/nm` route is available from both navigation menus. Event dates, venue and
-media settings live in `src/constants/nm.ts`. The four large cards show full
-24-hour days remaining; the smaller red-on-black cards show the remaining hours,
-minutes and seconds. All digits stop at zero when the target is reached.
+The `/nm` route is available from both navigation menus. Desktop navigation uses a
+single compact row, switching to the hamburger menu at 1230px and below.
+
+Event dates, venue and media settings live in `src/constants/nm.ts`. The four large
+cards show full 24-hour days remaining; the smaller red-on-black cards show the
+remaining hours, minutes and seconds. All digits stop at zero when the target is reached.
 
 Until the event start time is confirmed, `countdownAt` is midnight on 19 June
 2027 in Oslo (`2027-06-19T00:00:00+02:00`), not an announced lifting time.
