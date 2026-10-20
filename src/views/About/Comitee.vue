@@ -61,7 +61,7 @@ export default defineComponent({
         },
         {
           title: 'Varamedlem',
-          name: 'Damian Steinke',
+          name: 'Ragnar Kristoffersen',
           email: '',
           phoneNumber: '',
         },
