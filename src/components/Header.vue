@@ -1,8 +1,9 @@
 <template>
   <header class="pt-6 w-full" :style="home ? 'background-color: black' : 'background-color:white'">
-    <div :class="{ 'background-image': home }" class="main-container">
+    <div class="main-container px-8">
       <Navbar />
     </div>
+    <div v-if="home" class="main-container background-image"></div>
   </header>
 </template>
 
@@ -22,34 +23,37 @@ export default defineComponent({
 </script>
 
 <style>
-/*  Due to background images not being able to give % height to component we need to do this hackery.. */
-
 .background-image {
-  background-image: url(/public/logo/header.jpg);
-  background-repeat: no-repeat;
-  background-size: 110% auto;
-  background-position: center top;
+  position: relative;
+  /* Keep the responsive height independent of the photo's crop. */
+  padding-top: 7rem;
   padding-bottom: 30%;
 }
 
-@media (min-width: 768px) {
+.background-image::before {
+  content: '';
+  position: absolute;
+  inset: 0 2rem;
+  background-image: url(/public/logo/header.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+@media (min-width: 1231px) {
   .background-image {
-    background-size: 100% auto;
+    padding-top: 6rem;
   }
 }
 
 @media (min-width: 1280px) {
   .background-image {
-    background-position: center 32.5%;
-    background-size: 83% auto;
     padding-bottom: 26%;
   }
 }
 
 @media (min-width: 1536px) {
   .background-image {
-    background-size: 83% auto;
-    background-position: center 37.5%;
     padding-bottom: 21.5%;
   }
 }

@@ -1,2 +1,2 @@
-export * from './contstants'
+export * from './constants'
 export * from './sess_keys'

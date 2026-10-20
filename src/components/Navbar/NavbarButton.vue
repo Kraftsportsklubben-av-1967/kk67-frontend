@@ -1,10 +1,11 @@
 <template>
-  <div class="font-bold p-2 lg:p-3 text-lg">
+  <div class="font-bold" :class="compact ? 'text-base' : 'p-2 lg:p-3 text-lg'">
     <router-link
       v-if="invert"
       class="router-link"
       :class="
       {
+        'router-link-compact': compact,
         'bg-white text-black hover:bg-red-600 hover:text-slate-50': focus,
         'bg-transparent text-white hover:bg-white hover:text-black': !focus,
       }"
@@ -16,9 +17,10 @@
       v-else
       class="router-link"
       :class="{
+        'router-link-compact': compact,
          'text-white bg-red-700': isActive,
         'bg-black text-white hover:bg-red-600 hover:text-white': focus,
-        'bg-transparent hover:bg-black hover:text-white': !focus,
+        'bg-transparent hover:bg-black hover:text-white': !focus && !isActive,
       }"
       :to="path"
       ><strong>{{ title }}</strong>
@@ -52,6 +54,10 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    compact: {
+      type: Boolean,
+      default: false,
+    },
   },
   computed: {
     invert(): boolean {
@@ -71,7 +77,12 @@ export default defineComponent({
 </script>
 <style scoped>
 .router-link {
+  transition-property: color, background-color;
   transition-duration: 0.4s;
   @apply border-8 rounded-md border-transparent;
+}
+
+.router-link-compact {
+  @apply inline-block border-4;
 }
 </style>
