@@ -64,4 +64,4 @@ jobs:
           }
           $password = ConvertTo-SecureString $env:FTP_PASSWORD -AsPlainText -Force
           $credential = [PSCredential]::new($env:FTP_USERNAME, $password)
-          & .\scripts\upload-frontend.ps1 -SkipBuild -Credential $credential
+          & .\scripts\upload-frontend.ps1 -SkipBuild -SkipUnchangedImages -Credential $credential

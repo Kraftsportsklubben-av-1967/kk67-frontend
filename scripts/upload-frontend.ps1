@@ -13,7 +13,9 @@ param(
     [ValidateNotNullOrEmpty()]
     [string] $EnvFilePath,
 
-    [switch] $SkipBuild
+    [switch] $SkipBuild,
+
+    [switch] $SkipUnchangedImages
 )
 
 $ErrorActionPreference = 'Stop'
@@ -52,6 +54,7 @@ $uploadParameters = @{
     RemotePath = $RemotePath
     Credential = $Credential
     PublishLast = 'index.html'
+    SkipUnchangedImages = $SkipUnchangedImages
     WhatIf = $WhatIfPreference
 }
 foreach ($parameter in @('Confirm', 'EnvFilePath')) {
