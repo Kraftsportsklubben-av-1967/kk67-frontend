@@ -3,11 +3,11 @@
     <PictureOverlay v-if="focused" @click="focused = !focused" :src="focusSrc" />
   </Transition>
   <div class="flex flex-col">
-    <div class="flex flex-col lg:flex-row md:w-5/6 sm:w-5/6 sm:mx-auto justify-between">
-      <div class="header-red-underline mx-8 md:mx-0">
+    <div class="flex flex-col lg:flex-row justify-between">
+      <div class="header-red-underline">
         <h1>Lokalet til KK-67</h1>
       </div>
-      <Card class="mx-8 md:mx-0 mt-6 md:mt-0">
+      <Card class="mt-6 md:mt-0">
         <template v-slot:body>
           <p>
             Lokalet bærer preg av, som dere ser på bildene under, at det ble startet opp i 1967 og
@@ -17,7 +17,7 @@
         </template>
       </Card>
     </div>
-    <div class="flex flex-col mt-10 lg:flex-row justify-between md:w-5/6 sm:w-5/6 sm:mx-auto">
+    <div class="flex flex-col mt-10 lg:flex-row justify-between -mx-8 sm:mx-0">
       <div v-for="(_, i) in columnWidth" class="mb-4 column">
         <div
           v-for="(_, j) in columnHeight"
@@ -40,7 +40,7 @@
         </div>
       </div>
     </div>
-    <Card class="md:mx-auto md:w-5/6 mx-8">
+    <Card>
       <template v-slot:header>
         <h2>Fotograf:</h2>
       </template>

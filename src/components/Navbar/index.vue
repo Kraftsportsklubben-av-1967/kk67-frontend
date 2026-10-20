@@ -1,5 +1,5 @@
 <template>
-  <nav ref="container" class="relative mx-8">
+  <nav ref="container" class="relative">
     <div
       ref="desktop"
       :class="{ 'absolute inset-0 invisible overflow-hidden': !showDesktop }"

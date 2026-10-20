@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict'
+import { readFile } from 'node:fs/promises'
 import { after, test } from 'node:test'
+import postcss from 'postcss'
 import { createSSRApp, h } from 'vue'
 import { renderToString } from 'vue/server-renderer'
 import { createMemoryHistory, createRouter } from 'vue-router'
@@ -84,15 +86,17 @@ test('compact links retain active, membership and home-page colours', async () =
   assert.match(home, /src="\/public\/logo\/kk-logo-white\.png"/)
 })
 
-test('homepage navigation aligns with the content on a black strip, with light headers elsewhere', async () => {
-  // Isolate the header's layout and route-specific margins.
+test('all navigation shares the content gutters, with a black homepage strip and light headers elsewhere', async () => {
+  // Isolate the header's layout from navigation measurement.
   const header = { ...Header, components: { ...Header.components, Navbar: { render: () => h('nav') } } }
   const home = await render(header, {}, '/')
   const normal = await render(header, {})
   assert.ok(home.indexOf('</nav>') < home.indexOf('background-image'),
     'The homepage photo must sit below the navigation, not behind it')
-  assert.ok(home.includes('md:w-5/6 md:mx-auto'), 'Homepage navigation must share the main layout margins')
-  assert.ok(normal.includes('class="main-container"'), 'Other headers must remain within the page container')
+  for (const html of [home, normal]) {
+    assert.ok(html.includes('class="main-container px-8"'), 'Every header must share the main content gutters')
+  }
+  assert.doesNotMatch(home + normal, /md:w-5\/6|md:mx-auto/)
   assert.doesNotMatch(home + normal, /max-w-screen-2xl/)
   assert.match(home, /background-color:\s*black/)
   assert.match(normal, /background-color:\s*white/)
@@ -103,4 +107,31 @@ test('keeps the measuring row hidden and inert until the available width is know
   const html = await render(Navbar, {})
   assert.match(html, /class="[^"]*\binvisible\b[^"]*\boverflow-hidden\b[^"]*"[^>]*aria-hidden="true"[^>]*inert/)
   assert.match(html, /class="[^"]*\bhamburger-container\b/)
+})
+
+test('homepage photo fills the content gutters without changing its responsive height', async () => {
+  const source = await readFile(new URL('../src/components/Header.vue', import.meta.url), 'utf8')
+  const stylesheet = postcss.parse(source.match(/<style>([\s\S]*?)<\/style>/)[1])
+  const declarations = rule => Object.fromEntries(rule.nodes
+    .filter(node => node.type === 'decl').map(node => [node.prop, node.value]))
+  const frame = declarations(stylesheet.nodes.find(node => node.selector === '.background-image'))
+  const photo = stylesheet.nodes.find(node => node.selector === '.background-image::before')
+  assert.ok(photo, 'The crop must be independent of the frame that provides the existing height')
+  assert.equal(frame.position, 'relative')
+  assert.equal(frame['padding-top'], '7rem')
+  assert.equal(frame['padding-bottom'], '30%')
+  assert.equal(frame['background-image'], undefined, 'The photo must not paint outside the content gutters')
+  const image = declarations(photo)
+  assert.equal(image.content, "''")
+  assert.equal(image.position, 'absolute')
+  assert.equal(image.inset, '0 2rem', 'The photo must share the 32px content gutters')
+  assert.equal(image['background-size'], 'cover')
+  assert.equal(image['background-position'], 'center')
+  assert.equal(image['background-image'], 'url(/public/logo/header.jpg)')
+  assert.deepEqual(stylesheet.nodes.filter(node => node.type === 'atrule' && node.name === 'media')
+    .map(media => [media.params, declarations(media.nodes.find(node => node.selector === '.background-image'))]), [
+    ['(min-width: 1231px)', { 'padding-top': '6rem' }],
+    ['(min-width: 1280px)', { 'padding-bottom': '26%' }],
+    ['(min-width: 1536px)', { 'padding-bottom': '21.5%' }],
+  ])
 })
