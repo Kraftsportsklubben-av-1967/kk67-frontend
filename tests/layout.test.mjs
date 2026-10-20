@@ -19,9 +19,11 @@ function classLists(html) {
 
 test('the shared main wrapper owns the page gutters', async () => {
   const stub = tag => ({ render: () => h(tag) })
-  const shell = { ...App, components: { Header: stub('header'), Footer: stub('footer'), RouterView: stub('section') } }
-  const html = await renderToString(createSSRApp(shell))
-  assert.match(html, /<main[^>]*><div class="main-container px-8"><section/)
+  const shell = { ...App, components: { ...App.components, Header: stub('header'), Footer: stub('footer'), RouterView: stub('section') } }
+  const app = createSSRApp(shell)
+  app.config.globalProperties.$route = { path: '/' }
+  const html = await renderToString(app)
+  assert.match(html.replace(/<!--.*?-->/g, ''), /<main[^>]*><div class="main-container px-8"><div class="view-content"[^>]*><section/)
 })
 
 test('sidebar layouts fill the shared width without changing column proportions', async () => {

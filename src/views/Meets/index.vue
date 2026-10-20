@@ -38,7 +38,9 @@
     </template>
     <template v-slot:main>
       <div class="flex flex-wrap w-full justify-between flex-col h-full">
-        <router-view />
+        <ViewTransition :view-key="$route.path" subpage>
+          <router-view />
+        </ViewTransition>
       </div>
     </template>
   </Layout>
@@ -49,6 +51,7 @@ import { defineComponent } from 'vue'
 import Card from '@components/Card/Card.vue'
 import Menu from '@components/Menu/Menu.vue'
 import News from '@components/Media/News.vue'
+import ViewTransition from '@components/ViewTransition.vue'
 import { IMenuButton } from '@components/Menu/MenuButton.vue'
 
 export default defineComponent({
@@ -58,6 +61,7 @@ export default defineComponent({
     Card,
     Menu,
     News,
+    ViewTransition,
   },
 
   data() {

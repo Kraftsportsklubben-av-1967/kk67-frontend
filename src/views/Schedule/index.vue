@@ -8,7 +8,9 @@
     ></template>
     <template v-slot:main>
       <div class="flex w-full flex-col">
-        <router-view />
+        <ViewTransition :view-key="$route.path" subpage>
+          <router-view />
+        </ViewTransition>
       </div>
     </template>
   </Layout>
@@ -19,6 +21,7 @@ import Layout from '@components/Layout.vue'
 import Sidebar from '@components/Layout/Sidebar.vue'
 import Menu from '@components/Menu/Menu.vue'
 import Card from '@components/Card/Card.vue'
+import ViewTransition from '@components/ViewTransition.vue'
 
 export default defineComponent({
   name: 'Schedule',
@@ -38,6 +41,6 @@ export default defineComponent({
       ],
     }
   },
-  components: { Layout, Sidebar, Menu, Card },
+  components: { Layout, Sidebar, Menu, Card, ViewTransition },
 })
 </script>
