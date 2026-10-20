@@ -26,24 +26,24 @@ VITE_PROXY_PORT = 2000
 
 ## Local development
 
-This project is written in TypeScript with the Vue frontend framework using Prettier and ESlint for code formatting. You will need **Node** v14 and **Yarn**.
+This project is written in TypeScript with the Vue frontend framework using Prettier and ESlint for code formatting. You will need **Node** v20 and **Yarn** v1, matching the Docker Compose environment.
 
-1. Install node v14. I recommend installing that with nvm
+1. Install node v20. I recommend installing that with nvm
 
 MacOS/Ubuntu: https://github.com/nvm-sh/nvm
 Windows: https://nodejs.org/en/download/
 
 ```sh
-$ nvm install 14
+$ nvm install 20
 ```
 
-1. Make node v14 default
+1. Make node v20 default
 
 ```sh
-$ nvm alias default 14
+$ nvm alias default 20
 ```
 
-3. Open a new terminal and verify node version (should return v14.X.X)
+3. Open a new terminal and verify node version (should return v20.X.X)
 
 ```sh
 $ node -v
@@ -132,22 +132,31 @@ A quick introduction to the various tools we use can be found here
 
 - [**TailwindCSS**](https://www.youtube.com/watch?v=mr15Xzb1Ook&ab_channel=Fireship)
 
-<!--
-# //TODO add testing library for vue
+## Home feed
+
+The home feed shows Instagram posts without an embed library. Photos and native
+video players stay on the page. Albums retain their available images and videos,
+with previous/next buttons, direct selection and image swiping. Missing captions
+are omitted, not reconstructed; posts without usable media still link to Instagram.
+
+Pagination and session caching remain in place. Facebook profile links elsewhere
+on the site are unchanged; the home feed no longer fetches Facebook posts.
+
+Failed requests and empty feeds show a message and a retry button. Requests time
+out after thirty seconds; empty results are not cached. Invalid or unavailable
+session storage is reported in the console without preventing a fresh feed load.
+If an individual media item fails, use its original-post link.
+
 ## Test
 
-Jest (https://jestjs.io) is used for testing. All files within the `src` folder with the `<FILENAME>.test.ts` format will automatically be picked up by Jest.
+Run `yarn test` for the feed regression tests, then `yarn build` for type checking
+and the production build. The tests use Node's built-in test runner and the
+existing Vite/Vue loaders and Vue server renderer; no separate test framework is required.
 
-You can run the tests including generating a coverage report with:
-
-- `yarn test`
-
-You can start jest with watch mode with:
-
-- `yarn jest:watch`
-
-You can run one single test file by running `yarn jest:watch <FILENAME>`, for example `yarn jest:watch src/..<FILENAME>.test.ts`.
--->
+Feed tests mock the social API responses, so they need no network access or
+credentials. They cover optional captions, native image/video/album rendering,
+Instagram-only requests, sorting, cache migration and recovery, request failures
+and timeouts, and the home feed's loading/error/empty/retry states.
 
 ## Editor
 

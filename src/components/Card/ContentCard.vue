@@ -3,8 +3,13 @@
     <div class="text-lg md:text-xl font-extrabold flex flex-row my-2 justify-between items-center">
       <h2>{{ card.title }}</h2>
 
-      <a :href="card.href" target="_blank" class="hover:opacity-80 duration-500 ease-in-out"
-        ><img
+      <a
+        :href="card.href"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hover:opacity-80 duration-500 ease-in-out"
+      >
+        <img
           :src="card.profileUrl"
           alt="profile_picture"
           width="50"
@@ -13,66 +18,98 @@
         />
       </a>
     </div>
-    <template v-if="card.src">
-      <video v-if="card.type === 'VIDEO'" playsinline controls style="object-fit: contain">
-        <source :src="`${card.src}\#t=0.1`" type="video/mp4" />
-      </video>
-      <figure v-if="card.type === 'CAROUSEL_ALBUM'" :id="card.id">
-        <div class="relative m-auto w-full">
-          <div class="absolute top-0 text-white text-s p-3 font-bold pagination">
-            {{ i + 1 }} / {{ card.carusell.length }}
-          </div>
-          <img
-            v-if="card.carusell[i].media_type === 'IMAGE'"
-            :src="card.carusell[i].media_url"
-            alt="carusell_image"
-            class="fade w-full"
-            style="object-fit: contain: display: block;"
-          />
-          <video v-else playsinline controls style="object-fit: contain">
-            <source :src="`${card.carusell[i].media_url}\#t=0.1`" type="video/mp4" />
-          </video>
-          <a class="prev" v-if="hasPrev" @click="i--">❮</a>
-          <a class="next" v-if="hasNext" @click="i++">❯</a>
-
-          <div class="text-center absolute bottom-4 w-full">
-            <div class="flex flex-row mx-auto justify-center">
-              <template v-for="(_, j) in card.carusell.length">
-                <span @click="slide(j)" :class="i === j ? 'active dot' : 'dot'" />
-              </template>
-            </div>
-          </div>
-        </div>
-      </figure>
+    <figure v-if="currentMedia" class="my-2">
       <img
-        v-else-if="card.type === 'IMAGE'"
-        :src="card.src"
-        alt="card_image"
-        class="w-full my-2 block"
+        v-if="currentMedia.type === 'IMAGE'"
+        :key="mediaIndex"
+        :src="currentMedia.src"
+        :alt="`Bilde ${mediaIndex + 1} fra ${card.title}`"
+        class="w-full block"
         style="object-fit: contain"
+        @error="mediaFailed = true"
+        @load="mediaFailed = false"
+        @touchstart.passive="startSwipe"
+        @touchend.passive="endSwipe"
       />
-    </template>
-    <div class="text-md font-normal text-left mt-2 content-card-text">
+      <video
+        v-else
+        :key="mediaIndex"
+        :src="currentMedia.src"
+        :aria-label="`Video fra ${card.title}`"
+        controls
+        playsinline
+        preload="metadata"
+        class="w-full block"
+        style="object-fit: contain"
+        @error="mediaFailed = true"
+        @loadeddata="mediaFailed = false"
+      >
+        Nettleseren din støtter ikke videoavspilling.
+      </video>
+      <p v-if="mediaFailed" role="alert" class="px-4 py-2">
+        Mediet kunne ikke lastes. Bruk lenken til Instagram nedenfor.
+      </p>
+      <figcaption v-if="card.media.length > 1" class="px-4 pt-3">
+        <div class="flex items-center justify-between gap-2">
+          <button
+            type="button"
+            aria-label="Forrige medie"
+            :disabled="mediaIndex === 0"
+            class="media-navigation"
+            @click="slide(mediaIndex - 1)"
+          >
+            Forrige
+          </button>
+          <span aria-live="polite">{{ mediaIndex + 1 }} / {{ card.media.length }}</span>
+          <button
+            type="button"
+            aria-label="Neste medie"
+            :disabled="mediaIndex === card.media.length - 1"
+            class="media-navigation"
+            @click="slide(mediaIndex + 1)"
+          >
+            Neste
+          </button>
+        </div>
+        <div class="flex flex-wrap justify-center">
+          <button
+            v-for="(_, index) in card.media"
+            :key="index"
+            type="button"
+            :aria-label="`Vis medie ${index + 1}`"
+            :aria-current="index === mediaIndex ? 'true' : undefined"
+            class="media-dot"
+            @click="slide(index)"
+          >
+            <span :class="index === mediaIndex ? 'bg-red-600' : 'bg-gray-400'"></span>
+          </button>
+        </div>
+      </figcaption>
+    </figure>
+    <div v-if="card.text" class="text-md font-normal text-left mt-2 content-card-text">
       <p>{{ card.text }}</p>
     </div>
-    <div class="flex flex-row justify-between">
-      <a :href="card.url" target="_blank">
-        <button
-          class="rounded-2xl p-1 duration-500 text-white w-32 font-bold text-base md:text-lg shadow-lg mt-4 bg-black readmore mb-4"
-        >
-          LES MER
-        </button>
+    <div class="flex flex-wrap items-center justify-between gap-4 py-4">
+      <a
+        :href="card.url"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="rounded-2xl px-4 py-2 duration-500 text-white font-bold text-base md:text-lg shadow-lg bg-black readmore"
+      >
+        Se på Instagram
       </a>
-      <p class="my-auto text-base md:text-lg text-gray-600 py-2">{{ parseDate(card.date) }}</p>
+      <time :datetime="card.date.toISOString()" class="text-base md:text-lg text-gray-600">
+        {{ parseDate(card.date) }}
+      </time>
     </div>
   </article>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
-import { ICard } from '../../loaders'
+import { ICard, ICardMedia } from '../../loaders'
 
-const SWIPE_THRESHHOLD = 50
+const SWIPE_THRESHOLD = 50
 
 export default defineComponent({
   name: 'ContentCard',
@@ -83,36 +120,32 @@ export default defineComponent({
     },
   },
   data() {
-    return {
-      i: 0,
-      touchStartX: 0,
-      touchEndX: 0,
-    }
-  },
-  mounted() {
-    // when component is loaded, add event listeners to gallery if it exists
-    const gallery = document.getElementById(this.card.id)
-    if (gallery) {
-      gallery.addEventListener('touchstart', (e) => {
-        this.touchStartX = e.changedTouches[0].screenX
-      })
-      gallery.addEventListener('touchend', (e) => {
-        this.touchEndX = e.changedTouches[0].screenX
-        this.handleSwipe()
-      })
-    }
+    return { mediaIndex: 0, mediaFailed: false, touchStartX: null as number | null }
   },
   computed: {
-    hasPrev(): boolean {
-      return this.i > 0
-    },
-    hasNext(): boolean {
-      return this.i < this.card.carusell.length - 1
+    currentMedia(): ICardMedia | undefined {
+      return this.card.media[this.mediaIndex]
     },
   },
   methods: {
-    slide(n: number) {
-      this.i = n
+    slide(index: number) {
+      if (index >= 0 && index < this.card.media.length) {
+        this.mediaIndex = index
+        this.mediaFailed = false
+      }
+    },
+    startSwipe(event: TouchEvent) {
+      this.touchStartX = event.changedTouches[0]?.screenX ?? null
+    },
+    endSwipe(event: TouchEvent) {
+      const start = this.touchStartX
+      this.touchStartX = null
+      const touch = event.changedTouches[0]
+      if (start === null || !touch) return
+      const difference = start - touch.screenX
+      if (Math.abs(difference) >= SWIPE_THRESHOLD) {
+        this.slide(this.mediaIndex + (difference > 0 ? 1 : -1))
+      }
     },
     parseDate(date: Date): string {
       return date.toLocaleString('no-NO', {
@@ -121,14 +154,6 @@ export default defineComponent({
         month: 'long',
         year: 'numeric',
       })
-    },
-    handleSwipe() {
-      const difference = this.touchStartX - this.touchEndX
-      if (difference >= SWIPE_THRESHHOLD && this.hasNext) {
-        this.i++
-      } else if (difference <= -1 * SWIPE_THRESHHOLD && this.hasPrev) {
-        this.i--
-      }
     },
   },
 })
@@ -146,65 +171,19 @@ article > div {
 article {
   overflow-wrap: break-word;
 }
-.clockfit {
-  height: 2%;
-  width: 2%;
-  margin-right: 1%;
-  margin-bottom: auto;
-  max-height: 6rem;
-  min-width: 1.5rem;
-  max-width: 1.5rem;
+.media-navigation {
+  @apply rounded px-3 py-2 bg-black text-white font-bold disabled:opacity-40;
 }
-
-.dot {
-  cursor: pointer;
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
-  background-color: #bbb;
-  border-radius: 50%;
-  display: inline-block;
-  transition: background-color 0.6s ease;
+.media-dot {
+  @apply w-8 h-8 flex items-center justify-center rounded;
 }
-
-.pagination {
-  &:hover {
-    background: rgba(0, 0, 0, 0.3);
-  }
-  transition: background-color 0.6s ease;
+.media-dot > span {
+  @apply w-3 h-3 rounded-full;
 }
-
-.active,
-.dot:hover {
-  background-color: #4e4e4e;
+.media-navigation:focus-visible,
+.media-dot:focus-visible {
+  @apply outline outline-2 outline-offset-2 outline-red-600;
 }
-
-.prev,
-.next {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  width: auto;
-  padding: 16px;
-  margin-top: -22px;
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  transition: 0.6s ease;
-  border-radius: 0 3px 3px 0;
-  user-select: none;
-}
-
-.next {
-  right: 0;
-  border-radius: 3px 0 0 3px;
-}
-
-.prev:hover,
-.next:hover {
-  background-color: rgba(0, 0, 0, 0.8);
-}
-
 @media (hover: hover) and (pointer: fine) {
   .readmore:hover {
     @apply bg-red-600;
