@@ -2,7 +2,7 @@
   <div class="flex flex-col min-h-screen">
     <Header />
     <main class="pt-6 md:pt-12 pb-12">
-      <div class="main-container">
+      <div class="main-container px-8">
         <router-view />
       </div>
     </main>

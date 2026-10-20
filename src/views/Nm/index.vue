@@ -147,7 +147,6 @@ export default defineComponent({
 .nm-page {
   --nm-red: #b91c1c;
   --nm-paper: #f4f0e7;
-  margin-inline: clamp(1rem, 3vw, 2rem);
   color: #18191e;
 }
 .eyebrow {
@@ -197,7 +196,7 @@ export default defineComponent({
   padding-top: 2.5rem;
 }
 h1 {
-  font-size: clamp(3.75rem, 9vw, 8.5rem);
+  font-size: clamp(3.5rem, 9vw, 8.5rem);
   font-weight: 900;
   line-height: .95;
   letter-spacing: -.07em;

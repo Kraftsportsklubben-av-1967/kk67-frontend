@@ -1,7 +1,7 @@
 <template>
   <header class="pt-6 w-full" :style="home ? 'background-color: black' : 'background-color:white'">
-    <div class="main-container">
-      <Navbar :class="{ 'md:w-5/6 md:mx-auto': home }" />
+    <div class="main-container px-8">
+      <Navbar />
     </div>
     <div v-if="home" class="main-container background-image"></div>
   </header>

@@ -84,15 +84,17 @@ test('compact links retain active, membership and home-page colours', async () =
   assert.match(home, /src="\/public\/logo\/kk-logo-white\.png"/)
 })
 
-test('homepage navigation aligns with the content on a black strip, with light headers elsewhere', async () => {
-  // Isolate the header's layout and route-specific margins.
+test('all navigation shares the content gutters, with a black homepage strip and light headers elsewhere', async () => {
+  // Isolate the header's layout from navigation measurement.
   const header = { ...Header, components: { ...Header.components, Navbar: { render: () => h('nav') } } }
   const home = await render(header, {}, '/')
   const normal = await render(header, {})
   assert.ok(home.indexOf('</nav>') < home.indexOf('background-image'),
     'The homepage photo must sit below the navigation, not behind it')
-  assert.ok(home.includes('md:w-5/6 md:mx-auto'), 'Homepage navigation must share the main layout margins')
-  assert.ok(normal.includes('class="main-container"'), 'Other headers must remain within the page container')
+  for (const html of [home, normal]) {
+    assert.ok(html.includes('class="main-container px-8"'), 'Every header must share the main content gutters')
+  }
+  assert.doesNotMatch(home + normal, /md:w-5\/6|md:mx-auto/)
   assert.doesNotMatch(home + normal, /max-w-screen-2xl/)
   assert.match(home, /background-color:\s*black/)
   assert.match(normal, /background-color:\s*white/)

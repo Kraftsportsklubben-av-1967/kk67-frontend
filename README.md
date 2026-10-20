@@ -132,13 +132,20 @@ If text changes after opening a map, check the global Roboto stylesheet in
 [index.html](index.html). It must include the full 100-900 weight range; otherwise
 Google Maps can add missing weights and change typography on other pages.
 
+## Page layout
+
+Navigation and route content share 32px side gutters inside the responsive
+container. If a page looks narrower or its edges no longer align with the navbar,
+check for extra outer widths or margins in that view; the shared wrappers in
+`App.vue` and `Header.vue` already provide them. Homepage feed cards below 768px
+and gallery images below 640px intentionally reach the viewport edges.
+
 ## NM 2027
 
 The `/nm` route is available from both navigation menus. Desktop navigation stays
 on one row, switching to the hamburger menu at 1230px and below, or whenever the
-row cannot fit within the content margins. On the homepage, the navigation shares
-the main content's side margins and sits on a solid black strip above the photo.
-Other pages keep their light headers.
+row cannot fit within the content margins. Homepage navigation sits on a solid
+black strip above the photo; other pages keep their light headers.
 
 Event dates, venue and media settings live in `src/constants/nm.ts`. The four large
 cards show full 24-hour days remaining; the smaller red-on-black cards show the

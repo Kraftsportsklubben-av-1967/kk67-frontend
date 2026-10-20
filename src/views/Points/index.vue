@@ -1,5 +1,5 @@
 <template>
-<div class="md:w-5/6 md:mx-auto mx-8">
+<div>
         <div class="lg:flex lg:justify-between">
             <div class="header-red-underline">Regn ut poeng</div>
             <div class="flex lg:items-center mt-10 lg:mt-0">
