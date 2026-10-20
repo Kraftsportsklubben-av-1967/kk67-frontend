@@ -140,6 +140,9 @@ check for extra outer widths or margins in that view; the shared wrappers in
 `App.vue` and `Header.vue` already provide them. Homepage feed cards below 768px
 and gallery images below 640px intentionally reach the viewport edges.
 
+The homepage photo shares these gutters and uses a centred crop rather than
+stretching; its responsive height stays unchanged.
+
 ## NM 2027
 
 The `/nm` route is available from both navigation menus. Desktop navigation stays
