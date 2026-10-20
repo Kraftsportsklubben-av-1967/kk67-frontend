@@ -134,13 +134,18 @@ A quick introduction to the various tools we use can be found here
 
 ## Home feed
 
-The home feed shows Instagram-only previews without an embed library. Image
-posts show their photo; albums show their first available photo. Videos and
-albums without a photo remain visible as date/caption/link cards. The full post
-opens on Instagram. Missing captions are omitted, not reconstructed.
+The home feed shows Instagram posts without an embed library. Photos and native
+video players stay on the page. Albums retain their available images and videos,
+with previous/next buttons, direct selection and image swiping. Missing captions
+are omitted, not reconstructed; posts without usable media still link to Instagram.
 
 Pagination and session caching remain in place. Facebook profile links elsewhere
 on the site are unchanged; the home feed no longer fetches Facebook posts.
+
+Failed requests and empty feeds show a message and a retry button. Requests time
+out after thirty seconds; empty results are not cached. Invalid or unavailable
+session storage is reported in the console without preventing a fresh feed load.
+If an individual media item fails, use its original-post link.
 
 ## Test
 
@@ -149,9 +154,9 @@ and the production build. The tests use Node's built-in test runner and the
 existing Vite/Vue loaders and Vue server renderer; no separate test framework is required.
 
 Feed tests mock the social API responses, so they need no network access or
-credentials. They cover optional captions, image/link previews, Instagram-only
-requests, sorting, session caching (including the old mixed-feed cache), request
-failures, and native card markup without video players or embeds.
+credentials. They cover optional captions, native image/video/album rendering,
+Instagram-only requests, sorting, cache migration and recovery, request failures
+and timeouts, and the home feed's loading/error/empty/retry states.
 
 ## Editor
 

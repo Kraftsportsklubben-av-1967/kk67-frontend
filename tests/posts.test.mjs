@@ -75,14 +75,14 @@ for (const [label, overrides] of [
     const [card] = await loadIGPosts()
 
     assert.equal(card.id, post.id)
-    assert.equal(card.src, post.media_url)
+    assert.deepEqual(card.media, [{ type: 'IMAGE', src: post.media_url }])
     assert.equal(card.text, '')
     assert.equal(card.url, post.permalink)
     assert.deepEqual(card.date, new Date(post.timestamp))
   })
 }
 
-test('uses the first available album photo and skips entries without a media type', async () => {
+test('retains every usable album image and video in order and skips entries without a media type', async () => {
   const children = [
     { media_type: 'VIDEO', media_url: 'https://example.com/child.mp4' },
     { media_type: 'IMAGE' },
@@ -100,20 +100,21 @@ test('uses the first available album photo and skips entries without a media typ
 
   assert.equal(cards.length, 1)
   assert.equal(cards[0].text, post.caption)
-  assert.equal(cards[0].src, children[2].media_url)
+  assert.deepEqual(cards[0].media, [
+    { type: 'VIDEO', src: children[0].media_url },
+    { type: 'IMAGE', src: children[2].media_url },
+    { type: 'IMAGE', src: children[3].media_url },
+  ])
   assert.equal(cards[0].title, 'Test profile')
   assert.equal(cards[0].profileUrl, 'https://example.com/profile.jpg')
   assert.deepEqual(Object.keys(cards[0]).sort(), [
-    'date', 'href', 'id', 'profileUrl', 'src', 'text', 'title', 'url',
+    'date', 'href', 'id', 'media', 'profileUrl', 'text', 'title', 'url',
   ])
 })
 
 for (const [label, children] of [
   ['missing children', undefined],
   ['empty children', { data: [] }],
-  ['video-only children', {
-    data: [{ media_type: 'VIDEO', media_url: 'https://example.com/child.mp4' }],
-  }],
 ]) {
   test(`keeps an album with ${label} as a link card`, async () => {
     const post = instagramPost({ media_type: 'CAROUSEL_ALBUM', children })
@@ -122,12 +123,12 @@ for (const [label, children] of [
     const [card] = await loadIGPosts()
 
     assert.equal(card.id, post.id)
-    assert.equal(card.src, undefined)
+    assert.deepEqual(card.media, [])
     assert.equal(card.url, post.permalink)
   })
 }
 
-test('keeps video posts as link cards without using video URLs as images', async () => {
+test('retains native video sources rather than reducing videos to link cards', async () => {
   const post = instagramPost({
     media_type: 'VIDEO',
     media_url: 'https://example.com/clip.mp4',
@@ -137,7 +138,7 @@ test('keeps video posts as link cards without using video URLs as images', async
 
   const [card] = await loadIGPosts()
 
-  assert.equal(card.src, undefined)
+  assert.deepEqual(card.media, [{ type: 'VIDEO', src: post.media_url }])
   assert.equal(card.text, post.caption)
   assert.equal(card.url, post.permalink)
 })
@@ -164,7 +165,7 @@ test('loads only Instagram and retains posts with the same caption prefix in dat
   assert.equal(fetch.mock.callCount(), 1)
 })
 
-test('restores image and link cards with dates from the session cache without fetching again', async () => {
+test('restores all image and video sources with dates from the session cache without fetching again', async () => {
   const fetch = mockInstagram([
     instagramPost(),
     instagramPost({ id: 'ig-video', media_type: 'VIDEO', media_url: 'https://example.com/clip.mp4' }),
@@ -176,19 +177,22 @@ test('restores image and link cards with dates from the session cache without fe
   assert.equal(storage.size, 1)
   assert.deepEqual(cached, initial)
   assert.ok(cached.every((card) => card.date instanceof Date))
+  assert.deepEqual(cached[1].media, [{ type: 'VIDEO', src: 'https://example.com/clip.mp4' }])
   assert.equal(fetch.mock.callCount(), 1)
 })
 
-test('does not reuse the old mixed-provider session cache', async () => {
-  storage.set('posts', JSON.stringify([{ id: 'fb-legacy', date: '2026-10-14T12:00:00Z' }]))
-  const fetch = mockInstagram([instagramPost()])
+for (const key of ['posts', 'instagram-posts-v1']) {
+  test(`does not reuse the incompatible ${key} session cache`, async () => {
+    storage.set(key, JSON.stringify([{ id: 'legacy', date: '2026-10-14T12:00:00Z' }]))
+    const fetch = mockInstagram([instagramPost()])
 
-  const cards = await loadPosts()
+    const cards = await loadPosts()
 
-  assert.notEqual(sessionPostsKey, 'posts')
-  assert.deepEqual(cards.map((card) => card.id), ['ig-post'])
-  assert.equal(fetch.mock.callCount(), 1)
-})
+    assert.notEqual(sessionPostsKey, key)
+    assert.deepEqual(cards.map((card) => card.id), ['ig-post'])
+    assert.equal(fetch.mock.callCount(), 1)
+  })
+}
 
 test('propagates Instagram fetch failures without caching an empty feed', async () => {
   const failure = new Error('Feed request failed')
@@ -200,8 +204,8 @@ test('propagates Instagram fetch failures without caching an empty feed', async 
   assert.equal(storage.size, 0)
 })
 
-for (const [label, overrides, preview] of [
-  ['image', {}, 'https://example.com/photo.jpg'],
+for (const [label, overrides, mediaType, src] of [
+  ['image', {}, 'img', 'https://example.com/photo.jpg'],
   ['album', {
     caption: 'Album update',
     media_type: 'CAROUSEL_ALBUM',
@@ -212,30 +216,162 @@ for (const [label, overrides, preview] of [
         { media_type: 'IMAGE', media_url: 'https://example.com/second.jpg' },
       ],
     },
-  }, 'https://example.com/child.jpg'],
+  }, 'video', 'https://example.com/child.mp4'],
   ['video', {
     caption: 'Video update',
     media_type: 'VIDEO',
     media_url: 'https://example.com/clip.mp4',
-  }, undefined],
+  }, 'video', 'https://example.com/clip.mp4'],
 ]) {
-  test(`renders a native ${label} card with a date and original-post link, without players or embeds`, async () => {
+  test(`renders native ${label} media with a date and original-post link, without embeds`, async () => {
     const post = instagramPost(overrides)
     mockInstagram([post])
     const [card] = await loadIGPosts()
 
     const html = await renderToString(createSSRApp(ContentCard, { card }))
-    const images = [...html.matchAll(/<img\b[^>]*\bsrc="([^"]+)"/g)].map((match) => match[1])
-
-    assert.deepEqual(images, [
-      'https://example.com/profile.jpg',
-      ...(preview ? [preview] : []),
-    ])
+    assert.ok(html.includes(`src="${src}"`))
+    assert.match(html, new RegExp(`<${mediaType}\\b[^>]*src="${src.replaceAll('.', '\\.')}"`))
+    if (mediaType === 'video') {
+      assert.match(html, /<video\b[^>]*controls[^>]*playsinline[^>]*preload="metadata"/)
+      assert.doesNotMatch(html, /autoplay/)
+    }
     assert.ok(html.includes(`href="${post.permalink}"`))
     assert.ok(html.includes(`datetime="${new Date(post.timestamp).toISOString()}"`))
-    assert.doesNotMatch(html, /<(?:video|iframe|script|button)\b/)
-    assert.doesNotMatch(html, /class="[^"]*\b(?:prev|next|dot|pagination)\b/)
+    assert.doesNotMatch(html, /<(?:iframe|script)\b/)
+    if (label === 'album') {
+      assert.match(html, /aria-label="Forrige medie"[^>]*disabled/)
+      assert.match(html, /aria-label="Neste medie"/)
+      assert.equal([...html.matchAll(/aria-label="Vis medie \d+"/g)].length, 3)
+    }
     if (post.caption) assert.ok(html.includes(post.caption))
     else assert.doesNotMatch(html, /<p>\s*<\/p>/)
   })
 }
+
+test('renders every position of a mixed image/video album', async () => {
+  const children = [
+    { media_type: 'VIDEO', media_url: 'https://example.com/first.mp4' },
+    { media_type: 'IMAGE', media_url: 'https://example.com/second.jpg' },
+    { media_type: 'VIDEO', media_url: 'https://example.com/third.mp4' },
+  ]
+  mockInstagram([instagramPost({ media_type: 'CAROUSEL_ALBUM', children: { data: children } })])
+  const [card] = await loadIGPosts()
+  for (let mediaIndex = 0; mediaIndex < children.length; mediaIndex++) {
+    const component = { ...ContentCard, data: () => ({ mediaIndex, mediaFailed: false, touchStartX: null }) }
+    const html = await renderToString(createSSRApp(component, { card }))
+    assert.ok(html.includes(`src="${children[mediaIndex].media_url}"`))
+    assert.match(html, new RegExp(`${mediaIndex + 1} / 3`))
+  }
+})
+
+test('video-only albums retain native playback and navigation', async () => {
+  mockInstagram([instagramPost({ media_type: 'CAROUSEL_ALBUM', children: { data: [
+    { media_type: 'VIDEO', media_url: 'https://example.com/first.mp4' },
+    { media_type: 'VIDEO', media_url: 'https://example.com/second.mp4' },
+  ] } })])
+  const [card] = await loadIGPosts()
+  assert.equal(card.media.length, 2)
+  assert.ok(card.media.every(item => item.type === 'VIDEO'))
+  const html = await renderToString(createSSRApp(ContentCard, { card }))
+  assert.match(html, /<video\b/)
+  assert.match(html, /aria-label="Neste medie"/)
+})
+
+test('missing media leaves a usable original-post link without a broken player', async () => {
+  mockInstagram([instagramPost({ media_url: undefined })])
+  const [card] = await loadIGPosts()
+  const html = await renderToString(createSSRApp(ContentCard, { card }))
+  assert.ok(html.includes(`href="${card.url}"`))
+  assert.doesNotMatch(html, /<figure|<video|role="alert"/)
+  assert.equal([...html.matchAll(/<img\b/g)].length, 1)
+})
+
+test('a failed media item has a visible warning and the original Instagram link', async () => {
+  mockInstagram([instagramPost()])
+  const [card] = await loadIGPosts()
+  const component = { ...ContentCard, data: () => ({ mediaIndex: 0, mediaFailed: true, touchStartX: null }) }
+  const html = await renderToString(createSSRApp(component, { card }))
+  assert.match(html, /role="alert"/)
+  assert.match(html, /Mediet kunne ikke lastes/)
+  assert.ok(html.includes(`href="${card.url}"`))
+})
+
+test('an empty successful feed is not cached and recovery fetches new posts', async () => {
+  const fetch = mockInstagram()
+  assert.deepEqual(await loadPosts(), [])
+  assert.equal(storage.size, 0)
+  fetch.mock.restore()
+  const recovered = mockInstagram([instagramPost()])
+  assert.equal((await loadPosts()).length, 1)
+  assert.equal(recovered.mock.callCount(), 1)
+})
+
+for (const cached of ['{broken', '[]', '[{"id":"incomplete"}]']) {
+  test(`ignores unusable cached data (${cached}) and fetches a fresh feed`, async () => {
+    storage.set(sessionPostsKey, cached)
+    const warning = mock.method(console, 'warn', () => {})
+    const fetch = mockInstagram([instagramPost()])
+    const cards = await loadPosts()
+    assert.deepEqual(cards.map(card => card.id), ['ig-post'])
+    assert.equal(fetch.mock.callCount(), 1)
+    assert.equal(warning.mock.callCount(), 1)
+  })
+}
+
+test('invalid cached dates are rejected before they can break card rendering', async () => {
+  const fetch = mockInstagram([instagramPost()])
+  const cards = await loadPosts()
+  storage.set(sessionPostsKey, JSON.stringify([{ ...cards[0], date: 'invalid-date' }]))
+  mock.method(console, 'warn', () => {})
+  assert.ok(Number.isFinite((await loadPosts())[0].date.getTime()))
+  assert.equal(fetch.mock.callCount(), 2)
+})
+
+for (const [operation, errorName] of [['getItem', 'SecurityError'], ['setItem', 'QuotaExceededError']]) {
+  test(`keeps the feed usable when session storage ${operation} fails`, async () => {
+    const warning = mock.method(console, 'warn', () => {})
+    mock.method(window.sessionStorage, operation, () => { throw new DOMException('Storage unavailable', errorName) })
+    mockInstagram([instagramPost()])
+    assert.equal((await loadPosts()).length, 1)
+    assert.equal(warning.mock.callCount(), 1)
+  })
+}
+
+for (const [label, response] of [
+  ['HTTP error with otherwise valid data', () => Response.json({ name: 'Fixture', profile_picture_url: 'https://example.com/profile.jpg', media: { data: [] } }, { status: 500 })],
+  ['non-JSON success', () => new Response('<html>Not a feed</html>')],
+  ['Graph error envelope', () => Response.json({ media: { error: { message: 'Fixture' } } })],
+  ['missing data array', () => Response.json({ name: 'Fixture', profile_picture_url: 'https://example.com/profile.jpg', media: {} })],
+]) {
+  test(`rejects ${label} without caching a fake successful result`, async () => {
+    mock.method(globalThis, 'fetch', async () => response())
+    await assert.rejects(loadPosts)
+    assert.equal(storage.size, 0)
+  })
+}
+
+test('rejects invalid post dates before rendering', async () => {
+  mockInstagram([instagramPost({ timestamp: 'invalid-date' })])
+  await assert.rejects(loadPosts, /Instagram/)
+  assert.equal(storage.size, 0)
+})
+
+test('a stalled request is aborted after thirty seconds', async () => {
+  mock.timers.enable({ apis: ['setTimeout'] })
+  let signal
+  mock.method(globalThis, 'fetch', (_url, options) => {
+    signal = options.signal
+    return new Promise((resolve, reject) => {
+      signal?.addEventListener('abort', () => reject(signal.reason), { once: true })
+    })
+  })
+  const pending = loadIGPosts()
+  try {
+    assert.ok(signal, 'The feed request must have an abort signal')
+    const failure = assert.rejects(pending, error => error.name === 'AbortError')
+    mock.timers.tick(30000)
+    await failure
+  } finally {
+    mock.timers.reset()
+  }
+})
