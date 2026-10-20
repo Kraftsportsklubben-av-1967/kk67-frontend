@@ -5,7 +5,7 @@
       <template v-slot:body
         >KK-67 har flere utdannede trenere gjennom <i>Norges Stryrkeløftforbund</i>. Disse hjelper
         andre medlemmer med treningsprogrammer og teknikk på frivillig basis. Dersom du trenger
-        hjelp med trening tar du kontakt med ansvarlig for klubbtrenere <b>Damian Steinke</b>. Han
+        hjelp med trening tar du kontakt med ansvarlig for klubbtrenere <b>Joar Finsaas</b>. Han
         fordeler utøverne med behov for oppfølging på klubbtrenere.
       </template>
     </Card>
