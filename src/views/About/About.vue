@@ -22,7 +22,7 @@
         </template>
         <template v-slot:body>
           <p>Det er stort sett folk på trening hver dag! <br /><br /></p>
-          <p>Kjernetiden er mandag, onsdag og fredag mellom kl. 17:00 - 20:00.</p>
+          <p>Kjernetiden er mandag, onsdag og fredag mellom kl. 17:00 - 21:00.</p>
         </template>
       </Card>
       <Card class="w-full lg:w-7/12 lg:mt-0 mt-4">
