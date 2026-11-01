@@ -3,7 +3,8 @@
     <template v-slot:sidebar>
       <div class="flex flex-col md:flex-row lg:flex-col justify-between">
         <div class="w-full md:w-2/5 lg:w-full">
-          <News />
+          <!-- Midlertidig: NM-promo erstatter NSF-nyheter. Sett <News /> tilbake etter NM. -->
+          <NmPromo />
         </div>
         <div class="w-full md:w-2/5 lg:w-full mt-6 md:mt-0 lg:mt-6">
           <div class="text-lg md:text-xl w-fit">
@@ -26,7 +27,7 @@
 import { defineComponent } from 'vue'
 import Layout from '@/components/Layout.vue'
 import Media from '@/components/Media/Media.vue'
-import News from '@/components/Media/News.vue'
+import NmPromo from '@/components/Media/NmPromo.vue'
 import Content from './Content.vue'
 
 export default defineComponent({
@@ -34,7 +35,7 @@ export default defineComponent({
   components: {
     Layout,
     Media,
-    News,
+    NmPromo,
     Content,
   },
 })
