@@ -3,17 +3,17 @@
     <section class="nm-hero" aria-labelledby="nm-title">
       <div class="hero-topline">
         <p class="eyebrow">KK-67 presenterer · Norgesmesterskap i styrkeløft</p>
-        <span class="anniversary">1967–2027 <strong>60 år</strong></span>
+        <span class="anniversary">1967–2027 <strong>60&nbsp;år</strong></span>
       </div>
       <div class="hero-grid">
         <div>
           <h1 id="nm-title">NM <span>2027</span></h1>
-          <p class="hero-lead">Norges sterkeste.<br />Trondheims storstue.</p>
+          <p class="hero-lead">NM i styrkeløft kommer til Trondheim.</p>
           <p class="hero-description">
-            KK-67 fyller 60 år. Det feirer vi med en mesterskapshelg i hjertet av Trondheim.
-            Knebøy, benkpress og markløft. Vi gleder oss til å fylle Samfundet med styrke.
+            KK-67 fyller 60 år, og vi markerer det med NM i Storsalen på Studentersamfundet.
+            Utøverne konkurrerer i knebøy, benkpress og markløft.
           </p>
-          <a class="hero-link" href="#nm-info">Mer om mesterskapet <span aria-hidden="true">↗</span></a>
+          <a class="hero-link" href="#nm-info">Les mer om mesterskapet <span aria-hidden="true">↗</span></a>
         </div>
         <div class="hero-details">
           <img
@@ -22,6 +22,7 @@
             :alt="event.name"
             width="2236"
             height="2752"
+            fetchpriority="high"
             decoding="async"
           />
           <dl>
@@ -35,47 +36,47 @@
     </section>
 
     <section class="countdown-section" aria-labelledby="countdown-title">
-      <h2 id="countdown-title" class="eyebrow">Hver dag bringer oss nærmere.</h2>
+      <h2 id="countdown-title" class="eyebrow">Nedtelling til NM</h2>
       <FlipCountdown :target-at="event.countdownAt" :event-name="event.name" />
-      <p class="countdown-note">Til {{ countdownTarget }} · norsk tid. Løftetider kommer.</p>
+      <p class="countdown-note">Nedtellingen går til {{ countdownTarget }}, norsk tid. Løftetidene er ikke klare ennå.</p>
     </section>
 
     <section id="nm-info" class="information-section" aria-labelledby="information-title">
       <div class="section-intro">
         <div>
-          <p class="eyebrow red">En helg. Tre løft. Ett mesterskap.</p>
-          <h2 id="information-title">Sterke opplevelser.<br />Mer informasjon kommer.</h2>
+          <p class="eyebrow red">Om NM 2027</p>
+          <h2 id="information-title">Mer informasjon kommer</h2>
         </div>
         <p>
-          Vi inviterer utøvere, publikum og styrkeløftvenner til Storsalen på Studentersamfundet
-          {{ eventDates }}. Her samler vi det du trenger å vite når mesterskapet nærmer seg.
+          NM arrangeres i Storsalen på Studentersamfundet {{ eventDates }}. Program, påmelding
+          og praktisk informasjon legger vi ut her så snart det er klart.
         </p>
       </div>
       <div class="information-cards">
         <div class="information-card">
           <span class="card-number" aria-hidden="true">01</span>
           <h3>Program og tider</h3>
-          <p>Løfting, puljer og tidsplan. Detaljene publiseres når de er klare.</p>
+          <p>Puljer og tidsplan for løftingen publiseres når de er klare.</p>
           <span class="coming-soon">Kommer senere</span>
         </div>
         <div class="information-card">
           <span class="card-number" aria-hidden="true">02</span>
           <h3>For utøvere</h3>
-          <p>Informasjon om påmelding og alt det praktiske rundt deltakelsen.</p>
+          <p>Påmelding og praktisk informasjon om deltakelsen.</p>
           <span class="coming-soon">Kommer senere</span>
         </div>
         <div class="information-card">
           <span class="card-number" aria-hidden="true">03</span>
           <h3>For publikum</h3>
-          <p>Planlegg mesterskapshelgen. Informasjon om billetter og besøk følger.</p>
+          <p>Billetter og informasjon om besøket kommer her.</p>
           <span class="coming-soon">Kommer senere</span>
         </div>
       </div>
     </section>
 
     <section class="travel-section" aria-labelledby="travel-title">
-      <p class="eyebrow red">Midt i Trondheim</p>
-      <h2 id="travel-title">Finn veien til NM.</h2>
+      <p class="eyebrow red">Veibeskrivelse</p>
+      <h2 id="travel-title">Slik kommer du deg til NM</h2>
       <div class="travel-addresses">
         <div>
           <h3>A · {{ event.hotel.name }}</h3>
@@ -94,9 +95,9 @@
 
     <section class="video-section" aria-labelledby="video-title">
       <div>
-        <p class="eyebrow red">Bak løftene</p>
-        <h2 id="video-title">Følg reisen<br />mot NM.</h2>
-        <p>Forberedelser, folk og øyeblikk fra klubben. Følg med – vi har mer å dele.</p>
+        <p class="eyebrow red">Fra klubben</p>
+        <h2 id="video-title">På vei mot NM</h2>
+        <p>Her legger vi ut video fra treningen og forberedelsene før mesterskapet.</p>
       </div>
       <EventVideo
         :youtube-video-id="event.youtubeVideoId"
@@ -106,8 +107,8 @@
     </section>
 
     <div class="nm-signoff">
-      <span>KK-67 · Styrke siden 1967</span>
-      <span>Vi sees i Trondheim.</span>
+      <span></span>
+      <span>NM 2027 · Trondheim</span>
     </div>
   </div>
 </template>
@@ -201,6 +202,7 @@ h1 {
   line-height: .95;
   letter-spacing: -.07em;
   white-space: nowrap;
+  text-wrap: balance;
 }
 h1 span { color: #f15d55; }
 .hero-lead {
@@ -225,6 +227,7 @@ h1 span { color: #f15d55; }
   border-bottom: 1px solid #f4f0e77a;
   font-size: .85rem;
   font-weight: 700;
+  touch-action: manipulation;
 }
 .hero-link:hover { color: #f15d55; }
 .hero-link:focus-visible { outline: 2px solid var(--nm-paper); outline-offset: 5px; }
@@ -233,7 +236,7 @@ h1 span { color: #f15d55; }
 dt {
   margin-top: 1.5rem;
   color: #c6c4bd;
-  font-size: .65rem;
+  font-size: .72rem;
   font-weight: 700;
   letter-spacing: .15em;
   text-transform: uppercase;
@@ -262,6 +265,7 @@ dd {
   color: #b8b6b1;
   text-align: center;
   font-size: .75rem;
+  font-variant-numeric: tabular-nums;
 }
 .information-section {
   padding-block: clamp(2.5rem, 6vw, 5rem);
@@ -279,6 +283,7 @@ h2 {
   font-weight: 900;
   line-height: 1.1;
   letter-spacing: -.045em;
+  text-wrap: balance;
 }
 .section-intro > p, .video-section > div > p:last-child {
   color: #62605c;
@@ -308,7 +313,7 @@ h3 { margin-top: 1.25rem; font-size: 1.1rem; font-weight: 700; }
 }
 .coming-soon {
   margin-top: 1.5rem;
-  font-size: .65rem;
+  font-size: .72rem;
   font-weight: 700;
   letter-spacing: .12em;
   text-transform: uppercase;
@@ -321,8 +326,6 @@ h3 { margin-top: 1.25rem; font-size: 1.1rem; font-weight: 700; }
   grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
   gap: 3rem;
   align-items: center;
-  padding: clamp(1.5rem, 3vw, 3rem);
-  background: var(--nm-paper);
 }
 .video-section > div > p:last-child { margin-top: 1.25rem; }
 .nm-signoff {
@@ -330,7 +333,7 @@ h3 { margin-top: 1.25rem; font-size: 1.1rem; font-weight: 700; }
   justify-content: space-between;
   gap: 1rem;
   padding-block: 1.5rem;
-  font-size: .65rem;
+  font-size: .72rem;
   font-weight: 700;
   letter-spacing: .06em;
   text-transform: uppercase;
