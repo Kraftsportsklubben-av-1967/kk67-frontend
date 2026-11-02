@@ -39,20 +39,29 @@ To contribute to this project, follow the guidelines described in the [CONTRIBUT
 ## Production CI
 
 GitHub Actions on Ubuntu runs uploader regressions, `yarn test` and `yarn build`
-on pull requests to `master`. The Node.js test runner discovers application tests
-when present; this deployment change does not add application features or their tests.
-After a merge or push to `master`, CI also uploads the build using this repository's
-`scripts\upload-frontend.ps1` and `scripts\ftps.psm1`. It checks out only this
-repository, with no Docker-repository checkout or deployment controller pin.
-Pull requests never upload files or receive production FTP credentials or the
-Google Maps key.
+on pull requests and pushes to `master`. Merges and direct pushes **do not deploy**.
+Production uploads require a manual `workflow_dispatch` run selecting `master`,
+after that run's checks and build succeed. Selecting another branch runs checks
+only. Automatic runs never upload files or receive production FTP credentials
+or the Google Maps key.
+
+To deploy, open **Actions > Frontend CI and deployment > Run workflow**, select
+`master`, and run the workflow, or use:
+
+```sh
+gh workflow run deploy-frontend.yml --repo Kraftsportsklubben-av-1967/kk67-frontend --ref master
+```
+
+The workflow checks out only this repository and uploads directly from the runner
+using `scripts\upload-frontend.ps1` and `scripts\ftps.psm1`. It does not retain
+an Actions build artifact or fetch a separate deployment controller.
 
 Configure these repository secrets under **Settings > Secrets and variables >
 Actions**: `FTP_USERNAME`, `FTP_PASSWORD`, and `VITE_GOOGLE_API_KEY`. Missing
 production secrets stop deployment. Do not commit a `.env` file.
 
 The destination is `ftp.c9ry3m6by.service.one`, directory `webroots/r1058728`.
-Deployments run one at a time; a newer merge does not cancel an active upload.
+Deployments run one at a time; a newer run does not cancel an active upload.
 The uploader never deletes remote files, preserving server routing configuration
 and separately uploaded media. Uploads are not atomic and have no automatic rollback.
 

@@ -5,6 +5,7 @@ on:
     branches: [master]
   push:
     branches: [master]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -46,15 +47,15 @@ jobs:
 
       - name: Build frontend
         env:
-          VITE_GOOGLE_API_KEY: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' && secrets.VITE_GOOGLE_API_KEY || '' }}
+          VITE_GOOGLE_API_KEY: ${{ github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/master' && secrets.VITE_GOOGLE_API_KEY || '' }}
         run: |
-          if ($env:GITHUB_EVENT_NAME -eq 'push' -and [string]::IsNullOrEmpty($env:VITE_GOOGLE_API_KEY)) {
+          if ($env:GITHUB_EVENT_NAME -eq 'workflow_dispatch' -and $env:GITHUB_REF -eq 'refs/heads/master' -and [string]::IsNullOrEmpty($env:VITE_GOOGLE_API_KEY)) {
             throw 'Configure the VITE_GOOGLE_API_KEY repository secret before deploying.'
           }
           yarn build
 
       - name: Upload frontend using FTPS
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        if: github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/master'
         env:
           FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
           FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
