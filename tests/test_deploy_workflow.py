@@ -13,14 +13,9 @@ WORKFLOW = ROOT.joinpath(".github", "workflows", "deploy-frontend.yml").read_tex
 
 
 class DeploymentWorkflowTests(unittest.TestCase):
-    def test_checks_run_automatically_and_deployment_can_be_requested_manually(self):
+    def test_workflow_runs_only_when_requested_manually(self):
         events = WORKFLOW.split("\non:\n", 1)[1].split("\npermissions:\n", 1)[0]
-        self.assertEqual(
-            events.strip(),
-            "pull_request:\n    branches: [master]\n"
-            "  push:\n    branches: [master]\n"
-            "  workflow_dispatch:",
-        )
+        self.assertEqual(events.strip(), "workflow_dispatch:")
 
     def test_uses_ubuntu_with_powershell(self):
         self.assertRegex(WORKFLOW, r"(?m)^\s+runs-on: ubuntu-latest$")

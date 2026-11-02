@@ -38,11 +38,11 @@ To contribute to this project, follow the guidelines described in the [CONTRIBUT
 
 ## Production CI
 
-GitHub Actions on Ubuntu runs uploader regressions, `yarn test` and `yarn build`
-on pull requests and pushes to `master`. Merges and direct pushes **do not deploy**.
-Production uploads require a manual `workflow_dispatch` run selecting `master`,
-after that run's checks and build succeed. Selecting another branch runs checks
-only. Automatic runs never upload files or receive production FTP credentials
+The **Frontend CI and deployment** workflow runs **only when requested manually**
+via `workflow_dispatch`. Pull requests, merges and direct pushes **do not run CI
+or deploy**. A manual run on Ubuntu runs uploader regressions, `yarn test` and
+`yarn build` before uploading. Production uploads require selecting `master`;
+selecting another branch runs checks only, without production FTP credentials
 or the Google Maps key.
 
 To deploy, open **Actions > Frontend CI and deployment > Run workflow**, select
