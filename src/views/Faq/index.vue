@@ -22,17 +22,19 @@
       </div>
     </template>
     <template v-slot:main>
-      <div v-if="questionIndex >= 0" class="flex flex-col">
-        <Card v-for="question in questions[questionIndex]" :key="question.title" class="mb-5">
-          <template v-slot:header>
-            <h1>{{ question.title }}</h1>
-          </template>
-          <template v-slot:body>
-            <p v-html="question.ans" />
-          </template>
-        </Card>
-      </div>
-      <router-view v-else />
+      <ViewTransition :view-key="$route.path" subpage>
+        <div v-if="questionIndex >= 0" class="flex flex-col">
+          <Card v-for="question in questions[questionIndex]" :key="question.title" class="mb-5">
+            <template v-slot:header>
+              <h1>{{ question.title }}</h1>
+            </template>
+            <template v-slot:body>
+              <p v-html="question.ans" />
+            </template>
+          </Card>
+        </div>
+        <router-view v-else />
+      </ViewTransition>
     </template>
   </Layout>
 </template>
@@ -42,6 +44,7 @@ import { defineComponent } from 'vue'
 import Card from '@components/Card/Card.vue'
 import Menu from '@components/Menu/Menu.vue'
 import News from '@components/Media/News.vue'
+import ViewTransition from '@components/ViewTransition.vue'
 import { IMenuButton } from '@components/Menu/MenuButton.vue'
 
 interface IQuestion {
@@ -56,6 +59,7 @@ export default defineComponent({
     Card,
     Menu,
     News,
+    ViewTransition,
   },
 
   computed: {

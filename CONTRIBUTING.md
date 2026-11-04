@@ -147,6 +147,18 @@ out after thirty seconds; empty results are not cached. Invalid or unavailable
 session storage is reported in the console without preventing a fresh feed load.
 If an individual media item fails, use its original-post link.
 
+## Page transitions
+
+Page content fades and lifts into place; subpages use a shorter effect while
+keeping their sidebar mounted. Outgoing views are removed immediately, so rapid
+navigation does not queue animations or leave duplicate players on screen.
+Query/hash-only changes do not restart motion. Reduced-motion preferences disable
+both the fade and movement.
+
+Use `ViewTransition` around changing content, not shared navigation. Keep
+viewport-fixed overlays teleported to `body` so the temporary transform cannot
+reposition them.
+
 ## Test
 
 Run `yarn test` for the feed regression tests, then `yarn build` for type checking

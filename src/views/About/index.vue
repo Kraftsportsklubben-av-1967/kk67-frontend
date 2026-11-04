@@ -11,7 +11,9 @@
       </div>
     </template>
     <template v-slot:main>
-      <router-view />
+      <ViewTransition :view-key="$route.path" subpage>
+        <router-view />
+      </ViewTransition>
     </template>
   </Layout>
 </template>
@@ -21,10 +23,11 @@ import { defineComponent } from 'vue'
 import Layout from '@components/Layout.vue'
 import Card from '@components/Card/Card.vue'
 import Menu from '@components/Menu/Menu.vue'
+import ViewTransition from '@components/ViewTransition.vue'
 import { IMenuButton } from '@components/Menu/MenuButton.vue'
 export default defineComponent({
   name: 'About',
-  components: { Layout, Card, Menu },
+  components: { Layout, Card, Menu, ViewTransition },
   data() {
     return {
       menuButtons: [

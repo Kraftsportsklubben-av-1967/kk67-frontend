@@ -1,7 +1,9 @@
 <template>
-  <Transition>
-    <PictureOverlay v-if="focused" @click="focused = !focused" :src="focusSrc" />
-  </Transition>
+  <Teleport to="body">
+    <Transition>
+      <PictureOverlay v-if="focused" @click="focused = !focused" :src="focusSrc" />
+    </Transition>
+  </Teleport>
   <div class="flex flex-col">
     <div class="flex flex-col lg:flex-row justify-between">
       <div class="header-red-underline">
