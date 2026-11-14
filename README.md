@@ -135,6 +135,9 @@ plain-text `highlights`, an `archive` of earlier edition records, and an optiona
 highlights fields as the current edition. Archive years must be distinct and
 older than the current year. Selecting a year switches its books and update notes
 and closes the old reader. A planned year has no PDF links or invented release date.
+Year navigation uses the same responsive sidebar layout as `/about`: beside the
+books on desktop and above them on smaller screens. New editions appear from the
+catalog without adding hardcoded future years.
 Older catalogs still show their books, using the edition date's year as the label,
 without inventing update notes or a next-release announcement.
 

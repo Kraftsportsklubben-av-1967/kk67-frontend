@@ -206,6 +206,20 @@ test('announces the planned annual edition without offering an unpublished PDF',
   assert.doesNotMatch(html, /<object|<iframe/)
 })
 
+test('annual navigation uses the About sidebar layout while books stay in the main panel', async () => {
+  const data = { ...catalog(), archive: [pastEdition()], next_edition_year: 2027 }
+  const html = await renderPage({ catalog: data })
+  const sidebar = html.match(/<aside\b[^>]*>([\s\S]*?)<\/aside>/)
+  assert.ok(sidebar, 'Use the shared page layout with its complementary sidebar')
+  assert.match(sidebar[1], /<nav[^>]*aria-labelledby="edition-title"/)
+  assert.match(sidebar[1], /aria-label="Vis årsutgave 2025"/)
+  assert.match(sidebar[1], /aria-label="Vis årsutgave 2026"/)
+  assert.match(sidebar[1], /2027/)
+  assert.match(sidebar[1], /Planlagt/)
+  assert.doesNotMatch(sidebar[1], /book-card|Les på siden|Nytt i denne utgaven/)
+  assert.ok(html.indexOf('class="book-card"') > html.indexOf('</aside>'))
+})
+
 test('selecting an archived year shows its books, updates and original PDF URLs', async () => {
   const past = pastEdition()
   const data = { ...catalog(), archive: [past], next_edition_year: 2027 }

@@ -1,54 +1,58 @@
 <template>
-  <div class="stats-page">
-    <div class="header-red-underline">
-      <h1>KK-67 i tall</h1>
-    </div>
-    <p class="mt-6 max-w-3xl">
-      Les om klubbens løftere, rekorder og historie. Bøkene bygger på registrerte
-      konkurranseresultater og oppgir kilder og kjente mangler i datagrunnlaget.
-      Les dem her, åpne PDF-en i en egen fane eller last ned en kopi.
-    </p>
+  <Layout class="stats-page">
+    <template v-slot:sidebar>
+      <div class="flex flex-col">
+        <div class="header-red-underline">
+          <h1>KK-67 i tall</h1>
+        </div>
+        <nav v-if="catalog" class="mt-8" aria-labelledby="edition-title">
+          <h2 id="edition-title" class="text-lg font-bold">Årlige utgaver</h2>
+          <ol class="mt-4 flex flex-col gap-4">
+            <li v-for="edition in editions" :key="edition.edition_year">
+              <button
+                class="edition-button"
+                type="button"
+                :aria-pressed="selectedEdition?.edition_year === edition.edition_year"
+                :aria-label="`Vis årsutgave ${edition.edition_year}`"
+                @click="selectEdition(edition.edition_year)"
+              >
+                <span class="edition-marker" aria-hidden="true">&#11044;</span>
+                <span class="block font-medium">{{ edition.edition_year }}</span>
+                <span class="block mt-1 text-sm">
+                  {{ edition.edition_year === catalog.edition_year ? 'Nyeste utgave' : 'Tidligere utgave' }}
+                </span>
+                <span class="block mt-1 text-xs">Utgavedato {{ edition.edition }}</span>
+              </button>
+            </li>
+            <li v-if="catalog.next_edition_year" class="planned-edition">
+              <span class="block font-medium">{{ catalog.next_edition_year }}</span>
+              <span class="block mt-1 text-sm">Planlagt</span>
+              <p class="mt-1 text-xs">Utgivelsesdato ikke fastsatt.</p>
+            </li>
+          </ol>
+          <p v-if="catalog.next_edition_year === null" class="mt-3 text-sm text-gray-600">
+            Planen for neste årsutgave er ikke lagt inn ennå.
+          </p>
+        </nav>
+      </div>
+    </template>
+    <template v-slot:main>
+      <p class="max-w-3xl">
+        Les om klubbens løftere, rekorder og historie. Bøkene bygger på registrerte
+        konkurranseresultater og oppgir kilder og kjente mangler i datagrunnlaget.
+        Les dem her, åpne PDF-en i en egen fane eller last ned en kopi.
+      </p>
+      <p class="mt-3 max-w-3xl text-sm text-gray-600">
+        Bøkene utgis som årsutgaver. Velg blant utgavene som er tilgjengelige her;
+        rapportene oppgir selv dato og avgrensning for datagrunnlaget.
+      </p>
 
-    <p v-if="loading" class="mt-8" role="status">Laster bøker …</p>
-    <div v-else-if="error" class="mt-8" role="alert">
-      <p>{{ error }}</p>
-      <button class="reader-button mt-4" type="button" @click="loadCatalog">Prøv igjen</button>
-    </div>
-    <template v-else-if="catalog">
-      <section class="mt-8" aria-labelledby="edition-title">
-        <h2 id="edition-title" class="text-2xl font-bold">Årlige utgaver</h2>
-        <p class="mt-2 max-w-3xl">
-          Bøkene utgis som årsutgaver. Velg blant utgavene som er tilgjengelige her;
-          rapportene oppgir selv dato og avgrensning for datagrunnlaget.
-        </p>
-        <ol class="edition-timeline mt-4">
-          <li v-for="edition in editions" :key="edition.edition_year">
-            <button
-              class="edition-button"
-              type="button"
-              :aria-pressed="selectedEdition?.edition_year === edition.edition_year"
-              :aria-label="`Vis årsutgave ${edition.edition_year}`"
-              @click="selectEdition(edition.edition_year)"
-            >
-              <span class="block text-xl font-bold">{{ edition.edition_year }}</span>
-              <span class="block mt-1 text-sm">
-                {{ edition.edition_year === catalog.edition_year ? 'Nyeste utgave' : 'Tidligere utgave' }}
-              </span>
-              <span class="block mt-1 text-sm">Utgavedato {{ edition.edition }}</span>
-            </button>
-          </li>
-          <li v-if="catalog.next_edition_year" class="planned-edition">
-            <span class="block text-xl font-bold">{{ catalog.next_edition_year }}</span>
-            <span class="block mt-1 text-sm">Planlagt</span>
-            <p class="mt-1 text-sm">Utgivelsesdato ikke fastsatt.</p>
-          </li>
-        </ol>
-        <p v-if="catalog.next_edition_year === null" class="mt-3 text-sm text-gray-600">
-          Planen for neste årsutgave er ikke lagt inn ennå.
-        </p>
-      </section>
-
-      <template v-if="selectedEdition">
+      <p v-if="loading" class="mt-8" role="status">Laster bøker …</p>
+      <div v-else-if="error" class="mt-8" role="alert">
+        <p>{{ error }}</p>
+        <button class="reader-button mt-4" type="button" @click="loadCatalog">Prøv igjen</button>
+      </div>
+      <template v-else-if="selectedEdition">
         <h2 class="mt-8 text-2xl font-bold">Årsutgave {{ selectedEdition.edition_year }}</h2>
         <p class="mt-2 text-sm text-gray-600">Utgavedato {{ selectedEdition.edition }}</p>
         <section class="mt-4" aria-labelledby="updates-title">
@@ -121,13 +125,14 @@
           </object>
         </section>
       </template>
-      <p v-else class="mt-6" role="alert">Den valgte årsutgaven finnes ikke i arkivet.</p>
+      <p v-else-if="catalog" class="mt-6" role="alert">Den valgte årsutgaven finnes ikke i arkivet.</p>
     </template>
-  </div>
+  </Layout>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import Layout from '@components/Layout.vue'
 import {
   loadStatsCatalog,
   statsPdfUrl,
@@ -137,6 +142,7 @@ import {
 } from '../../loaders/statsLoader'
 
 export default defineComponent({
+  components: { Layout },
   data() {
     return {
       catalog: null as StatsCatalog | null,
@@ -199,23 +205,28 @@ export default defineComponent({
 
 <style scoped>
 .stats-page { width: 100%; min-width: 0; }
+.stats-page :deep(> div) { flex: 1; min-width: 0; }
 .book-card { display: flex; flex-direction: column; padding: 1.5rem; border: 1px solid #d1d5db; }
-.edition-timeline {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-  gap: 1rem;
-}
 .edition-button, .planned-edition {
   display: block;
+  position: relative;
   width: 100%;
-  height: 100%;
-  padding: 1rem;
-  border: 1px solid #d1d5db;
+  padding-left: 1.25rem;
   text-align: left;
 }
-.edition-button[aria-pressed="true"] { border-color: #b91c1c; background: #fef2f2; }
-.edition-button:hover { border-color: #b91c1c; }
-.planned-edition { background: #f3f4f6; color: #4b5563; }
+.edition-marker {
+  position: absolute;
+  top: .3rem;
+  left: 0;
+  color: #dc2626;
+  font-size: .6rem;
+  opacity: 0;
+  transition: opacity .5s ease;
+}
+.edition-button[aria-pressed="true"] .edition-marker,
+.edition-button:hover .edition-marker { opacity: 1; }
+.edition-button:hover { color: #6b7280; }
+.planned-edition { color: #4b5563; }
 .reader-button {
   padding: .65rem 1rem;
   background: #b91c1c;
