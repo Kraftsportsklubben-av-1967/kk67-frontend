@@ -60,6 +60,13 @@ test('desktop buttons use 16px text and compact link borders', async () => {
   assert.doesNotMatch(html, /\btext-sm\b|\btext-lg\b|\blg:p-3\b|\bmx-1\b/)
 })
 
+test('statistics books are reachable from desktop and mobile navigation', async () => {
+  for (const component of [Desktop, MobileOverlay]) {
+    const html = await render(component, { navbarButtons: buttons })
+    assert.ok(links(html).some(link => link.href === '/statistikk' && link.title === 'STATISTIKK'))
+  }
+})
+
 test('mobile overlay and sidebar keep the original larger button style', async () => {
   const mobile = await render(MobileOverlay, { navbarButtons: buttons })
   const sidebar = await render(Menu, { buttons: [], showJoinButton: true, currentPath: '/about' })

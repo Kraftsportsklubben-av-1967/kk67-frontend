@@ -136,6 +136,11 @@ const routes = [
     name: 'Points',
     component: () => import('../views/Points/index.vue'),
   },
+  {
+    path: '/statistikk',
+    name: 'Statistics',
+    component: () => import('../views/Statistics/index.vue'),
+  },
   { path: '/:pathMatch(.*)*', redirect: '/' }, // catch all use case
 ]
 

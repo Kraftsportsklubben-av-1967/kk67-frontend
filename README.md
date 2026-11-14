@@ -111,6 +111,41 @@ to force a full image upload and refresh the baseline, for example after manuall
 changing or deleting remote images. `-WhatIf` never reads remote state, so its
 file count is an upper bound rather than an exact incremental-upload count.
 
+## Statistics books
+
+The public `/statistikk` route is linked from desktop and mobile navigation.
+It reads `/public/stats/index.json`, lists the main-lifters book and almanac,
+and loads a browser-native PDF reader only after **Les på siden** is selected.
+Direct open/download links stay available, including on mobile browsers that
+cannot embed PDFs. Missing or invalid catalogs show an error and retry button.
+
+The catalog and unchanged PDFs come from `kk67-stats export-web` in the
+[lifter-stats repository](https://github.com/Kraftsportsklubben-av-1967/kk67-lifter-stats).
+The version 1 catalog contains `edition` (ISO date) and `reports`, whose entries
+have `id` (`main` or `history`), `title`, `path`, `page_count`, `size_bytes` and
+`sha256`. PDF paths are relative to `/public/stats/`, with the edition date
+and content hash identifying the exact published bytes. No analysis datasets
+are needed in the frontend or PHP backend.
+
+For local preview, place the **contents** of an exported bundle under
+`assets\public\stats`, then run `yarn build` and `yarn preview`. This generated
+directory is Git-ignored. A clean checkout intentionally has no books; publishing
+the frontend alone does not publish an edition.
+
+To preview a separate media upload without reading credentials or connecting:
+
+```powershell
+Import-Module .\scripts\ftps.psm1
+Send-FtpsDirectory -SourcePath .\assets\public\stats -FtpHost ftp.c9ry3m6by.service.one -RemotePath webroots/r1058728/public/stats -PublishLast index.json -WhatIf
+```
+
+An actual upload needs a separate explicit deployment decision and credentials,
+as described above. Publish PDFs first and `index.json` last, retaining old PDFs.
+Do not overlap this upload with a full frontend deployment. Publication is not
+atomic; verify the catalog and both PDF URLs afterwards. Each PDF must return
+`application/pdf`, not the SPA's HTML fallback, and support byte-range requests.
+The existing Apache routing already leaves real static files untouched.
+
 ## Available Scripts
 
 In the project directory, you can run:
