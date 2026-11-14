@@ -111,6 +111,61 @@ to force a full image upload and refresh the baseline, for example after manuall
 changing or deleting remote images. `-WhatIf` never reads remote state, so its
 file count is an upper bound rather than an exact incremental-upload count.
 
+## Statistics books
+
+The public `/statistikk` route is linked from desktop and mobile navigation.
+It reads `/public/stats/index.json`, lists the main-lifters book and almanac,
+and loads a browser-native PDF reader only after **Les på siden** is selected.
+Direct open/download links stay available, including on mobile browsers that
+cannot embed PDFs. Missing or invalid catalogs show an error and retry button.
+The main-book card explains that its competition/activity and historical focus
+is not a ranking of members' importance to the club.
+
+The catalog and unchanged PDFs come from `kk67-stats export-web` in the
+[lifter-stats repository](https://github.com/Kraftsportsklubben-av-1967/kk67-lifter-stats).
+The version 1 catalog contains `edition` (ISO date) and `reports`, whose entries
+have `id` (`main` or `history`), `title`, `path`, `page_count`, `size_bytes` and
+`sha256`. PDF paths are relative to `/public/stats/`, with the edition date
+and content hash identifying the exact published bytes. No analysis datasets
+are needed in the frontend or PHP backend.
+
+Annual editions add compatible version 1 fields: `edition_year`, reviewed
+plain-text `highlights`, an `archive` of earlier edition records, and an optional
+`next_edition_year`. An edition record has the same date, year, reports and
+highlights fields as the current edition. Archive years must be distinct and
+older than the current year. Selecting a year switches its books and update notes
+and closes the old reader. A planned year has no PDF links or invented release date.
+Year navigation uses the same responsive sidebar layout as `/about`: beside the
+books on desktop and above them on smaller screens. New editions appear from the
+catalog without adding hardcoded future years.
+Older catalogs still show their books, using the edition date's year as the label,
+without inventing update notes or a next-release announcement.
+
+Use `--previous-catalog` on the next `export-web` run to preserve the annual archive.
+The exporter makes a self-contained bundle, verifying and copying all referenced
+old PDFs. Same-year corrections stay within that annual edition. Add only reviewed
+major changes with repeated `--update-note` options; an empty list means no notes
+have been supplied, not that nothing changed.
+
+For local preview, place the **contents** of an exported bundle under
+`assets\public\stats`, then run `yarn build` and `yarn preview`. This generated
+directory is Git-ignored. A clean checkout intentionally has no books; publishing
+the frontend alone does not publish an edition.
+
+To preview a separate media upload without reading credentials or connecting:
+
+```powershell
+Import-Module .\scripts\ftps.psm1
+Send-FtpsDirectory -SourcePath .\assets\public\stats -FtpHost ftp.c9ry3m6by.service.one -RemotePath webroots/r1058728/public/stats -PublishLast index.json -WhatIf
+```
+
+An actual upload needs a separate explicit deployment decision and credentials,
+as described above. Publish PDFs first and `index.json` last, retaining old PDFs.
+Do not overlap this upload with a full frontend deployment. Publication is not
+atomic; verify the catalog and both PDF URLs afterwards. Each PDF must return
+`application/pdf`, not the SPA's HTML fallback, and support byte-range requests.
+The existing Apache routing already leaves real static files untouched.
+
 ## Available Scripts
 
 In the project directory, you can run:

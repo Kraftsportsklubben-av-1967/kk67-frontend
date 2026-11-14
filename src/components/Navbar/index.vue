@@ -77,6 +77,10 @@ export default defineComponent({
           path: '/records',
         },
         {
+          title: 'STATISTIKK',
+          path: '/statistikk',
+        },
+        {
           title: 'BILDER',
           path: '/pictures',
         },
