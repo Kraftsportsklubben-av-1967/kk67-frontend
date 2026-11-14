@@ -118,6 +118,8 @@ It reads `/public/stats/index.json`, lists the main-lifters book and almanac,
 and loads a browser-native PDF reader only after **Les på siden** is selected.
 Direct open/download links stay available, including on mobile browsers that
 cannot embed PDFs. Missing or invalid catalogs show an error and retry button.
+The main-book card explains that its competition/activity and historical focus
+is not a ranking of members' importance to the club.
 
 The catalog and unchanged PDFs come from `kk67-stats export-web` in the
 [lifter-stats repository](https://github.com/Kraftsportsklubben-av-1967/kk67-lifter-stats).
@@ -126,6 +128,21 @@ have `id` (`main` or `history`), `title`, `path`, `page_count`, `size_bytes` and
 `sha256`. PDF paths are relative to `/public/stats/`, with the edition date
 and content hash identifying the exact published bytes. No analysis datasets
 are needed in the frontend or PHP backend.
+
+Annual editions add compatible version 1 fields: `edition_year`, reviewed
+plain-text `highlights`, an `archive` of earlier edition records, and an optional
+`next_edition_year`. An edition record has the same date, year, reports and
+highlights fields as the current edition. Archive years must be distinct and
+older than the current year. Selecting a year switches its books and update notes
+and closes the old reader. A planned year has no PDF links or invented release date.
+Older catalogs still show their books, using the edition date's year as the label,
+without inventing update notes or a next-release announcement.
+
+Use `--previous-catalog` on the next `export-web` run to preserve the annual archive.
+The exporter makes a self-contained bundle, verifying and copying all referenced
+old PDFs. Same-year corrections stay within that annual edition. Add only reviewed
+major changes with repeated `--update-note` options; an empty list means no notes
+have been supplied, not that nothing changed.
 
 For local preview, place the **contents** of an exported bundle under
 `assets\public\stats`, then run `yarn build` and `yarn preview`. This generated
